@@ -1,0 +1,377 @@
+---
+const whyItems = [
+  {
+    index: '01',
+    word: 'BUILD',
+    title: 'Ship for the real world.',
+    desc: 'Work on problem statements inspired by real industry challenges—not just academic exercises.',
+    keywords: ['REAL PROBLEMS', 'WORKING SOLUTIONS', 'INDUSTRY CONTEXT']
+  },
+  {
+    index: '02',
+    word: 'LEARN',
+    title: 'Learn while you build.',
+    desc: 'Get guidance, mentoring, and practical exposure while turning your idea into a working solution.',
+    keywords: ['MENTORSHIP', 'PRACTICAL SKILLS', 'EXPERT GUIDANCE']
+  },
+  {
+    index: '03',
+    word: 'COLLABORATE',
+    title: 'Build with people who think differently.',
+    desc: 'Work as a team, exchange ideas, and learn from mentors, peers, and other builders.',
+    keywords: ['TEAMWORK', 'DIVERSE PERSPECTIVES', 'NETWORKING']
+  },
+  {
+    index: '04',
+    word: 'COMPETE',
+    title: 'Put your solution to the test.',
+    desc: 'Compete for prizes, internship opportunities, goodies, recognition, and other official rewards.',
+    keywords: ['PRIZES', 'INTERNSHIPS', 'RECOGNITION']
+  },
+  {
+    index: '05',
+    word: 'PROVE IT',
+    title: 'Walk away with proof.',
+    desc: 'Showcase what you built and earn recognition for your work, including participation certification where officially applicable.',
+    keywords: ['PORTFOLIO', 'CERTIFICATION', 'SHOWCASE']
+  }
+];
+---
+
+<section class="section s-why-enter" id="why" aria-labelledby="why-title">
+  <div class="container">
+    <div class="why-header" data-reveal>
+      <p class="section-label">03 / WHY ENTER</p>
+      <h2 class="why-title" id="why-title">WHY<br />ENTER?</h2>
+      <p class="why-desc">
+        More than a hackathon. A place to build, learn, collaborate and prove what you can do.
+      </p>
+    </div>
+
+    <div class="why-list-wrapper">
+      <div class="why-list" role="list">
+        {whyItems.map((item, i) => (
+          <button class="why-row" type="button" aria-expanded="false" data-index={i} data-reveal style={`--d: ${i * 50}ms;`}>
+            <div class="row-visible">
+              <span class="row-num mono" aria-hidden="true">{item.index}</span>
+              <span class="row-word">{item.word}</span>
+              <span class="row-arrow" aria-hidden="true">→</span>
+            </div>
+            
+            <div class="row-hidden">
+              <div class="row-hidden-inner">
+                <h3 class="hidden-title">{item.title}</h3>
+                <p class="hidden-desc">{item.desc}</p>
+                <div class="hidden-keywords">
+                  {item.keywords.map(kw => <span>{kw}</span>)}
+                </div>
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .s-why-enter {
+    background-color: #F0F0EE;
+    color: #111111;
+    padding-top: clamp(100px, 15vh, 180px);
+    padding-bottom: clamp(100px, 15vh, 180px);
+  }
+
+  .why-header {
+    margin-bottom: clamp(60px, 10vh, 120px);
+    max-width: 600px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: #777777;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .why-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #111111;
+    margin-bottom: 30px;
+  }
+
+  .why-desc {
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    line-height: 1.5;
+    color: #555555;
+    max-width: 45ch;
+  }
+
+  /* --- List Layout --- */
+  .why-list-wrapper {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto; /* Push to the right for asymmetry, matching the Arena */
+  }
+
+  .why-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(17, 17, 17, 0.12);
+  }
+
+  /* --- Row Basics --- */
+  .why-row {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+    padding: 0;
+    text-align: left;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: background-color 300ms ease;
+  }
+
+  @media (pointer: fine) {
+    .why-row { cursor: pointer; }
+  }
+
+  .row-visible {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: clamp(24px, 4vw, 40px) 0;
+    padding-right: 20px;
+  }
+
+  .row-num {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #777777;
+    width: 60px;
+    flex-shrink: 0;
+    transition: color 300ms ease;
+  }
+
+  .row-word {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    flex-grow: 1;
+    transition: transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1), color 300ms ease;
+  }
+
+  .row-arrow {
+    font-size: 1.5rem;
+    font-family: var(--font-mono);
+    color: #777777;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 350ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* --- Reveal Section --- */
+  .row-hidden {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .row-hidden-inner {
+    overflow: hidden;
+    padding: 0 0 40px 60px; /* Aligned with text */
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 400ms ease;
+  }
+
+  .hidden-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: #111;
+  }
+
+  .hidden-desc {
+    font-size: clamp(1rem, 1.2vw, 1.1rem);
+    line-height: 1.6;
+    color: #777; /* Default lighter, darker on hover */
+    max-width: 55ch;
+    transition: color 300ms ease;
+  }
+
+  .hidden-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    margin-top: 10px;
+  }
+
+  .hidden-keywords span {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    text-transform: uppercase;
+  }
+
+  /* --- Interactions (Desktop & Mobile Unified Expansion) --- */
+  
+  /* Expand state */
+  .why-row[aria-expanded="true"] .row-hidden {
+    grid-template-rows: 1fr;
+  }
+  
+  .why-row[aria-expanded="true"] .row-hidden-inner {
+    opacity: 1;
+    transform: none;
+    transition-delay: 50ms;
+  }
+  
+  .why-row[aria-expanded="true"] .hidden-desc {
+    color: #111; /* Darker description */
+  }
+
+  .why-row[aria-expanded="true"] .row-num {
+    color: var(--blue);
+  }
+  
+  .why-row[aria-expanded="true"] .row-word {
+    transform: translateX(12px);
+  }
+
+  .why-row[aria-expanded="true"] .row-arrow {
+    opacity: 1;
+    transform: translateX(0);
+    color: var(--blue);
+  }
+  
+  .why-row[aria-expanded="true"] {
+    background-color: rgba(17, 17, 17, 0.02); /* subtle background shift */
+  }
+
+  /* Desktop Hover State (Only applies if hover is supported) */
+  @media (hover: hover) and (pointer: fine) {
+    .why-row:hover .row-hidden,
+    .why-row:focus-visible .row-hidden {
+      grid-template-rows: 1fr;
+    }
+    
+    .why-row:hover .row-hidden-inner,
+    .why-row:focus-visible .row-hidden-inner {
+      opacity: 1;
+      transform: none;
+      transition-delay: 50ms;
+    }
+    
+    .why-row:hover .hidden-desc,
+    .why-row:focus-visible .hidden-desc {
+      color: #111;
+    }
+    
+    .why-row:hover .row-num,
+    .why-row:focus-visible .row-num {
+      color: var(--blue);
+    }
+    
+    .why-row:hover .row-word,
+    .why-row:focus-visible .row-word {
+      transform: translateX(12px);
+    }
+    
+    .why-row:hover .row-arrow,
+    .why-row:focus-visible .row-arrow {
+      opacity: 1;
+      transform: translateX(0);
+      color: var(--blue);
+    }
+
+    .why-row:hover,
+    .why-row:focus-visible {
+      background-color: rgba(17, 17, 17, 0.02);
+    }
+  }
+
+  /* Mobile Specific tweaks */
+  @media (max-width: 768px) {
+    .row-hidden-inner {
+      padding: 0 10px 30px 10px; /* Less left padding on mobile */
+    }
+    .why-list-wrapper {
+      margin-left: 0;
+    }
+    
+    /* Rotate arrow on expansion for mobile */
+    .why-row[aria-expanded="true"] .row-arrow {
+      transform: rotate(90deg);
+    }
+  }
+
+  /* --- Focus outline for a11y --- */
+  .why-row:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: -2px;
+  }
+
+  /* --- Scroll reveal --- */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUpRow 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--d, 0ms);
+  }
+
+  @keyframes fadeUpRow {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal], .row-word, .row-arrow, .row-hidden, .row-hidden-inner {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Mobile interaction logic (only active on touch devices essentially)
+  const isTouch = window.matchMedia('(hover: none)').matches;
+  
+  if (isTouch) {
+    const rows = document.querySelectorAll<HTMLButtonElement>('.why-row');
+    rows.forEach((row) => {
+      row.addEventListener('click', () => {
+        const isExpanded = row.getAttribute('aria-expanded') === 'true';
+        
+        // Close others
+        rows.forEach(r => r.setAttribute('aria-expanded', 'false'));
+        
+        // Toggle current
+        row.setAttribute('aria-expanded', String(!isExpanded));
+      });
+    });
+  }
+</script>

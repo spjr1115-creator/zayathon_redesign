@@ -1,0 +1,17 @@
+{
+  "name": "zayathon",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ZAYATHON 2026 — Code for Coexistence. Official website (redesign).",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.115.0",
+    "astro": "^7.3.1"
+  }
+}

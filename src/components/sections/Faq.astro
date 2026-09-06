@@ -1,0 +1,397 @@
+---
+import { site } from '../../data/site';
+
+const contactMail = `mailto:${site.contact.email}`;
+
+const faqList = [
+  {
+    q: 'WHO CAN PARTICIPATE?',
+    a: 'ZAYATHON is open to students from 1st to 3rd year.'
+  },
+  {
+    q: 'HOW MANY PEOPLE CAN BE ON A TEAM?',
+    a: 'Teams can have up to 4 members: one team leader and up to 3 additional members.'
+  },
+  {
+    q: 'HOW LONG IS THE HACKATHON?',
+    a: 'ZAYATHON includes 10 hours of coding, along with mentoring and workshops.'
+  },
+  {
+    q: 'WHAT ARE THE PROBLEM DOMAINS?',
+    a: 'The hackathon features 9 domains: Agentic AI, Robotics & Autonomous Systems, Cybersecurity & Threat Intelligence, HealthTech & MedAI, FinTech & Blockchain, Smart Cities & IoT, Agritech & Rural Innovation, Transportation & Logistics, and Open Innovation.'
+  },
+  {
+    q: 'WHEN DOES REGISTRATION OPEN?',
+    a: 'Registration opens on February 6, 2026.'
+  },
+  {
+    q: 'WHAT ARE THE PRIZES?',
+    a: 'The official rewards include ₹3,000 for the Grand Champion, ₹2,000 for the First Runner Up, and ₹1,000 for the Second Runner Up, along with other listed rewards.'
+  },
+  {
+    q: 'IS THERE AN INTERNSHIP OPPORTUNITY?',
+    a: 'An internship opportunity is listed among the rewards for the Grand Champion.'
+  },
+  {
+    q: 'WHERE IS ZAYATHON HELD?',
+    a: 'ZAYATHON is associated with SONA COLLEGE OF TECHNOLOGY, Salem, Tamil Nadu, India.'
+  },
+  {
+    q: 'HOW DO I REGISTER?',
+    a: 'Use the official ZAYATHON registration process to submit your details and participate.'
+  }
+];
+---
+
+<section class="section s-faq" id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    
+    <header class="faq-head" data-reveal>
+      <p class="section-label">07 / THE QUESTIONS</p>
+      <h2 class="faq-title" id="faq-title">
+        BEFORE YOU BUILD,<br />
+        KNOW THE RULES.
+      </h2>
+      <p class="faq-desc">
+        Everything you need to know before stepping into ZAYATHON.
+      </p>
+    </header>
+
+    <div class="faq-layout">
+      <!-- LEFT: Sticky Intro -->
+      <div class="faq-intro" data-reveal style="--d: 150ms;">
+        <h3 class="intro-heading">STILL CURIOUS?</h3>
+        <p class="intro-sub mono">START HERE.</p>
+      </div>
+
+      <!-- RIGHT: Questions List -->
+      <div class="faq-list" role="list">
+        {faqList.map((item, i) => (
+          <div class="faq-row" data-reveal style={`--d: ${(i * 100) + 150}ms;`}>
+            <button class="faq-trigger" aria-expanded="false" aria-controls={`faq-answer-${i}`}>
+              <span class="faq-num mono" aria-hidden="true">{`0${i + 1}`}</span>
+              <span class="faq-q">{item.q}</span>
+              <span class="faq-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                  <path d="M12 5v14M5 12h14" class="icon-v"/>
+                  <path d="M5 12h14" class="icon-h"/>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer-wrapper" id={`faq-answer-${i}`}>
+              <div class="faq-answer-inner">
+                <p class="faq-a">{item.a}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+    
+    <!-- BOTTOM: CTA -->
+    <div class="faq-footer" data-reveal style="--d: 300ms;">
+      <p class="footer-prompt mono">QUESTION NOT HERE?</p>
+      <a href={contactMail} class="btn-contact">CONTACT THE TEAM ↗</a>
+      <p class="footer-mail mono">{site.contact.email}</p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .s-faq {
+    background-color: #F0F0EE;
+    color: #111111;
+    padding-top: clamp(100px, 15vh, 180px);
+    padding-bottom: clamp(100px, 15vh, 180px);
+    border-top: 1px solid rgba(17, 17, 17, 0.12);
+  }
+
+  .faq-head {
+    max-width: 700px;
+    margin-bottom: clamp(80px, 12vh, 140px);
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: #777777;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .faq-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #111111;
+    margin-bottom: 30px;
+  }
+
+  .faq-desc {
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    line-height: 1.5;
+    color: #555555;
+    max-width: 45ch;
+  }
+
+  /* Two Column Layout */
+  .faq-layout {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(40px, 8vw, 120px);
+    align-items: flex-start;
+  }
+
+  .faq-intro {
+    flex: 0 0 25%;
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .intro-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 4.5rem);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #111111;
+    margin-bottom: 20px;
+  }
+
+  .intro-sub {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: #777777;
+    text-transform: uppercase;
+  }
+
+  .faq-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(17, 17, 17, 0.12);
+  }
+
+  /* FAQ Rows */
+  .faq-row {
+    border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+  }
+
+  .faq-trigger {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    padding: clamp(24px, 3vw, 36px) 0;
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+    transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .faq-num {
+    font-size: 0.75rem;
+    color: #777777;
+    width: clamp(30px, 4vw, 50px);
+    flex-shrink: 0;
+    transition: color 300ms ease;
+  }
+
+  .faq-q {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    flex-grow: 1;
+    padding-right: 20px;
+    color: #111111;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    color: #777777;
+    transition: transform 300ms ease, color 300ms ease;
+  }
+
+  .icon-v {
+    transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform-origin: center;
+  }
+
+  /* Answer Wrapper */
+  .faq-answer-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .faq-answer-inner {
+    overflow: hidden;
+    padding-left: clamp(30px, 4vw, 50px);
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: all 400ms ease;
+  }
+
+  .faq-a {
+    font-size: clamp(0.95rem, 1vw, 1.05rem);
+    line-height: 1.6;
+    color: #555555;
+    padding-bottom: clamp(24px, 3vw, 36px);
+    max-width: 60ch;
+  }
+
+  /* Expanded State */
+  .faq-trigger[aria-expanded="true"] .faq-num {
+    color: var(--blue);
+  }
+
+  .faq-trigger[aria-expanded="true"] .icon-v {
+    transform: rotate(90deg); /* Forms a minus */
+  }
+
+  .faq-trigger[aria-expanded="true"] .faq-icon {
+    color: var(--blue);
+  }
+
+  .faq-trigger[aria-expanded="true"] + .faq-answer-wrapper {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-trigger[aria-expanded="true"] + .faq-answer-wrapper .faq-answer-inner {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Hover States (Desktop) */
+  @media (hover: hover) and (pointer: fine) {
+    .faq-trigger:hover {
+      transform: translateX(8px);
+    }
+    .faq-trigger:hover .faq-num {
+      color: var(--blue);
+    }
+    .faq-trigger:hover .faq-icon {
+      transform: scale(1.1);
+      color: #111111;
+    }
+    .faq-trigger[aria-expanded="true"]:hover .faq-icon {
+      color: var(--blue);
+    }
+  }
+
+  /* Footer CTA */
+  .faq-footer {
+    margin-top: clamp(80px, 12vh, 140px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .footer-prompt {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: #777777;
+    text-transform: uppercase;
+  }
+
+  .btn-contact {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 1.8vw, 1.8rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    padding: 16px 32px;
+    border-radius: 40px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 300ms ease;
+  }
+
+  .btn-contact:hover {
+    background-color: var(--blue);
+    color: #F0F0EE;
+    transform: translateY(-2px);
+  }
+
+  .footer-mail {
+    font-size: 0.75rem;
+    color: #555555;
+  }
+
+  /* Scroll reveal */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUpRow 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--d, 0ms);
+  }
+
+  @keyframes fadeUpRow {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal], .faq-trigger, .icon-v, .faq-num, .faq-icon, .btn-contact {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  /* Mobile Tweaks */
+  @media (max-width: 900px) {
+    .faq-layout {
+      flex-direction: column;
+      gap: 60px;
+    }
+    .faq-intro {
+      position: static;
+      flex: none;
+    }
+    .intro-heading {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+    }
+    .faq-q {
+      font-size: 1.1rem;
+    }
+    .faq-a {
+      padding-bottom: 20px;
+    }
+  }
+</style>
+
+<script>
+  // Accordion Logic
+  const triggers = document.querySelectorAll('.faq-trigger');
+  
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+      
+      // Optional: Close all others first
+      // triggers.forEach(t => t.setAttribute('aria-expanded', 'false'));
+      
+      // Toggle current
+      trigger.setAttribute('aria-expanded', String(!isExpanded));
+    });
+  });
+</script>

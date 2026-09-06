@@ -1,0 +1,73 @@
+---
+import { stats } from '../../data/site';
+---
+
+<section class="s-stats" aria-labelledby="stats-title">
+  <h2 class="sr-only" id="stats-title">Hackathon statistics</h2>
+  <div class="container-wide">
+    <dl class="stats-row">
+      {stats.map((s, i) => (
+        <div class="stat" data-reveal style={`--d:${i * 90}ms`}>
+          <dt class="stat__label mono">{s.label}</dt>
+          <dd class="stat__value">{s.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .s-stats {
+    background: var(--paper);
+    border-top: 1px solid var(--line-soft);
+    padding-block: clamp(56px, 9vh, 96px);
+  }
+
+  .stats-row {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stat + .stat {
+    border-left: 1px solid var(--line-soft);
+    padding-left: clamp(24px, 3.4vw, 48px);
+  }
+
+  .stat__label {
+    order: 2;
+    font-size: 0.64rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+
+  .stat__value {
+    order: 1;
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 760px) {
+    .stats-row {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 44px;
+    }
+
+    .stat:nth-child(3) {
+      border-left: none;
+    }
+  }
+</style>

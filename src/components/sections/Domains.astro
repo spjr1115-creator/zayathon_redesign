@@ -1,0 +1,657 @@
+---
+import { domains as siteDomains } from '../../data/site';
+
+// Rich domain content provided specifically for the Arena section
+const arenaDomains = [
+  {
+    index: '01',
+    name: 'AGENTIC AI',
+    desc: 'Build intelligent agents that can reason, plan, use tools, and take action to solve complex real-world problems.',
+    explore: ['AI Agents', 'Autonomous Workflows', 'Multi-Agent Systems', 'Intelligent Assistants'],
+    challenge: "Don't just build an AI that answers. Build one that acts.",
+    icon: 'agent'
+  },
+  {
+    index: '02',
+    name: 'ROBOTICS & AUTONOMOUS SYSTEMS',
+    desc: 'Design intelligent machines that can perceive their surroundings, make decisions, and operate with minimal human intervention.',
+    explore: ['Robotics', 'Computer Vision', 'Automation', 'Autonomous Navigation'],
+    challenge: 'Give machines the ability to sense, decide, and move.',
+    icon: 'robot'
+  },
+  {
+    index: '03',
+    name: 'CYBERSECURITY & THREAT INTELLIGENCE',
+    desc: 'Build solutions that detect threats, protect digital systems, identify vulnerabilities, and make the digital world safer.',
+    explore: ['Threat Detection', 'Network Security', 'Digital Forensics', 'Security Intelligence'],
+    challenge: 'Find the threat before it finds you.',
+    icon: 'shield'
+  },
+  {
+    index: '04',
+    name: 'HEALTHTECH & MEDAI',
+    desc: 'Use technology and artificial intelligence to create smarter, more accessible, and more efficient healthcare solutions.',
+    explore: ['Medical AI', 'Health Monitoring', 'Diagnostics', 'Patient Care'],
+    challenge: 'Turn technology into better healthcare.',
+    icon: 'health'
+  },
+  {
+    index: '05',
+    name: 'FINTECH & BLOCKCHAIN',
+    desc: 'Reimagine financial services with intelligent, secure, transparent, and accessible digital solutions.',
+    explore: ['Digital Payments', 'Financial AI', 'Blockchain', 'Fraud Detection'],
+    challenge: 'Build the financial systems of tomorrow.',
+    icon: 'chain'
+  },
+  {
+    index: '06',
+    name: 'SMART CITIES & IOT',
+    desc: 'Connect devices, infrastructure, and data to create smarter, safer, and more efficient urban environments.',
+    explore: ['IoT', 'Smart Infrastructure', 'Sensors', 'Urban Intelligence'],
+    challenge: 'Make cities think, respond, and adapt.',
+    icon: 'city'
+  },
+  {
+    index: '07',
+    name: 'AGRITECH & RURAL INNOVATION',
+    desc: 'Use technology to improve agriculture, empower rural communities, and create sustainable solutions for the future of farming.',
+    explore: ['Smart Farming', 'Crop Intelligence', 'Rural Tech', 'Sustainability'],
+    challenge: 'Grow smarter. Build for everyone.',
+    icon: 'agri'
+  },
+  {
+    index: '08',
+    name: 'TRANSPORTATION & LOGISTICS',
+    desc: 'Solve the challenges of moving people and goods through smarter, safer, and more efficient transportation systems.',
+    explore: ['Route Optimization', 'Fleet Intelligence', 'Mobility', 'Supply Chains'],
+    challenge: 'Make every journey smarter.',
+    icon: 'route'
+  },
+  {
+    index: '09',
+    name: 'OPEN INNOVATION',
+    desc: "Have an idea that doesn't fit a specific category? Build something original that tackles a meaningful problem in your own way.",
+    explore: ['Experimental Ideas', 'Emerging Technology', 'Social Impact', 'Anything Goes'],
+    challenge: 'No box. No boundaries. Just your idea.',
+    icon: 'spark'
+  }
+];
+---
+
+<section class="section s-arena" id="domains" aria-labelledby="arena-title">
+  <div class="container">
+    <div class="arena-layout">
+      
+      <header class="arena-head" data-reveal>
+        <p class="section-label">02 / THE ARENA</p>
+        <h2 class="arena-title" id="arena-title">
+          CHOOSE<br />
+          YOUR<br />
+          ARENA.
+        </h2>
+        <p class="arena-desc">
+          Nine domains. Different problems.<br />
+          One opportunity to build something real.
+        </p>
+      </header>
+
+      <div class="arena-interactive">
+        <div class="arena-list" role="list">
+          {arenaDomains.map((d, i) => (
+            <button class="arena-row" type="button" aria-expanded={i === 0 ? "true" : "false"} aria-controls={`panel-${d.index}`} data-index={i} data-reveal style={`--d: ${i * 40}ms;`}>
+              <div class="row-main">
+                <span class="row-num mono" aria-hidden="true">{d.index}</span>
+                <span class="row-name">{d.name}</span>
+                <span class="row-arrow" aria-hidden="true">→</span>
+              </div>
+              
+              {/* Mobile Accordion Reveal */}
+              <div class="mobile-reveal" id={`panel-${d.index}`} role="region">
+                <div class="mobile-reveal-inner">
+                  <p class="m-challenge">"{d.challenge}"</p>
+                  <p class="m-desc">{d.desc}</p>
+                  <div class="m-explore">
+                    {d.explore.join(' · ')}
+                  </div>
+                  <div class="m-visual">
+                    {d.icon === 'agent' && <div class="visual-agentic"></div>}
+                    {d.icon === 'robot' && <div class="visual-robotics"></div>}
+                    {d.icon === 'shield' && <div class="visual-cyber"></div>}
+                    {d.icon === 'health' && <div class="visual-health"></div>}
+                    {d.icon === 'chain' && <div class="visual-fintech"></div>}
+                    {d.icon === 'city' && <div class="visual-city"></div>}
+                    {d.icon === 'agri' && <div class="visual-agri"></div>}
+                    {d.icon === 'route' && <div class="visual-transport"></div>}
+                    {d.icon === 'spark' && <div class="visual-open"></div>}
+                  </div>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Desktop Side Panel */}
+        <div class="arena-side-panel">
+          <div class="side-panel-sticky">
+            {arenaDomains.map((d, i) => (
+              <div class="side-panel-content" data-index={i} aria-hidden={i === 0 ? "false" : "true"}>
+                <div class="sp-visual">
+                  {d.icon === 'agent' && <div class="visual-agentic"></div>}
+                  {d.icon === 'robot' && <div class="visual-robotics"></div>}
+                  {d.icon === 'shield' && <div class="visual-cyber"></div>}
+                  {d.icon === 'health' && <div class="visual-health"></div>}
+                  {d.icon === 'chain' && <div class="visual-fintech"></div>}
+                  {d.icon === 'city' && <div class="visual-city"></div>}
+                  {d.icon === 'agri' && <div class="visual-agri"></div>}
+                  {d.icon === 'route' && <div class="visual-transport"></div>}
+                  {d.icon === 'spark' && <div class="visual-open"></div>}
+                </div>
+                
+                <p class="sp-challenge">"{d.challenge}"</p>
+                
+                <div class="sp-divider"></div>
+                
+                <p class="sp-desc">{d.desc}</p>
+                
+                <div class="sp-explore-box">
+                  <p class="sp-explore-label">EXPLORE</p>
+                  <ul class="sp-explore-list">
+                    {d.explore.map(item => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .s-arena {
+    background-color: #F0F0EE;
+    color: #111111;
+    padding-top: clamp(100px, 15vh, 180px);
+    padding-bottom: clamp(100px, 15vh, 180px);
+    position: relative;
+  }
+
+  .arena-layout {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(60px, 10vw, 100px);
+  }
+
+  .arena-head {
+    max-width: 600px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: #777777;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .arena-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #111111;
+    margin-bottom: 30px;
+  }
+
+  .arena-desc {
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    line-height: 1.5;
+    color: #555555;
+    max-width: 40ch;
+  }
+
+  /* --- Interactive Split Layout --- */
+  .arena-interactive {
+    display: flex;
+    gap: 60px;
+    position: relative;
+    align-items: flex-start;
+  }
+
+  .arena-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(17, 17, 17, 0.15);
+  }
+
+  .arena-side-panel {
+    display: none;
+    width: 400px;
+    flex-shrink: 0;
+    position: relative;
+    /* Extra height for scrolling effect if needed */
+  }
+
+  @media (min-width: 1024px) {
+    .arena-side-panel {
+      display: block;
+    }
+    .mobile-reveal {
+      display: none !important;
+    }
+  }
+
+  .side-panel-sticky {
+    position: sticky;
+    top: 120px;
+    min-height: 500px;
+  }
+
+  .side-panel-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 400ms ease, transform 400ms ease, visibility 400ms;
+  }
+
+  .side-panel-content[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  /* Side Panel Details */
+  .sp-visual {
+    width: 100%;
+    height: 140px;
+    margin-bottom: 40px;
+    opacity: 0.8;
+  }
+
+  .sp-challenge {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #111;
+    margin-bottom: 30px;
+  }
+
+  .sp-divider {
+    width: 40px;
+    height: 1px;
+    background-color: rgba(17,17,17,0.2);
+    margin-bottom: 30px;
+  }
+
+  .sp-desc {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 40px;
+  }
+
+  .sp-explore-box {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sp-explore-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: #777;
+    text-transform: uppercase;
+  }
+
+  .sp-explore-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sp-explore-list li {
+    font-size: 0.95rem;
+    color: #111;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sp-explore-list li::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 4px;
+    background: var(--blue);
+    border-radius: 50%;
+  }
+
+  /* --- Row Basics --- */
+  .arena-row {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(17, 17, 17, 0.15);
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .row-main {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: clamp(24px, 4vw, 40px) 0;
+    transition: padding var(--dur-normal) var(--ease-out);
+  }
+
+  .row-num {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #777777;
+    width: 60px;
+    flex-shrink: 0;
+    transition: color 300ms ease;
+  }
+
+  .row-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    flex-grow: 1;
+    transition: transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1), color 300ms ease;
+  }
+
+  .row-arrow {
+    font-size: 1.5rem;
+    font-family: var(--font-mono);
+    color: #777777;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 350ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* --- Hover & Focus States (Desktop) --- */
+  @media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
+    .arena-row:hover .row-num,
+    .arena-row:focus-visible .row-num,
+    .arena-row[aria-expanded="true"] .row-num {
+      color: var(--blue);
+    }
+    
+    .arena-row:hover .row-name,
+    .arena-row:focus-visible .row-name,
+    .arena-row[aria-expanded="true"] .row-name {
+      transform: translateX(12px);
+      color: #000;
+    }
+    
+    .arena-row:hover .row-arrow,
+    .arena-row:focus-visible .row-arrow,
+    .arena-row[aria-expanded="true"] .row-arrow {
+      opacity: 1;
+      transform: translateX(0);
+      color: var(--blue);
+    }
+  }
+
+  /* --- Mobile Accordion Reveal --- */
+  .mobile-reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .arena-row[aria-expanded="true"] .mobile-reveal {
+    grid-template-rows: 1fr;
+  }
+
+  .mobile-reveal-inner {
+    overflow: hidden;
+    padding: 0 0 40px 60px; /* Aligned with text */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 400ms ease;
+  }
+
+  .arena-row[aria-expanded="true"] .mobile-reveal-inner {
+    opacity: 1;
+    transform: none;
+    transition-delay: 100ms;
+  }
+
+  .m-challenge {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #111;
+  }
+
+  .m-desc {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #555;
+    max-width: 40ch;
+  }
+
+  .m-explore {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--blue);
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  .m-visual {
+    margin-top: 10px;
+    width: 100%;
+    max-width: 150px;
+    height: 80px;
+    opacity: 0.6;
+  }
+
+  /* Mobile arrows */
+  @media (max-width: 1023px) {
+    .row-arrow {
+      opacity: 1;
+      transform: none;
+    }
+    .arena-row[aria-expanded="true"] .row-arrow {
+      transform: rotate(90deg);
+      color: var(--blue);
+    }
+    .arena-row[aria-expanded="true"] .row-num {
+      color: var(--blue);
+    }
+  }
+
+  /* --- Focus outline for a11y --- */
+  .arena-row:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: -2px;
+  }
+
+  /* --- Abstract Visuals (CSS Art) --- */
+  .visual-agentic {
+    /* Connected nodes */
+    width: 100%; height: 100%;
+    background: 
+      radial-gradient(circle at 20% 50%, #111 2px, transparent 3px),
+      radial-gradient(circle at 50% 20%, #111 2px, transparent 3px),
+      radial-gradient(circle at 80% 80%, #111 2px, transparent 3px),
+      linear-gradient(25deg, transparent 40%, rgba(17,17,17,0.2) 41%, rgba(17,17,17,0.2) 42%, transparent 43%),
+      linear-gradient(-60deg, transparent 45%, rgba(17,17,17,0.2) 46%, rgba(17,17,17,0.2) 47%, transparent 48%);
+  }
+  
+  .visual-robotics {
+    /* Mechanical forms */
+    width: 100%; height: 100%;
+    background:
+      linear-gradient(90deg, transparent 20%, rgba(17,17,17,0.8) 20%, rgba(17,17,17,0.8) 25%, transparent 25%),
+      linear-gradient(0deg, transparent 40%, rgba(17,17,17,0.4) 40%, rgba(17,17,17,0.4) 60%, transparent 60%);
+    border: 1px solid rgba(17,17,17,0.2);
+  }
+
+  .visual-cyber {
+    /* Abstract grid / threat */
+    width: 100%; height: 100%;
+    background-image: repeating-linear-gradient(45deg, rgba(17,17,17,0.1) 0, rgba(17,17,17,0.1) 1px, transparent 1px, transparent 6px);
+    border-left: 3px solid #111;
+  }
+
+  .visual-health {
+    /* Medical cross / data */
+    width: 100%; height: 100%;
+    background: 
+      linear-gradient(90deg, transparent 45%, #111 45%, #111 55%, transparent 55%),
+      linear-gradient(0deg, transparent 45%, #111 45%, #111 55%, transparent 55%);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .visual-fintech {
+    /* Ledger bars */
+    width: 100%; height: 100%;
+    background:
+      linear-gradient(90deg, #111 0%, #111 15%, transparent 15%, transparent 20%, rgba(17,17,17,0.4) 20%, rgba(17,17,17,0.4) 60%, transparent 60%);
+    background-size: 100% 10px;
+    background-repeat: space;
+  }
+
+  .visual-city {
+    /* Infrastructure blocks */
+    width: 100%; height: 100%;
+    background:
+      linear-gradient(0deg, rgba(17,17,17,0.1) 0%, rgba(17,17,17,0.1) 50%, transparent 50%),
+      linear-gradient(90deg, rgba(17,17,17,0.6) 0%, rgba(17,17,17,0.6) 20%, transparent 20%, transparent 40%, #111 40%, #111 80%, transparent 80%);
+    background-position: bottom;
+    background-size: 100% 30px;
+    background-repeat: no-repeat;
+  }
+
+  .visual-agri {
+    /* Organic curves */
+    width: 100%; height: 100%;
+    border-bottom: 2px solid #111;
+    border-radius: 0 0 40px 10px;
+    background: repeating-radial-gradient(circle at top left, transparent, transparent 4px, rgba(17,17,17,0.1) 4px, rgba(17,17,17,0.1) 5px);
+  }
+
+  .visual-transport {
+    /* Route lines */
+    width: 100%; height: 100%;
+    background:
+      linear-gradient(90deg, transparent 0%, transparent 30%, #111 30%, #111 32%, transparent 32%),
+      linear-gradient(15deg, transparent 40%, rgba(17,17,17,0.3) 40%, rgba(17,17,17,0.3) 42%, transparent 42%);
+  }
+
+  .visual-open {
+    /* Interconnected circles */
+    width: 100%; height: 100%;
+    background:
+      radial-gradient(circle, transparent 30%, rgba(17,17,17,0.5) 32%, transparent 34%);
+    background-size: 20px 20px;
+  }
+
+  /* --- Scroll reveal --- */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUpRow 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--d, 0ms);
+  }
+
+  @keyframes fadeUpRow {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal], .row-name, .row-arrow, .row-desc, .row-visual, .row-reveal, .mobile-reveal, .side-panel-content {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Interaction Logic for hover on desktop, tap on mobile
+  const rows = document.querySelectorAll<HTMLButtonElement>('.arena-row');
+  const panels = document.querySelectorAll<HTMLDivElement>('.side-panel-content');
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+
+  function setActiveDomain(index) {
+    rows.forEach(r => r.setAttribute('aria-expanded', 'false'));
+    panels.forEach(p => p.setAttribute('aria-hidden', 'true'));
+    
+    if (rows[index]) rows[index].setAttribute('aria-expanded', 'true');
+    if (panels[index]) panels[index].setAttribute('aria-hidden', 'false');
+  }
+
+  rows.forEach((row, index) => {
+    // Hover interactions (Desktop)
+    row.addEventListener('mouseenter', () => {
+      if (window.innerWidth >= 1024) {
+        setActiveDomain(index);
+      }
+    });
+    
+    // Keyboard focus interactions (Desktop)
+    row.addEventListener('focus', () => {
+      if (window.innerWidth >= 1024) {
+        setActiveDomain(index);
+      }
+    });
+
+    // Click/Tap interactions (Mobile & Desktop)
+    row.addEventListener('click', () => {
+      if (window.innerWidth < 1024) {
+        // Toggle behavior on mobile
+        const isExpanded = row.getAttribute('aria-expanded') === 'true';
+        if (isExpanded) {
+          row.setAttribute('aria-expanded', 'false');
+        } else {
+          setActiveDomain(index);
+        }
+      } else {
+        // Ensure it's active on desktop click as well
+        setActiveDomain(index);
+      }
+    });
+  });
+</script>

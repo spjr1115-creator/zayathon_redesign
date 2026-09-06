@@ -1,0 +1,319 @@
+---
+import { navLinks, site } from '../data/site';
+---
+
+<header class="site-header" id="site-header">
+  <div class="container-wide nav-row">
+    <!-- Left pill · circular logo -->
+    <a class="pill pill--logo" href="#top" aria-label="ZAYATHON — back to top">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square">
+          <path d="M4 5h16v3L13 19h7" />
+        </svg>
+      </span>
+    </a>
+
+    <!-- Right pill · links + register -->
+    <nav class="pill pill--links" aria-label="Primary">
+      <ul class="nav-list" role="list">
+        {navLinks.map((l) => (
+          <li>
+            <a class="nav-link" href={l.href}>{l.label}</a>
+          </li>
+        ))}
+      </ul>
+      <a class="nav-reg" href="/register">
+        Register
+        <svg class="arrow" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" /></svg>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+        <span></span><span></span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="nav-menu" id="nav-menu" hidden>
+    <ul role="list">
+      {navLinks.map((l) => (
+        <li>
+          <a class="nav-menu__link" href={l.href}>
+            <span>{l.label}</span>
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a class="btn btn--primary nav-menu__cta" href="/register">Register your team</a>
+    <p class="nav-menu__contact mono">
+      {site.contact.email} · {site.contact.phoneDisplay}
+    </p>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    z-index: 120;
+    pointer-events: none;
+  }
+
+  .nav-row {
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 18px;
+  }
+
+  /* shared pill anatomy */
+  .pill {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    background: var(--pill, #ededed);
+    border: 1px solid transparent;
+    border-radius: var(--r-pill);
+    box-shadow: none;
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out);
+  }
+
+  /* after the hero, pills lift slightly over the paper page */
+  .site-header.is-scrolled .pill {
+    border-color: var(--line-soft);
+    box-shadow: var(--shadow-float);
+  }
+
+  .pill--logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    justify-content: center;
+  }
+
+  .logo-mark {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    transition:
+      background-color var(--dur-micro) var(--ease-out),
+      color var(--dur-micro) var(--ease-out);
+  }
+
+  .pill--logo:hover .logo-mark {
+    background: var(--blue);
+  }
+
+  .pill--links {
+    gap: 2px;
+    padding: 5px;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    display: inline-block;
+    padding: 9px 11px;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    border-radius: var(--r-pill);
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+
+  .nav-link:hover {
+    color: var(--blue);
+  }
+
+  .nav-reg {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 36px;
+    margin-left: 6px;
+    padding: 0 18px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition:
+      background-color var(--dur-micro) var(--ease-out),
+      transform var(--dur-micro) var(--ease-out);
+  }
+
+  .nav-reg:hover {
+    background: var(--blue);
+    transform: translateX(2px);
+  }
+
+  .nav-reg .arrow {
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .nav-reg:hover .arrow {
+    transform: translateX(2px);
+  }
+
+  /* mobile toggle */
+  .menu-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4.5px;
+    width: 38px;
+    height: 38px;
+    margin-left: 6px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .menu-btn span {
+    width: 16px;
+    height: 1.7px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      opacity var(--dur-fast) var(--ease-out);
+  }
+
+  .menu-btn[aria-expanded='true'] span:nth-child(1) {
+    transform: translateY(3.1px) rotate(45deg);
+  }
+
+  .menu-btn[aria-expanded='true'] span:nth-child(2) {
+    transform: translateY(-3.1px) rotate(-45deg);
+  }
+
+  /* mobile dropdown */
+  .nav-menu {
+    position: fixed;
+    top: 84px;
+    right: max(22px, calc((100vw - var(--container-wide)) / 2 + var(--gutter)));
+    width: min(400px, calc(100vw - 44px));
+    background: var(--paper-2);
+    border: 1px solid var(--line-soft);
+    border-radius: 22px;
+    box-shadow: var(--shadow-float);
+    padding: 20px;
+  }
+
+  .nav-menu[hidden] {
+    display: none;
+  }
+
+  .nav-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-menu__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 4px;
+    border-bottom: 1px solid var(--line-soft);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .nav-menu__link svg {
+    color: var(--ink-3);
+    transition: transform var(--dur-fast) var(--ease-out), color var(--dur-micro) var(--ease-out);
+  }
+
+  .nav-menu__link:hover {
+    color: var(--blue);
+  }
+
+  .nav-menu__link:hover svg {
+    transform: translateX(4px);
+    color: var(--blue);
+  }
+
+  .nav-menu__cta {
+    width: 100%;
+    margin-top: 18px;
+  }
+
+  .nav-menu__contact {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 0.68rem;
+    color: var(--ink-3);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 1060px) {
+    .nav-list {
+      display: none;
+    }
+
+    .menu-btn {
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .nav-reg {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const header = document.getElementById('site-header');
+  const toggle = header?.querySelector<HTMLButtonElement>('.menu-btn');
+  const menu = header?.querySelector<HTMLElement>('#nav-menu');
+
+  const onScroll = () => {
+    header?.classList.toggle('is-scrolled', window.scrollY > 48);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    if (menu) menu.hidden = open;
+    toggle.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+  });
+
+  menu?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      if (menu) menu.hidden = true;
+    }),
+  );
+</script>

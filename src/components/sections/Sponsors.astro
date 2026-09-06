@@ -1,0 +1,233 @@
+---
+// No confirmed sponsors available in site data, using category placeholders
+const partnerTiers = [
+  {
+    tier: 'PLATINUM',
+    count: 2
+  },
+  {
+    tier: 'GOLD',
+    count: 3
+  },
+  {
+    tier: 'SILVER',
+    count: 4
+  },
+  {
+    tier: 'PARTNERS',
+    count: 2
+  }
+];
+---
+
+<section class="section s-partners" id="sponsors" aria-labelledby="partners-title">
+  <div class="container">
+    
+    <header class="partners-head" data-reveal>
+      <p class="section-label">06 / THE PARTNERS</p>
+      <h2 class="partners-title" id="partners-title">
+        BUILT WITH<br />
+        THE RIGHT PEOPLE.
+      </h2>
+      <p class="partners-desc">
+        Great ideas move faster when the right people are behind them.
+      </p>
+    </header>
+
+    <div class="credits-wall">
+      {partnerTiers.map((tierGroup, i) => (
+        <div class="tier-group" data-reveal style={`--d: ${i * 150}ms;`}>
+          <p class="tier-label mono">{tierGroup.tier}</p>
+          <div class="tier-partners">
+            {Array.from({ length: tierGroup.count }).map(() => (
+              <div class="partner-item">
+                <span class="partner-name">To be announced</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <footer class="partners-footer" data-reveal style="--d: 600ms;">
+      <p class="footer-line">THE BEST BUILDS ARE NEVER BUILT ALONE.</p>
+    </footer>
+
+  </div>
+</section>
+
+<style>
+  .s-partners {
+    background-color: #F0F0EE;
+    color: #111111;
+    padding-top: clamp(100px, 15vh, 180px);
+    padding-bottom: clamp(80px, 12vh, 140px);
+    border-top: 1px solid rgba(17, 17, 17, 0.12);
+  }
+
+  .partners-head {
+    max-width: 600px;
+    margin-bottom: clamp(80px, 12vh, 140px);
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: #777777;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .partners-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 5.5vw, 6rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #111111;
+    margin-bottom: 30px;
+  }
+
+  .partners-desc {
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    line-height: 1.5;
+    color: #555555;
+    max-width: 40ch;
+  }
+
+  /* Credits Wall Layout */
+  .credits-wall {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(60px, 10vw, 100px);
+    border-top: 1px solid rgba(17, 17, 17, 0.12);
+    padding-top: clamp(60px, 10vw, 100px);
+  }
+
+  .tier-group {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .tier-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: #777777;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+    padding-bottom: 16px;
+    margin-bottom: 10px;
+  }
+
+  .tier-partners {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px clamp(40px, 6vw, 100px);
+    align-items: baseline;
+  }
+
+  .partner-item {
+    padding: 10px 0;
+    cursor: default;
+    transition: transform 300ms ease, opacity 300ms ease;
+  }
+
+  .partner-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.5vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: rgba(17, 17, 17, 0.3); /* Muted because it's a placeholder */
+    transition: color 300ms ease;
+    white-space: nowrap;
+  }
+
+  /* Platinum sizing override */
+  .tier-group:first-child .partner-name {
+    font-size: clamp(1.8rem, 3.5vw, 3.5rem);
+  }
+
+  /* Interactions */
+  @media (hover: hover) and (pointer: fine) {
+    .partner-item:hover {
+      transform: scale(1.02);
+      opacity: 1;
+    }
+    
+    .partner-item:hover .partner-name {
+      color: #111111;
+    }
+  }
+
+  /* Footer */
+  .partners-footer {
+    margin-top: clamp(100px, 15vh, 180px);
+    text-align: center;
+  }
+
+  .footer-line {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: #777777;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    padding: 0 40px;
+  }
+  
+  .footer-line::before,
+  .footer-line::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 1px;
+    background-color: rgba(17, 17, 17, 0.3);
+  }
+
+  .footer-line::before { left: 0; }
+  .footer-line::after { right: 0; }
+
+  /* Scroll reveal */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUpRow 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--d, 0ms);
+  }
+
+  @keyframes fadeUpRow {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal], .partner-item, .partner-name {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  /* Mobile Tweaks */
+  @media (max-width: 768px) {
+    .tier-partners {
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .partner-name {
+      white-space: normal;
+      word-break: break-word;
+    }
+  }
+</style>

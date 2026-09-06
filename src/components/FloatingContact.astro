@@ -1,0 +1,435 @@
+---
+// FloatingContact.astro
+// Self-contained floating contact button + panel.
+// Drop into BaseLayout — no props needed.
+---
+
+<!-- ============================================================
+     FLOATING CONTACT WIDGET
+     ============================================================ -->
+<div class="fc-root" id="fc-root">
+
+  <!-- Contact Panel (hidden by default) -->
+  <div
+    class="fc-panel"
+    id="fc-panel"
+    role="dialog"
+    aria-modal="false"
+    aria-label="Contact ZAYATHON team"
+    aria-hidden="true"
+  >
+    <!-- Panel header -->
+    <div class="fc-panel-header">
+      <span class="fc-panel-title">CONTACT THE TEAM</span>
+      <button
+        class="fc-close-btn"
+        id="fc-close-btn"
+        type="button"
+        aria-label="Close contact panel"
+      >×</button>
+    </div>
+
+    <!-- Supporting text -->
+    <p class="fc-panel-sub">Need help with registration or ZAYATHON?</p>
+
+    <!-- Divider -->
+    <div class="fc-divider"></div>
+
+    <!-- Email row -->
+    <a
+      href="mailto:zayacodehub@gmail.com"
+      class="fc-contact-row"
+      aria-label="Email the ZAYATHON team at zayacodehub@gmail.com"
+    >
+      <span class="fc-contact-label">EMAIL</span>
+      <span class="fc-contact-value">
+        zayacodehub@gmail.com
+        <svg class="fc-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M2 10L10 2M10 2H4M10 2v6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </a>
+
+    <!-- Phone row -->
+    <a
+      href="tel:+917033399183"
+      class="fc-contact-row"
+      aria-label="Call the ZAYATHON team at +91 70333 99183"
+    >
+      <span class="fc-contact-label">PHONE</span>
+      <span class="fc-contact-value">
+        +91 70333 99183
+        <svg class="fc-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M2 10L10 2M10 2H4M10 2v6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </a>
+  </div>
+
+  <!-- Main floating button -->
+  <button
+    class="fc-trigger"
+    id="fc-trigger"
+    type="button"
+    aria-label="Contact ZAYATHON team"
+    aria-expanded="false"
+    aria-controls="fc-panel"
+  >
+    <span class="fc-btn-label" id="fc-btn-label">CONTACT</span>
+    <span class="fc-btn-icon" id="fc-btn-icon" aria-hidden="true">↗</span>
+  </button>
+
+</div>
+
+<!-- ============================================================
+     STYLES
+     ============================================================ -->
+<style>
+  /* ----------------------------------------------------------
+     CSS custom props (local — not polluting global scope)
+  ---------------------------------------------------------- */
+  .fc-root {
+    --fc-bg:        #111111;
+    --fc-fg:        #FFFFFF;
+    --fc-panel-bg:  #111111;
+    --fc-muted:     rgba(255,255,255,0.45);
+    --fc-divider:   rgba(255,255,255,0.10);
+    --fc-blue:      var(--blue, #1d4ed8);
+    --fc-radius:    999px;
+    --fc-panel-r:   18px;
+    --fc-shadow:    0 4px 24px rgba(0,0,0,0.18);
+    --fc-shadow-lg: 0 8px 40px rgba(0,0,0,0.28);
+    --fc-dur:       280ms;
+    --fc-ease:      cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* ----------------------------------------------------------
+     Root wrapper — fixed position anchor
+  ---------------------------------------------------------- */
+  .fc-root {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 900;               /* below navbar (~1000) */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  /* ----------------------------------------------------------
+     TRIGGER BUTTON
+  ---------------------------------------------------------- */
+  .fc-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 52px;
+    padding: 0 22px;
+    background: var(--fc-bg);
+    color: var(--fc-fg);
+    border: none;
+    border-radius: var(--fc-radius);
+    box-shadow: var(--fc-shadow);
+    cursor: pointer;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition:
+      padding var(--fc-dur) var(--fc-ease),
+      box-shadow var(--fc-dur) var(--fc-ease),
+      background var(--fc-dur) var(--fc-ease);
+    white-space: nowrap;
+  }
+
+  .fc-trigger:hover {
+    background: #222222;
+    box-shadow: var(--fc-shadow-lg);
+    padding: 0 26px;
+  }
+
+  .fc-trigger:focus-visible {
+    outline: 2px solid var(--fc-blue);
+    outline-offset: 3px;
+  }
+
+  /* Icon shift on hover */
+  .fc-btn-icon {
+    display: inline-block;
+    font-size: 1em;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    transition: transform var(--fc-dur) var(--fc-ease);
+  }
+
+  .fc-trigger:hover .fc-btn-icon {
+    transform: translate(3px, -3px);
+  }
+
+  /* When panel is open — button shows CLOSE × */
+  .fc-root.is-open .fc-btn-icon {
+    transform: none;
+  }
+
+  /* ----------------------------------------------------------
+     CONTACT PANEL
+  ---------------------------------------------------------- */
+  .fc-panel {
+    width: 300px;
+    background: var(--fc-panel-bg);
+    border-radius: var(--fc-panel-r);
+    padding: 24px;
+    box-shadow: var(--fc-shadow-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    /* Hidden state */
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    visibility: hidden;
+    transition:
+      opacity var(--fc-dur) var(--fc-ease),
+      transform var(--fc-dur) var(--fc-ease),
+      visibility 0ms var(--fc-dur);  /* delay visibility until after fade-out */
+  }
+
+  .fc-root.is-open .fc-panel {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    visibility: visible;
+    transition:
+      opacity var(--fc-dur) var(--fc-ease),
+      transform var(--fc-dur) var(--fc-ease),
+      visibility 0ms 0ms;
+  }
+
+  /* ----------------------------------------------------------
+     PANEL HEADER
+  ---------------------------------------------------------- */
+  .fc-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .fc-panel-title {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fc-fg);
+  }
+
+  .fc-close-btn {
+    background: none;
+    border: none;
+    color: var(--fc-muted);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color var(--fc-dur) ease;
+  }
+
+  .fc-close-btn:hover {
+    color: var(--fc-fg);
+  }
+
+  .fc-close-btn:focus-visible {
+    outline: 2px solid var(--fc-blue);
+    outline-offset: 2px;
+  }
+
+  /* ----------------------------------------------------------
+     SUPPORTING TEXT
+  ---------------------------------------------------------- */
+  .fc-panel-sub {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.82rem;
+    color: var(--fc-muted);
+    line-height: 1.5;
+    margin: 0 0 18px 0;
+  }
+
+  /* ----------------------------------------------------------
+     DIVIDER
+  ---------------------------------------------------------- */
+  .fc-divider {
+    height: 1px;
+    background: var(--fc-divider);
+    margin-bottom: 18px;
+  }
+
+  /* ----------------------------------------------------------
+     CONTACT ROWS (email / phone)
+  ---------------------------------------------------------- */
+  .fc-contact-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-decoration: none;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--fc-divider);
+    transition: color var(--fc-dur) ease;
+  }
+
+  .fc-contact-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .fc-contact-row:first-of-type {
+    padding-top: 0;
+  }
+
+  .fc-contact-label {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fc-muted);
+    transition: color var(--fc-dur) ease;
+  }
+
+  .fc-contact-value {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--fc-fg);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color var(--fc-dur) ease;
+  }
+
+  .fc-arrow {
+    width: 11px;
+    height: 11px;
+    opacity: 0;
+    transform: translate(-2px, 2px);
+    transition:
+      opacity var(--fc-dur) ease,
+      transform var(--fc-dur) ease;
+    flex-shrink: 0;
+  }
+
+  .fc-contact-row:hover .fc-contact-label {
+    color: var(--fc-blue);
+  }
+
+  .fc-contact-row:hover .fc-contact-value {
+    color: var(--fc-blue);
+  }
+
+  .fc-contact-row:hover .fc-arrow {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  .fc-contact-row:focus-visible {
+    outline: 2px solid var(--fc-blue);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  /* ----------------------------------------------------------
+     MOBILE
+  ---------------------------------------------------------- */
+  @media (max-width: 768px) {
+    .fc-root {
+      bottom: 16px;
+      right: 16px;
+    }
+
+    .fc-trigger {
+      height: 46px;
+      padding: 0 18px;
+      font-size: 0.68rem;
+    }
+
+    .fc-trigger:hover {
+      padding: 0 20px;
+    }
+
+    .fc-panel {
+      width: calc(100vw - 32px);
+      max-width: 320px;
+    }
+  }
+
+  /* ----------------------------------------------------------
+     PREFERS-REDUCED-MOTION
+  ---------------------------------------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    .fc-panel,
+    .fc-trigger,
+    .fc-btn-icon,
+    .fc-contact-row,
+    .fc-contact-label,
+    .fc-contact-value,
+    .fc-arrow {
+      transition: none !important;
+    }
+  }
+</style>
+
+<!-- ============================================================
+     SCRIPT
+     ============================================================ -->
+<script>
+  const root    = document.getElementById('fc-root')!;
+  const trigger = document.getElementById('fc-trigger') as HTMLButtonElement;
+  const panel   = document.getElementById('fc-panel')!;
+  const closeBtn = document.getElementById('fc-close-btn')!;
+  const btnLabel = document.getElementById('fc-btn-label')!;
+  const btnIcon  = document.getElementById('fc-btn-icon')!;
+
+  let isOpen = false;
+
+  function openPanel() {
+    isOpen = true;
+    root.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    panel.setAttribute('aria-hidden', 'false');
+    btnLabel.textContent = 'CLOSE';
+    btnIcon.textContent  = '×';
+  }
+
+  function closePanel() {
+    isOpen = false;
+    root.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+    panel.setAttribute('aria-hidden', 'true');
+    btnLabel.textContent = 'CONTACT';
+    btnIcon.textContent  = '↗';
+  }
+
+  trigger.addEventListener('click', () => {
+    isOpen ? closePanel() : openPanel();
+  });
+
+  closeBtn.addEventListener('click', closePanel);
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (isOpen && !root.contains(e.target as Node)) {
+      closePanel();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (isOpen && e.key === 'Escape') {
+      closePanel();
+      trigger.focus();
+    }
+  });
+</script>

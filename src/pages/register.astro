@@ -1,0 +1,1476 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <!-- Main Registration Container -->
+  <main class="registration-page">
+    
+    <!-- Header -->
+    <header class="reg-header">
+      <div class="header-inner container-wide">
+        <span class="reg-brand">ZAYATHON</span>
+        <a href="/" class="back-link">
+          <span class="arrow">←</span> BACK TO ZAYATHON
+        </a>
+      </div>
+    </header>
+
+    <div class="container reg-content">
+      
+      <!-- Intro Section -->
+      <div class="reg-intro" data-reveal>
+        <p class="section-label">ZAYATHON 2026 / REGISTRATION</p>
+        <h1 class="reg-title">LET'S BUILD.</h1>
+        <p class="reg-desc">Register your team and step into the arena.</p>
+        <p class="reg-meta mono">Teams of up to 4 members • Students from 1st–3rd year</p>
+      </div>
+
+      <!-- Two Column Layout for Form -->
+      <div class="reg-layout" id="form-view">
+        
+        <!-- Left: Progress -->
+        <aside class="reg-sidebar" data-reveal style="--d: 150ms;">
+          <div class="sidebar-sticky">
+            <ul class="progress-list mono" id="progress-tracker">
+              <li class="active" data-step="1">01 TEAM</li>
+              <li data-step="2">02 LEADER</li>
+              <li data-step="3">03 MEMBERS</li>
+              <li data-step="4">04 CONFIRM</li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- Right: Form -->
+        <div class="reg-form-wrapper" data-reveal style="--d: 300ms;">
+          <form class="reg-form" id="zayathon-reg-form">
+            
+            <!-- SECTION 1: TEAM -->
+            <fieldset class="form-section" id="section-1">
+              <div class="section-header">
+                <span class="section-num mono">01 / TEAM</span>
+                <legend class="section-heading">YOUR TEAM</legend>
+                <p class="section-explain">Tell us what you're building.</p>
+              </div>
+              
+              <div class="fields-container">
+                <div class="field-group">
+                  <label for="team_name">TEAM NAME <span class="req">*</span></label>
+                  <input type="text" id="team_name" name="team_name" required placeholder="Enter team name" />
+                </div>
+                
+                <div class="field-group">
+                  <label for="problem_domain">PROBLEM DOMAIN <span class="req">*</span></label>
+                  <div class="select-wrapper">
+                    <select id="problem_domain" name="problem_domain" required>
+                      <option value="" disabled selected>Select a domain</option>
+                      <option value="Agentic AI">Agentic AI</option>
+                      <option value="Robotics & Autonomous Systems">Robotics & Autonomous Systems</option>
+                      <option value="Cybersecurity & Threat Intelligence">Cybersecurity & Threat Intelligence</option>
+                      <option value="HealthTech & MedAI">HealthTech & MedAI</option>
+                      <option value="FinTech & Blockchain">FinTech & Blockchain</option>
+                      <option value="Smart Cities & IoT">Smart Cities & IoT</option>
+                      <option value="Agritech & Rural Innovation">Agritech & Rural Innovation</option>
+                      <option value="Transportation & Logistics">Transportation & Logistics</option>
+                      <option value="Open Innovation">Open Innovation</option>
+                    </select>
+                    <svg class="select-arrow" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4" /></svg>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <hr class="section-divider" />
+
+            <!-- SECTION 2: LEADER -->
+            <fieldset class="form-section" id="section-2">
+              <div class="section-header">
+                <span class="section-num mono">02 / LEADER</span>
+                <legend class="section-heading">TEAM LEADER</legend>
+                <p class="section-explain">The person representing your team.</p>
+              </div>
+
+              <div class="fields-container">
+                <div class="field-group">
+                  <label for="leader_name">FULL NAME <span class="req">*</span></label>
+                  <input type="text" id="leader_name" name="leader_name" required placeholder="Leader's full name" />
+                </div>
+                
+                <div class="field-group">
+                  <label for="leader_email">EMAIL <span class="req">*</span></label>
+                  <input type="email" id="leader_email" name="leader_email" required placeholder="leader@example.com" />
+                </div>
+                
+                <div class="field-group">
+                  <label for="leader_phone">PHONE NUMBER <span class="req">*</span></label>
+                  <input type="tel" id="leader_phone" name="leader_phone" required placeholder="10-digit number" pattern="[0-9]{10}" title="Please enter exactly 10 digits" />
+                </div>
+
+                <div class="field-group">
+                  <label for="leader_college">COLLEGE / INSTITUTION <span class="req">*</span></label>
+                  <input type="text" id="leader_college" name="leader_college" required placeholder="Full college name" />
+                </div>
+
+                <div class="field-group">
+                  <label for="leader_year">YEAR OF STUDY <span class="req">*</span></label>
+                  <div class="select-wrapper">
+                    <select id="leader_year" name="leader_year" required>
+                      <option value="" disabled selected>Select year</option>
+                      <option value="1st Year">1st Year</option>
+                      <option value="2nd Year">2nd Year</option>
+                      <option value="3rd Year">3rd Year</option>
+                    </select>
+                    <svg class="select-arrow" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4" /></svg>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <hr class="section-divider" />
+
+            <!-- SECTION 3: MEMBERS -->
+            <fieldset class="form-section" id="section-3">
+              <div class="section-header">
+                <span class="section-num mono">03 / MEMBERS</span>
+                <legend class="section-heading">TEAM MEMBERS</legend>
+                <p class="section-explain">Add up to 3 additional members.</p>
+              </div>
+              
+              <div class="fields-container">
+                  <!-- Members will be revealed here via JS -->
+                  <div class="member-group" id="member-group-2" style="display: none;">
+                    <div class="member-header">
+                      <span class="member-label">MEMBER 2</span>
+                      <button type="button" class="btn-remove-member" data-member="2">REMOVE</button>
+                    </div>
+                    <div class="fields-container">
+                      <div class="field-group">
+                        <label for="member_2_name">FULL NAME <span class="req">*</span></label>
+                        <input type="text" id="member_2_name" name="member_2_name" placeholder="Member's full name" />
+                      </div>
+                      <div class="field-group">
+                        <label for="member_2_email">EMAIL <span class="req">*</span></label>
+                        <input type="email" id="member_2_email" name="member_2_email" placeholder="member@example.com" />
+                      </div>
+                      <div class="field-group">
+                        <label for="member_2_phone">PHONE NUMBER <span class="req">*</span></label>
+                        <input type="tel" id="member_2_phone" name="member_2_phone" placeholder="10-digit number" pattern="[0-9]{10}" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="member-group" id="member-group-3" style="display: none;">
+                    <div class="member-header">
+                      <span class="member-label">MEMBER 3</span>
+                      <button type="button" class="btn-remove-member" data-member="3">REMOVE</button>
+                    </div>
+                    <div class="fields-container">
+                      <div class="field-group">
+                        <label for="member_3_name">FULL NAME <span class="req">*</span></label>
+                        <input type="text" id="member_3_name" name="member_3_name" placeholder="Member's full name" />
+                      </div>
+                      <div class="field-group">
+                        <label for="member_3_email">EMAIL <span class="req">*</span></label>
+                        <input type="email" id="member_3_email" name="member_3_email" placeholder="member@example.com" />
+                      </div>
+                      <div class="field-group">
+                        <label for="member_3_phone">PHONE NUMBER <span class="req">*</span></label>
+                        <input type="tel" id="member_3_phone" name="member_3_phone" placeholder="10-digit number" pattern="[0-9]{10}" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="member-group" id="member-group-4" style="display: none;">
+                    <div class="member-header">
+                      <span class="member-label">MEMBER 4</span>
+                      <button type="button" class="btn-remove-member" data-member="4">REMOVE</button>
+                    </div>
+                    <div class="fields-container">
+                      <div class="field-group">
+                        <label for="member_4_name">FULL NAME <span class="req">*</span></label>
+                        <input type="text" id="member_4_name" name="member_4_name" placeholder="Member's full name" />
+                      </div>
+                      <div class="field-group">
+                        <label for="member_4_email">EMAIL <span class="req">*</span></label>
+                        <input type="email" id="member_4_email" name="member_4_email" placeholder="member@example.com" />
+                      </div>
+                      <div class="field-group">
+                        <label for="member_4_phone">PHONE NUMBER <span class="req">*</span></label>
+                        <input type="tel" id="member_4_phone" name="member_4_phone" placeholder="10-digit number" pattern="[0-9]{10}" />
+                      </div>
+                    </div>
+                  </div>
+
+                <button type="button" class="btn-add-member mono" id="btn-add-member">
+                  + ADD TEAM MEMBER
+                </button>
+              </div>
+            </fieldset>
+
+            <hr class="section-divider" />
+
+            <!-- SECTION 4: CONFIRMATION -->
+            <fieldset class="form-section" id="section-4">
+              <div class="section-header">
+                <span class="section-num mono">04 / CONFIRM</span>
+              </div>
+              
+              <div class="fields-container">
+                <div class="checkbox-group">
+                  <input type="checkbox" id="confirmation" name="confirmation" required />
+                  <label for="confirmation">
+                    I confirm that the information provided is accurate and that my team meets the ZAYATHON eligibility requirements.
+                  </label>
+                </div>
+                
+                <!-- Error Message Box -->
+                <div id="form-error" class="form-error" hidden>
+                  Something went wrong. Your registration was not submitted. Please try again.
+                </div>
+
+                <button type="submit" class="btn-submit" id="btn-submit">
+                  SUBMIT REGISTRATION <span class="arrow">↗</span>
+                </button>
+              </div>
+            </fieldset>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  /* Base Page Styles */
+  .registration-page {
+    background-color: #F0F0EE;
+    color: #111111;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  .reg-header {
+    border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+    padding: 24px 0;
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .reg-brand {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .back-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: #777777;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 300ms ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .back-link .arrow {
+    transition: transform 300ms ease;
+  }
+
+  .back-link:hover {
+    color: var(--blue);
+  }
+
+  .back-link:hover .arrow {
+    transform: translateX(-4px);
+  }
+
+  /* Content Area */
+  .reg-content {
+    flex: 1;
+    padding-top: clamp(60px, 8vh, 100px);
+    padding-bottom: clamp(100px, 15vh, 140px);
+  }
+
+  .reg-intro {
+    max-width: 700px;
+    margin-bottom: clamp(60px, 10vh, 100px);
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: #777777;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .reg-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #111111;
+    margin-bottom: 24px;
+  }
+
+  .reg-desc {
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    line-height: 1.5;
+    color: #111111;
+    margin-bottom: 16px;
+  }
+
+  .reg-meta {
+    font-size: 0.8rem;
+    color: #777777;
+  }
+
+  /* Two Column Layout */
+  .reg-layout {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(40px, 8vw, 120px);
+    align-items: flex-start;
+  }
+
+  /* Sidebar Tracker */
+  .reg-sidebar {
+    flex: 0 0 200px;
+  }
+  
+  .sidebar-sticky {
+    position: sticky;
+    top: 40px;
+  }
+
+  .progress-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .progress-list li {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: #999999; /* Upcoming */
+    transition: color 300ms ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .progress-list li.completed {
+    color: #111111;
+  }
+  
+  .progress-list li.completed::after {
+    content: '✓';
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: #111111;
+    opacity: 0.7;
+  }
+
+  .progress-list li.active {
+    color: var(--blue);
+    font-weight: 600;
+  }
+  
+  .progress-list li.active::after {
+    content: none;
+  }
+
+  /* Form */
+  .reg-form-wrapper {
+    flex: 1;
+    max-width: 680px;
+  }
+
+  .reg-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-section {
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid rgba(17, 17, 17, 0.12);
+    margin: clamp(60px, 10vh, 100px) 0;
+  }
+
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .section-num {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: #777777;
+    text-transform: uppercase;
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #111111;
+  }
+
+  .section-explain {
+    font-size: 1rem;
+    color: #777777;
+  }
+  
+  .fields-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  /* Fields */
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 8-10px gap between label and input */
+    width: 100%;
+  }
+
+  label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #555555;
+    text-transform: uppercase;
+  }
+
+  .req {
+    color: var(--blue);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(17, 17, 17, 0.16);
+    border-radius: 10px;
+    height: 56px;
+    padding: 0 16px;
+    font-size: 16px;
+    font-family: var(--font-sans);
+    color: #111111;
+    transition: border-color 300ms ease, box-shadow 300ms ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+  }
+
+  input::placeholder {
+    color: #999999;
+  }
+
+  /* Select specific */
+  .select-wrapper {
+    position: relative;
+  }
+
+  .select-arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777777;
+    pointer-events: none;
+  }
+
+  /* Add Member Button */
+  .btn-add-member {
+    align-self: flex-start;
+    background: transparent;
+    border: 1px dashed rgba(17, 17, 17, 0.2);
+    border-radius: 10px;
+    color: #111111;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 16px 24px;
+    cursor: pointer;
+    transition: border-color 300ms ease, color 300ms ease;
+  }
+
+  .btn-add-member:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  /* Member Card/Group */
+  .member-group {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 80px;
+    animation: fadeSlideIn 400ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  
+  .member-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0;
+  }
+
+  .member-label {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #111111;
+    text-transform: uppercase;
+  }
+  
+  .btn-remove-member {
+    background: transparent;
+    border: none;
+    color: #777777;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: color 300ms ease;
+  }
+
+  .btn-remove-member:hover {
+    color: var(--blue);
+    text-decoration: underline;
+  }
+
+  /* Checkbox */
+  .checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    margin-top: 4px;
+    width: 24px;
+    height: 24px;
+    accent-color: var(--blue);
+    flex-shrink: 0;
+  }
+
+  .checkbox-group label {
+    font-family: var(--font-sans);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #111111;
+    cursor: pointer;
+  }
+
+  /* Error Box */
+  .form-error {
+    color: #dc2626;
+    font-size: 0.95rem;
+    margin-top: 20px;
+  }
+
+  /* Submit Button */
+  .btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 40px;
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #FFFFFF;
+    background: #111111;
+    border: none;
+    height: 60px;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 250ms ease, transform 250ms ease;
+  }
+
+  .btn-submit .arrow {
+    font-family: var(--font-mono);
+    font-size: 1.1em;
+    transition: transform 300ms ease;
+  }
+
+  .btn-submit:hover:not(:disabled) {
+    background: #333333;
+  }
+
+  .btn-submit:hover:not(:disabled) .arrow {
+    transform: translateX(4px);
+  }
+
+  .btn-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  /* Success View */
+  .success-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 60vh;
+    animation: fadeIn 600ms ease forwards;
+  }
+
+  .success-inner {
+    max-width: 600px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    color: var(--blue);
+    margin: 40px 0;
+  }
+
+  .success-icon.animate .draw-circle {
+    animation: drawCircle 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  
+  .success-icon.animate .draw-check {
+    animation: drawCheck 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.6s forwards;
+  }
+
+  .success-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: #111111;
+    margin-bottom: 20px;
+  }
+
+  .success-desc {
+    font-size: 1.2rem;
+    color: #555555;
+    margin-bottom: 60px;
+  }
+
+  .success-details {
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid rgba(17, 17, 17, 0.16);
+    border-radius: 10px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+    margin-bottom: 40px;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed rgba(17, 17, 17, 0.1);
+    padding-bottom: 8px;
+  }
+  .detail-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .detail-label {
+    font-size: 0.7rem;
+    color: #777777;
+    letter-spacing: 0.1em;
+  }
+  .detail-val {
+    font-size: 0.85rem;
+    color: #111111;
+    font-weight: 600;
+  }
+
+  .success-footer {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: #111111;
+  }
+  
+  .btn-return {
+    margin-top: 40px; 
+    width: auto;
+    padding: 0 40px;
+  }
+
+  /* Animations */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUpRow 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--d, 0ms);
+  }
+
+  @keyframes fadeUpRow {
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes drawCircle {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes drawCheck {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal], .member-group, .success-view, .draw-circle, .draw-check {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      stroke-dashoffset: 0 !important;
+    }
+  }
+
+  /* Mobile tweaks */
+  @media (max-width: 768px) {
+    .reg-layout {
+      flex-direction: column;
+      gap: 40px;
+    }
+    
+    .reg-sidebar {
+      position: static;
+      flex: none;
+      width: 100%;
+    }
+    
+    .progress-list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+    }
+    
+    .reg-form-wrapper {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+</style>
+
+<!-- ============================================================
+     SUCCESS SCREEN — GLOBAL STYLES
+     (applied to dynamically injected HTML — must be :global)
+     ============================================================ -->
+<style is:global>
+  /* ── Keyframes ─────────────────────────────────────────────────────────── */
+  @keyframes sc-fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes sc-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes sc-draw-circle {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes sc-draw-check {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes sc-line-grow {
+    from { width: 0; }
+    to   { width: 100%; }
+  }
+
+  /* ── Page root ─────────────────────────────────────────────────────────── */
+  .sc-page {
+    position: relative;
+    min-height: 100vh;
+    background: #F0F0EE;
+    color: #111111;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+  }
+
+  /* ── Watermark ──────────────────────────────────────────────────────────── */
+  .sc-watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: clamp(28vw, 38vw, 48vw);
+    font-weight: 700;
+    color: #111111;
+    opacity: 0.03;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    letter-spacing: -0.05em;
+  }
+
+  /* ── Top nav ────────────────────────────────────────────────────────────── */
+  .sc-nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px clamp(24px, 5vw, 80px);
+    border-bottom: 1px solid rgba(17,17,17,0.10);
+    opacity: 0;
+    animation: sc-fade-in 400ms ease 0ms forwards;
+  }
+  .sc-nav-brand {
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #111111;
+  }
+  .sc-nav-back {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #777777;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 250ms ease;
+  }
+  .sc-nav-back:hover { color: var(--blue, #1d4ed8); }
+  .sc-back-arrow {
+    display: inline-block;
+    transition: transform 250ms ease;
+  }
+  .sc-nav-back:hover .sc-back-arrow { transform: translateX(-4px); }
+
+  /* ── Two-column editorial grid ──────────────────────────────────────────── */
+  .sc-main {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 100px);
+    padding: clamp(60px, 9vh, 110px) clamp(24px, 5vw, 80px);
+    align-items: center;
+  }
+
+  /* ── Left column ────────────────────────────────────────────────────────── */
+  .sc-left { display: flex; flex-direction: column; }
+
+  .sc-label {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #777777;
+    margin: 0 0 28px 0;
+    opacity: 0;
+    animation: sc-fade-up 500ms cubic-bezier(0.22,1,0.36,1) 150ms forwards;
+  }
+  .sc-hero {
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: clamp(5rem, 12vw, 10.5rem);
+    font-weight: 500;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #111111;
+    margin: 0 0 44px 0;
+    opacity: 0;
+    animation: sc-fade-up 700ms cubic-bezier(0.22,1,0.36,1) 500ms forwards;
+  }
+  .sc-tagline {
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    color: #555555;
+    line-height: 1.6;
+    margin: 0 0 10px 0;
+    opacity: 0;
+    animation: sc-fade-up 500ms cubic-bezier(0.22,1,0.36,1) 700ms forwards;
+  }
+  .sc-tagline-strong {
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    color: #111111;
+    font-weight: 500;
+    margin: 0;
+    opacity: 0;
+    animation: sc-fade-up 500ms cubic-bezier(0.22,1,0.36,1) 830ms forwards;
+  }
+
+  /* ── Right column ───────────────────────────────────────────────────────── */
+  .sc-right {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  /* Checkmark SVG */
+  .sc-check {
+    width: 68px;
+    height: 68px;
+    opacity: 0;
+    animation: sc-fade-in 400ms ease 250ms forwards;
+  }
+  .sc-check svg { width: 100%; height: 100%; }
+  .sc-circle {
+    animation: sc-draw-circle 900ms cubic-bezier(0.4,0,0.2,1) 300ms forwards;
+  }
+  .sc-check-path {
+    animation: sc-draw-check 500ms cubic-bezier(0.4,0,0.2,1) 950ms forwards;
+  }
+
+  /* Summary card */
+  .sc-summary {
+    background: #FFFFFF;
+    border: 1px solid rgba(17,17,17,0.11);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+  .sc-summary-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(17,17,17,0.07);
+    opacity: 0;
+  }
+  .sc-summary-row:first-child { padding-top: 0; }
+  .sc-summary-row:last-child  { border-bottom: none; padding-bottom: 0; }
+  .sc-summary-row:nth-child(1) { animation: sc-fade-up 400ms cubic-bezier(0.22,1,0.36,1) 860ms  forwards; }
+  .sc-summary-row:nth-child(2) { animation: sc-fade-up 400ms cubic-bezier(0.22,1,0.36,1) 980ms  forwards; }
+  .sc-summary-row:nth-child(3) { animation: sc-fade-up 400ms cubic-bezier(0.22,1,0.36,1) 1100ms forwards; }
+  .sc-summary-row:nth-child(4) { animation: sc-fade-up 400ms cubic-bezier(0.22,1,0.36,1) 1220ms forwards; }
+
+  .sc-summary-label {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.60rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #999999;
+  }
+  .sc-summary-val {
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #111111;
+    text-transform: uppercase;
+  }
+
+  /* ── Bottom section ─────────────────────────────────────────────────────── */
+  .sc-bottom {
+    position: relative;
+    z-index: 1;
+    padding: clamp(36px, 5vh, 72px) clamp(24px, 5vw, 80px) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  /* Ruler + label */
+  .sc-ruler {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    opacity: 0;
+    animation: sc-fade-in 400ms ease 1250ms forwards;
+  }
+  .sc-ruler-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(17,17,17,0.14);
+    width: 0;
+    animation: sc-line-grow 700ms cubic-bezier(0.22,1,0.36,1) 1250ms forwards;
+  }
+  .sc-ruler-label {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.63rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #999999;
+    white-space: nowrap;
+  }
+
+  /* Closing lines */
+  .sc-closing {
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #111111;
+    margin: 0;
+    opacity: 0;
+    animation: sc-fade-up 500ms cubic-bezier(0.22,1,0.36,1) 1350ms forwards;
+  }
+  .sc-sub-closing {
+    font-size: 1rem;
+    color: #777777;
+    margin: 0;
+    opacity: 0;
+    animation: sc-fade-up 500ms cubic-bezier(0.22,1,0.36,1) 1460ms forwards;
+  }
+
+  /* Actions */
+  .sc-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    opacity: 0;
+    animation: sc-fade-up 500ms cubic-bezier(0.22,1,0.36,1) 1560ms forwards;
+  }
+
+  /* CTA pill */
+  .sc-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 56px;
+    padding: 0 32px;
+    background: #111111;
+    color: #FFFFFF;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: background 250ms ease, padding 250ms ease;
+  }
+  .sc-cta:hover { background: #333333; padding: 0 40px; }
+  .sc-cta-arrow {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    transition: transform 250ms ease;
+  }
+  .sc-cta:hover .sc-cta-arrow { transform: translate(3px, -3px); }
+
+  /* Contact text-link */
+  .sc-contact-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.88rem;
+    color: #777777;
+    cursor: pointer;
+    transition: color 250ms ease;
+    text-align: left;
+  }
+  .sc-contact-link:hover { color: var(--blue, #1d4ed8); text-decoration: underline; }
+
+  /* ── Footer ─────────────────────────────────────────────────────────────── */
+  .sc-footer {
+    position: relative;
+    z-index: 1;
+    margin-top: clamp(60px, 8vh, 100px);
+    padding: 30px clamp(24px, 5vw, 80px);
+    border-top: 1px solid rgba(17,17,17,0.10);
+  }
+  .sc-footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 32px;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.62rem;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: #999999;
+  }
+
+  /* ── Mobile ─────────────────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .sc-main {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding-bottom: clamp(40px, 6vh, 60px);
+    }
+    .sc-watermark { font-size: 65vw; }
+    .sc-check { width: 52px; height: 52px; }
+    .sc-summary { padding: 24px 20px; }
+    .sc-bottom { align-items: stretch; }
+    .sc-actions { align-items: stretch; }
+    .sc-cta { justify-content: center; }
+    .sc-contact-link { text-align: center; }
+    .sc-footer-inner { flex-direction: column; gap: 5px; }
+  }
+
+  /* ── Reduced motion ─────────────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .sc-nav, .sc-label, .sc-hero, .sc-tagline, .sc-tagline-strong,
+    .sc-check, .sc-ruler, .sc-closing, .sc-sub-closing, .sc-actions,
+    .sc-summary-row {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .sc-circle, .sc-check-path { animation: none !important; stroke-dashoffset: 0 !important; }
+    .sc-ruler-line { animation: none !important; width: 100% !important; }
+  }
+</style>
+
+<script>
+  import { createClient } from '@supabase/supabase-js';
+
+  // ── Supabase client ──────────────────────────────────────────────────────────
+  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL
+    || 'https://njeunkcnmprvrymcdvil.supabase.co';
+  const supabaseKey = import.meta.env.PUBLIC_SUPABASE_KEY
+    || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qZXVua2NubXBydnJ5bWNkdmlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2ODk2NTAsImV4cCI6MjEwNDI2NTY1MH0.-AuTqqX7-YzZSbVtZJRlrnPpwtZsN5vc_45UxgEG9tk';
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  // ── State ────────────────────────────────────────────────────────────────────
+  // FALSE on every fresh page load — success HTML does NOT exist in the DOM yet.
+  let submissionSuccessful = false;
+
+  // ── Dynamic member add / remove ──────────────────────────────────────────────
+  const btnAddMember = document.getElementById('btn-add-member');
+
+  if (btnAddMember) {
+    btnAddMember.addEventListener('click', () => {
+      const hiddenMember = document.querySelector('.member-group[style*="display: none"]');
+      if (hiddenMember) {
+        (hiddenMember as HTMLElement).style.display = 'flex';
+        updateAddMemberButton();
+      }
+    });
+  }
+
+  function updateAddMemberButton() {
+    if (!btnAddMember) return;
+    const visibleMembers = document.querySelectorAll(
+      '.member-group[style="display: flex;"], .member-group:not([style*="display: none"])'
+    );
+    if (visibleMembers.length >= 3) {
+      (btnAddMember as HTMLElement).style.display = 'none';
+    } else {
+      (btnAddMember as HTMLElement).style.display = 'block';
+      btnAddMember.innerHTML = visibleMembers.length === 0
+        ? '+ ADD TEAM MEMBER'
+        : '+ ADD ANOTHER MEMBER';
+    }
+  }
+
+  document.querySelectorAll('.btn-remove-member').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const targetBtn = e.currentTarget as HTMLButtonElement;
+      const memberId  = targetBtn.getAttribute('data-member');
+      const group     = document.getElementById(`member-group-${memberId}`);
+      if (group) {
+        group.style.display = 'none';
+        group.querySelectorAll('input').forEach(input => (input as HTMLInputElement).value = '');
+        updateAddMemberButton();
+      }
+    });
+  });
+
+  // ── Scroll-spy progress tracker ──────────────────────────────────────────────
+  const sections      = document.querySelectorAll('.form-section');
+  const progressItems = document.querySelectorAll('.progress-list li');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const stepNum = parseInt(
+          entry.target.getAttribute('id')?.replace('section-', '') || '1', 10
+        );
+        progressItems.forEach(item => {
+          const itemStep = parseInt(item.getAttribute('data-step') || '1', 10);
+          item.classList.remove('active', 'completed');
+          if (itemStep === stepNum)       item.classList.add('active');
+          else if (itemStep < stepNum)    item.classList.add('completed');
+        });
+      }
+    });
+  }, { root: null, rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+  sections.forEach(section => sectionObserver.observe(section));
+
+  // ── renderSuccess ────────────────────────────────────────────────────────────
+  // Called ONLY after confirmed Supabase INSERT (error === null).
+  // Dynamically injects the success screen — it never exists in the DOM before this.
+  function renderSuccess(
+    teamName: string,
+    domain: string,
+    leaderName: string,
+    additionalMemberCount: number
+  ) {
+    const registrationPage = document.querySelector('.registration-page') as HTMLElement;
+    if (!registrationPage) return;
+
+    // Total members = leader + additional
+    const totalMembers = additionalMemberCount + 1;
+    const membersText  = `${totalMembers} MEMBER${totalMembers > 1 ? 'S' : ''}`;
+
+    // Wipe everything from the page body (form, header, etc.)
+    registrationPage.innerHTML = '';
+
+    // Inject the new premium success screen — only now does it exist on the page
+    registrationPage.innerHTML = `
+      <div class="sc-page" id="success-view" aria-live="polite">
+
+        <!-- Barely-visible watermark 'Z' -->
+        <span class="sc-watermark" aria-hidden="true">Z</span>
+
+        <!-- Top navigation -->
+        <nav class="sc-nav">
+          <span class="sc-nav-brand">ZAYATHON</span>
+          <a href="/" class="sc-nav-back">
+            <span class="sc-back-arrow">&#x2190;</span>
+            BACK TO ZAYATHON
+          </a>
+        </nav>
+
+        <!-- Two-column editorial layout -->
+        <main class="sc-main">
+
+          <!-- LEFT: headline copy -->
+          <div class="sc-left">
+            <p class="sc-label">REGISTRATION COMPLETE</p>
+            <h1 class="sc-hero">YOU&#x2019;RE<br>IN.</h1>
+            <p class="sc-tagline">Your team registration has been received.</p>
+            <p class="sc-tagline-strong">Now it&#x2019;s time to build.</p>
+          </div>
+
+          <!-- RIGHT: checkmark + summary -->
+          <div class="sc-right">
+
+            <!-- Animated checkmark -->
+            <div class="sc-check" aria-label="Registration confirmed">
+              <svg viewBox="0 0 56 56" fill="none" aria-hidden="true">
+                <circle
+                  cx="28" cy="28" r="25"
+                  stroke="var(--blue, #1d4ed8)" stroke-width="1.4"
+                  stroke-dasharray="157" stroke-dashoffset="157"
+                  class="sc-circle" />
+                <path
+                  d="M18 28l8 8 14-14"
+                  stroke="var(--blue, #1d4ed8)" stroke-width="1.6"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  stroke-dasharray="42" stroke-dashoffset="42"
+                  class="sc-check-path" />
+              </svg>
+            </div>
+
+            <!-- Registration summary -->
+            <div class="sc-summary">
+              <div class="sc-summary-row">
+                <span class="sc-summary-label">TEAM</span>
+                <span class="sc-summary-val">${teamName.toUpperCase()}</span>
+              </div>
+              <div class="sc-summary-row">
+                <span class="sc-summary-label">DOMAIN</span>
+                <span class="sc-summary-val">${domain.toUpperCase()}</span>
+              </div>
+              <div class="sc-summary-row">
+                <span class="sc-summary-label">TEAM LEADER</span>
+                <span class="sc-summary-val">${leaderName.toUpperCase()}</span>
+              </div>
+              <div class="sc-summary-row">
+                <span class="sc-summary-label">MEMBERS</span>
+                <span class="sc-summary-val">${membersText}</span>
+              </div>
+            </div>
+
+          </div>
+        </main>
+
+        <!-- Bottom section -->
+        <div class="sc-bottom">
+
+          <!-- Animated horizontal rule -->
+          <div class="sc-ruler" aria-hidden="true">
+            <div class="sc-ruler-line"></div>
+            <span class="sc-ruler-label">ZAYATHON 2026</span>
+          </div>
+
+          <p class="sc-closing">WE&#x2019;LL SEE YOU AT ZAYATHON.</p>
+          <p class="sc-sub-closing">Build something worth remembering.</p>
+
+          <div class="sc-actions">
+            <a href="/" class="sc-cta">
+              BACK TO ZAYATHON
+              <span class="sc-cta-arrow">&#x2197;</span>
+            </a>
+            <button type="button" class="sc-contact-link" id="sc-contact-btn">
+              Need help? Contact the ZAYATHON team &#x2192;
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="sc-footer">
+          <div class="sc-footer-inner">
+            <span>ZAYATHON 2026 &middot; ZAYA CODE HUB</span>
+            <span>SALEM, TAMIL NADU &middot; INDIA</span>
+            <span>&copy; 2026 ZAYA CODE HUB</span>
+          </div>
+        </footer>
+
+      </div>`;
+
+    // Wire up the contact panel trigger
+    const scContactBtn = document.getElementById('sc-contact-btn');
+    if (scContactBtn) {
+      scContactBtn.addEventListener('click', () => {
+        const fcTrigger = document.getElementById('fc-trigger') as HTMLButtonElement | null;
+        if (fcTrigger) fcTrigger.click();
+      });
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Form submission ──────────────────────────────────────────────────────────
+  const form      = document.getElementById('zayathon-reg-form') as HTMLFormElement;
+  const btnSubmit = document.getElementById('btn-submit') as HTMLButtonElement;
+  const errorBox  = document.getElementById('form-error');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Guard: prevent double-submit
+      if (submissionSuccessful) return;
+
+      // Hide previous errors
+      if (errorBox) errorBox.hidden = true;
+
+      // Loading state
+      const originalBtnContent = btnSubmit.innerHTML;
+      btnSubmit.disabled  = true;
+      btnSubmit.innerHTML = 'SUBMITTING...';
+
+      // Collect values — saved here so success screen can use them
+      const formData   = new FormData(form);
+      const teamName   = String(formData.get('team_name')      || '');
+      const domain     = String(formData.get('problem_domain') || '');
+      const leaderName = String(formData.get('leader_name')    || '');
+
+      // Count visible additional members (beyond the leader)
+      const additionalMemberCount = document.querySelectorAll(
+        '.member-group:not([style*="display: none"])'
+      ).length;
+
+      const payload = {
+        team_name:      teamName,
+        problem_domain: domain,
+        leader_name:    leaderName,
+        leader_email:   formData.get('leader_email'),
+        leader_phone:   formData.get('leader_phone'),
+        leader_college: formData.get('leader_college'),
+        leader_year:    formData.get('leader_year'),
+        member_2_name:  formData.get('member_2_name')  || null,
+        member_2_email: formData.get('member_2_email') || null,
+        member_2_phone: formData.get('member_2_phone') || null,
+        member_3_name:  formData.get('member_3_name')  || null,
+        member_3_email: formData.get('member_3_email') || null,
+        member_3_phone: formData.get('member_3_phone') || null,
+        member_4_name:  formData.get('member_4_name')  || null,
+        member_4_email: formData.get('member_4_email') || null,
+        member_4_phone: formData.get('member_4_phone') || null,
+      };
+
+      try {
+        // INSERT only — no .select(), participant data never read back
+        const { error } = await supabase
+          .from('registrations')
+          .insert([payload]);
+
+        if (error) throw error;
+
+        // ── error === null → INSERT confirmed ────────────────────────────────
+        submissionSuccessful = true;
+
+        // Only NOW create the success screen in the DOM
+        renderSuccess(teamName, domain, leaderName, additionalMemberCount);
+
+      } catch (err) {
+        // ── INSERT failed → submissionSuccessful stays false ─────────────────
+        // Form remains visible. Success screen is never rendered.
+        submissionSuccessful = false;
+        console.error('Submission Error:', err);
+        if (errorBox) {
+          errorBox.textContent =
+            'Something went wrong. Your registration was not submitted. Please try again.';
+          errorBox.hidden = false;
+        }
+        btnSubmit.disabled  = false;
+        btnSubmit.innerHTML = originalBtnContent;
+      }
+    });
+  }
+</script>
+

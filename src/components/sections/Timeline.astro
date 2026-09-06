@@ -1,0 +1,449 @@
+---
+const stages = [
+  {
+    num: '01',
+    date: '06 FEB 2026',
+    title: 'REGISTRATION OPENS',
+    desc: 'Start registering your team and prepare for the challenge.',
+    isFinal: false
+  },
+  {
+    num: '02',
+    date: '06 FEB 2026',
+    title: 'PROBLEM STATEMENTS RELEASED',
+    desc: 'Explore the industry-relevant problem statements and choose your direction.',
+    isFinal: false
+  },
+  {
+    num: '03',
+    date: '07 FEB 2026',
+    title: 'TEAM SELECTION ANNOUNCED',
+    desc: 'Selected teams are announced and confirmation is sent.',
+    isFinal: false
+  },
+  {
+    num: '04',
+    date: '10 FEB 2026',
+    title: 'HACKATHON DAY',
+    desc: '10 hours of coding, mentoring sessions and workshops.',
+    isFinal: false
+  },
+  {
+    num: '05',
+    date: '10 FEB 2026',
+    title: 'FINAL JUDGING & AWARDS',
+    desc: 'Present your solution and compete for the official prizes.',
+    isFinal: true
+  }
+];
+---
+
+<section class="section s-clock" id="timeline" aria-labelledby="clock-title">
+  <div class="container">
+    <header class="clock-header" data-reveal>
+      <p class="section-label">04 / THE CLOCK</p>
+      <h2 class="clock-title" id="clock-title">
+        10 HOURS.<br />
+        ONE DAY.<br />
+        BUILD.
+      </h2>
+      <p class="clock-desc">
+        From registration to final judging, every stage moves toward one intense day of building, testing and presenting.
+      </p>
+    </header>
+
+    <div class="clock-journey">
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      
+      <div class="stages-container">
+        {stages.map((stage, i) => (
+          <div class={`stage ${stage.isFinal ? 'stage-final' : ''}`} data-index={i} data-reveal style={`--d: ${i * 100}ms;`}>
+            {stage.isFinal ? (
+              <div class="final-content">
+                <span class="stage-num mono">{stage.num}</span>
+                <span class="final-time">10:00:00</span>
+                <h3 class="final-title">{stage.title}</h3>
+                <div class="final-words">
+                  <span>BUILD.</span>
+                  <span>TEST.</span>
+                  <span>PRESENT.</span>
+                </div>
+              </div>
+            ) : (
+              <div class="stage-content">
+                <span class="stage-num mono">{stage.num}</span>
+                <span class="stage-date mono">{stage.date}</span>
+                <h3 class="stage-title">{stage.title}</h3>
+                <p class="stage-desc">{stage.desc}</p>
+              </div>
+            )}
+            
+            {i < stages.length - 1 && (
+              <div class="stage-connector" aria-hidden="true">
+                <span class="desktop-arrow">→</span>
+                <span class="mobile-arrow">↓</span>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .s-clock {
+    background-color: #F0F0EE;
+    color: #111111;
+    padding-top: clamp(100px, 15vh, 180px);
+    padding-bottom: clamp(100px, 15vh, 180px);
+    overflow: hidden;
+  }
+
+  .clock-header {
+    margin-bottom: clamp(80px, 12vh, 140px);
+    max-width: 600px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: #777777;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .clock-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #111111;
+    margin-bottom: 30px;
+  }
+
+  .clock-desc {
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    line-height: 1.5;
+    color: #555555;
+    max-width: 45ch;
+  }
+
+  /* --- Journey Layout --- */
+  .clock-journey {
+    position: relative;
+    width: 100%;
+  }
+
+  .progress-track {
+    position: absolute;
+    background: rgba(17, 17, 17, 0.12);
+    z-index: 1;
+  }
+
+  .progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--blue);
+    transition: width 300ms ease, height 300ms ease;
+  }
+
+  .stages-container {
+    display: flex;
+    position: relative;
+    z-index: 2;
+    gap: 0;
+    justify-content: space-between;
+  }
+
+  .stage {
+    flex: 1;
+    position: relative;
+    display: flex;
+    padding-right: 40px;
+    transition: opacity 300ms ease;
+    opacity: 0.5; /* Muted by default until active via scroll */
+  }
+
+  .stage.is-active {
+    opacity: 1;
+  }
+
+  .stage:last-child {
+    padding-right: 0;
+    flex: 1.5; /* Give final stage more room */
+  }
+
+  .stage-content, .final-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stage-num {
+    font-size: 0.75rem;
+    color: #777777;
+    margin-bottom: 24px;
+    transition: color 300ms ease;
+  }
+
+  .stage.is-active .stage-num {
+    color: var(--blue);
+  }
+
+  .stage-date {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: #111;
+    margin-bottom: 16px;
+    transition: color 300ms ease;
+  }
+
+  .stage-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 1.5vw, 1.6rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: #111;
+    margin-bottom: 16px;
+    transition: transform 300ms ease;
+  }
+
+  .stage.is-active .stage-title {
+    transform: translateY(-4px);
+  }
+
+  .stage-desc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555;
+    max-width: 28ch;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 400ms ease, transform 400ms ease;
+  }
+
+  .stage.is-active .stage-desc {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Final Stage Styling */
+  .final-content {
+    background-color: transparent;
+    padding-left: 20px;
+    border-left: 1px solid rgba(17,17,17,0.12);
+  }
+
+  .final-time {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 3vw, 3.5rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    color: #111;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  .final-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2vw, 2.2rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--blue);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+
+  .final-words {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .final-words span {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 4.5rem);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #111;
+  }
+
+  /* Connectors */
+  .stage-connector {
+    position: absolute;
+    right: 15px;
+    top: 50px;
+    font-family: var(--font-mono);
+    color: rgba(17, 17, 17, 0.3);
+    font-size: 1.2rem;
+  }
+
+  .mobile-arrow {
+    display: none;
+  }
+
+  /* Desktop layout tuning */
+  @media (min-width: 900px) {
+    .progress-track {
+      top: 32px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%; /* Updated by JS */
+    }
+    .stages-container {
+      padding-top: 60px; /* Space for the line above */
+    }
+    /* Add a tick mark to the track for each stage */
+    .stage::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      left: 0;
+      width: 1px;
+      height: 10px;
+      background: rgba(17, 17, 17, 0.3);
+    }
+    .stage.is-active::before {
+      background: var(--blue);
+    }
+  }
+
+  /* --- Mobile Layout --- */
+  @media (max-width: 899px) {
+    .stages-container {
+      flex-direction: column;
+      gap: 60px;
+      padding-left: 40px; /* Space for vertical track */
+    }
+
+    .progress-track {
+      top: 0;
+      left: 15px;
+      width: 1px;
+      height: 100%;
+    }
+    
+    .progress-fill {
+      width: 100%;
+      height: 0%; /* Updated by JS */
+    }
+
+    .stage {
+      padding-right: 0;
+      opacity: 0.6; /* Higher base opacity for mobile */
+    }
+    
+    .stage::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: -28px;
+      width: 6px;
+      height: 6px;
+      background: #F0F0EE;
+      border: 1px solid rgba(17,17,17,0.3);
+      border-radius: 50%;
+      z-index: 3;
+      transition: background 300ms ease, border-color 300ms ease;
+    }
+    
+    .stage.is-active::before {
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .stage-connector {
+      display: none; /* Rely entirely on vertical line */
+    }
+
+    .desktop-arrow { display: none; }
+    .mobile-arrow { display: inline; }
+
+    .stage-desc {
+      max-width: 100%;
+    }
+    
+    .final-content {
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+
+  /* --- Scroll reveal generic --- */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUpRow 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--d, 0ms);
+  }
+
+  @keyframes fadeUpRow {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal], .stage, .stage-title, .stage-desc, .progress-fill {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .stage {
+      opacity: 1;
+    }
+    .stage-desc {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll-based activation
+  const stages = document.querySelectorAll('.stage');
+  const progressFill = document.getElementById('progress-fill');
+  
+  if (progressFill && stages.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-active');
+          
+          // Calculate progress percentage
+          const index = parseInt(entry.target.getAttribute('data-index') || '0');
+          const percent = ((index + 1) / stages.length) * 100;
+          
+          if (window.innerWidth >= 900) {
+            progressFill.style.width = `${percent}%`;
+          } else {
+            progressFill.style.height = `${percent}%`;
+          }
+        }
+      });
+    }, { 
+      threshold: 0.6,
+      rootMargin: "0px 0px -15% 0px"
+    });
+    
+    stages.forEach(stage => observer.observe(stage));
+  }
+</script>

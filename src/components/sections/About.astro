@@ -1,0 +1,187 @@
+---
+import { site } from '../../data/site';
+---
+
+<section class="section s-challenge" id="about" aria-labelledby="challenge-title">
+  <div class="container challenge-container">
+    <div class="challenge-grid">
+      <div class="challenge-left">
+        <p class="section-label" data-reveal>01 / THE CHALLENGE</p>
+      </div>
+      
+      <div class="challenge-right">
+        <h2 class="challenge-title" id="challenge-title" data-reveal style="--d: 100ms;">
+          <span class="line">THE WORLD</span>
+          <span class="line highlight">HAS PROBLEMS.</span>
+          <span class="line mt-space">WE BUILD</span>
+          <span class="line highlight">SOLUTIONS.</span>
+        </h2>
+        
+        <p class="challenge-desc" data-reveal style="--d: 250ms;">
+          {site.intro.statement} {site.intro.detail}
+        </p>
+      </div>
+    </div>
+
+    <div class="facts-strip" data-reveal style="--d: 400ms;">
+      <div class="fact">
+        <span class="fact-val">10 HOURS</span>
+        <span class="fact-label">HACKATHON DURATION</span>
+      </div>
+      <div class="fact">
+        <span class="fact-val">2–4</span>
+        <span class="fact-label">TEAM SIZE</span>
+      </div>
+      <div class="fact">
+        <span class="fact-val">1st–3rd</span>
+        <span class="fact-label">ELIGIBLE STUDENTS</span>
+      </div>
+      <div class="fact">
+        <span class="fact-val">SALEM</span>
+        <span class="fact-label">LOCATION</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .s-challenge {
+    background-color: #F0F0EE;
+    color: #111;
+    padding-top: clamp(100px, 15vh, 180px);
+    padding-bottom: clamp(100px, 15vh, 180px);
+    position: relative;
+    z-index: 10; /* Make sure it layers over the hero cleanly */
+  }
+
+  .challenge-container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(80px, 12vh, 140px);
+  }
+
+  .challenge-grid {
+    display: grid;
+    grid-template-columns: minmax(180px, 2fr) 8fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    margin-top: 14px;
+  }
+
+  .challenge-right {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(40px, 6vw, 60px);
+  }
+
+  .challenge-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 7vw, 7.5rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    color: #111;
+  }
+
+  .challenge-title .line {
+    display: block;
+  }
+
+  .challenge-title .mt-space {
+    margin-top: 0.4em;
+  }
+
+  .challenge-title .highlight {
+    color: #000;
+  }
+  
+  .challenge-title .line:not(.highlight) {
+    color: rgba(17, 17, 17, 0.7);
+  }
+
+  .challenge-desc {
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 54ch;
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  .facts-strip {
+    display: flex;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+  }
+
+  .fact {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: clamp(30px, 4vw, 40px) clamp(20px, 3vw, 30px);
+    border-right: 1px solid rgba(0,0,0,0.12);
+  }
+
+  .fact:last-child {
+    border-right: none;
+  }
+
+  .fact-val {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #111;
+    line-height: 1;
+  }
+
+  .fact-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 980px) {
+    .challenge-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    
+    .section-label {
+      margin-top: 0;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .facts-strip {
+      flex-direction: column;
+      border-bottom: none;
+    }
+
+    .fact {
+      border-right: none;
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+      padding: 30px 10px;
+      align-items: flex-start;
+    }
+    
+    .fact:last-child {
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+    }
+  }
+</style>
