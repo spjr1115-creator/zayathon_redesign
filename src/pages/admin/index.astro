@@ -26,8 +26,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       
       <!-- Page Title Section -->
       <div class="dash-title-section">
-        <h1 class="dash-title">REGISTRATIONS</h1>
-        <p class="dash-subtitle">Manage and review submitted ZAYATHON 2026 teams.</p>
+        <div class="title-header-row">
+          <div>
+            <h1 class="dash-title">REGISTRATIONS</h1>
+            <p class="dash-subtitle">Manage and review submitted ZAYATHON 2026 teams.</p>
+          </div>
+          <button type="button" id="btn-export-csv" class="btn-export mono" aria-label="Export registrations to CSV">
+            EXPORT CSV <span class="arrow">↗</span>
+          </button>
+        </div>
       </div>
 
       <!-- Stats Summary Grid -->
@@ -272,6 +279,49 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     display: flex;
     flex-direction: column;
     gap: 8px;
+  }
+
+  .title-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .btn-export {
+    background: #FFFFFF;
+    border: 1px solid rgba(17, 17, 17, 0.16);
+    border-radius: 8px;
+    height: 48px;
+    padding: 0 20px;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: #111111;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+    white-space: nowrap;
+  }
+
+  .btn-export:hover:not(:disabled) {
+    background: #111111;
+    color: #FFFFFF;
+    border-color: #111111;
+  }
+
+  .btn-export:focus-visible {
+    outline: none;
+    border-color: var(--blue, #1d4ed8);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+  }
+
+  .btn-export:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
   .dash-title {
@@ -806,6 +856,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     .dossier-grid {
       grid-template-columns: 1fr;
     }
+    .btn-export {
+      width: 100%;
+      justify-content: center;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -844,6 +898,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }[char]!));
   }
 
+  // CSV Value Escape Helper
+  function escapeCsv(val: string | null | undefined): string {
+    if (val === null || val === undefined) return '""';
+    const str = String(val);
+    const escaped = str.replace(/"/g, '""');
+    return `"${escaped}"`;
+  }
+
   interface Registration {
     id: string;
     team_name: string;
@@ -874,6 +936,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   // DOM Elements
   const btnSignOut = document.getElementById('btn-signout');
+  const btnExportCsv = document.getElementById('btn-export-csv') as HTMLButtonElement;
   const statTotalTeams = document.getElementById('stat-total-teams');
   const statTotalMembers = document.getElementById('stat-total-members');
   const statDomains = document.getElementById('stat-domains');
@@ -1133,6 +1196,89 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     });
   }
 
+  // ── CSV Export Handler ──────────────────────────────────────────────────
+  function exportRegistrationsToCsv() {
+    if (!btnExportCsv) return;
+
+    // Target registrations already loaded in memory
+    const exportList = registrations;
+
+    if (!exportList || exportList.length === 0) {
+      const originalText = btnExportCsv.innerHTML;
+      btnExportCsv.innerHTML = 'NO REGISTRATIONS TO EXPORT';
+      setTimeout(() => {
+        btnExportCsv.innerHTML = originalText;
+      }, 2500);
+      return;
+    }
+
+    const headers = [
+      'Registration ID',
+      'Team Name',
+      'Problem Domain',
+      'Leader Name',
+      'Leader Email',
+      'Leader Phone',
+      'College / Institution',
+      'Year',
+      'Member 2 Name',
+      'Member 2 Email',
+      'Member 2 Phone',
+      'Member 3 Name',
+      'Member 3 Email',
+      'Member 3 Phone',
+      'Member 4 Name',
+      'Member 4 Email',
+      'Member 4 Phone',
+      'Registration Date'
+    ];
+
+    const rows = exportList.map(r => [
+      escapeCsv(r.id),
+      escapeCsv(r.team_name),
+      escapeCsv(r.problem_domain),
+      escapeCsv(r.leader_name),
+      escapeCsv(r.leader_email),
+      escapeCsv(r.leader_phone),
+      escapeCsv(r.leader_college),
+      escapeCsv(r.leader_year),
+      escapeCsv(r.member_2_name),
+      escapeCsv(r.member_2_email),
+      escapeCsv(r.member_2_phone),
+      escapeCsv(r.member_3_name),
+      escapeCsv(r.member_3_email),
+      escapeCsv(r.member_3_phone),
+      escapeCsv(r.member_4_name),
+      escapeCsv(r.member_4_email),
+      escapeCsv(r.member_4_phone),
+      escapeCsv(r.created_at)
+    ].join(','));
+
+    const csvContent = [headers.map(h => escapeCsv(h)).join(','), ...rows].join('\r\n');
+
+    // Dynamic filename: zayathon-registrations-YYYY-MM-DD.csv
+    const dateStr = new Date().toISOString().split('T')[0];
+    const filename = `zayathon-registrations-${dateStr}.csv`;
+
+    // Local client-side browser download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    // Micro-interaction button state update
+    const originalContent = btnExportCsv.innerHTML;
+    btnExportCsv.innerHTML = 'EXPORTED ✓';
+    setTimeout(() => {
+      btnExportCsv.innerHTML = originalContent;
+    }, 2000);
+  }
+
   // ── Detail Modal (Redesigned Editorial Dossier View) ─────────────────────
   function openDetailModal(r: Registration) {
     if (!r || !detailModal || !modalTeamName || !modalBody) return;
@@ -1273,6 +1419,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   if (domainFilter) domainFilter.addEventListener('change', applyFiltersAndSort);
   if (sortSelect) sortSelect.addEventListener('change', applyFiltersAndSort);
 
+  if (btnExportCsv) btnExportCsv.addEventListener('click', exportRegistrationsToCsv);
   if (btnRetry) btnRetry.addEventListener('click', fetchRegistrations);
 
   if (btnCloseModal) btnCloseModal.addEventListener('click', closeDetailModal);
