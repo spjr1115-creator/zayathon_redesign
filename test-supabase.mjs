@@ -1,7 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://njeunkcnmprvrymcdvil.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qZXVua2NubXBydnJ5bWNkdmlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2ODk2NTAsImV4cCI6MjEwNDI2NTY1MH0.-AuTqqX7-YzZSbVtZJRlrnPpwtZsN5vc_45UxgEG9tk';
+const supabaseUrl = process.env.PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+const supabaseKey = process.env.PUBLIC_SUPABASE_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error("Missing Supabase configuration in environment variables.");
+  process.exit(1);
+}
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
