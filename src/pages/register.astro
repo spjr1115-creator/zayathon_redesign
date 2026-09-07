@@ -224,8 +224,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 </div>
                 
                 <!-- Error Message Box -->
-                <div id="form-error" class="form-error" hidden>
-                  Something went wrong. Your registration was not submitted. Please try again.
+                <div id="form-error" class="form-error" aria-live="assertive" hidden>
+                  REGISTRATION FAILED
+
+Something went wrong while submitting your registration.
+Please try again.
                 </div>
 
                 <button type="submit" class="btn-submit" id="btn-submit">
@@ -612,6 +615,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: #dc2626;
     font-size: 0.95rem;
     margin-top: 20px;
+    white-space: pre-line;
   }
 
   /* Submit Button */
@@ -1184,10 +1188,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   import { createClient } from '@supabase/supabase-js';
 
   // ── Supabase client ──────────────────────────────────────────────────────────
-  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL
-    || 'https://njeunkcnmprvrymcdvil.supabase.co';
-  const supabaseKey = import.meta.env.PUBLIC_SUPABASE_KEY
-    || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qZXVua2NubXBydnJ5bWNkdmlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2ODk2NTAsImV4cCI6MjEwNDI2NTY1MH0.-AuTqqX7-YzZSbVtZJRlrnPpwtZsN5vc_45UxgEG9tk';
+  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+  const supabaseKey = import.meta.env.PUBLIC_SUPABASE_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error(
+      'Missing Supabase configuration. Set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_KEY.'
+    );
+  }
+
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   // ── State ────────────────────────────────────────────────────────────────────
@@ -1257,6 +1266,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   sections.forEach(section => sectionObserver.observe(section));
 
+  // ── HTML Escape Helper ────────────────────────────────────────────────────────
+  function escapeHtml(value: string) {
+    return value.replace(/[&<>"']/g, char => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]!));
+  }
+
   // ── renderSuccess ────────────────────────────────────────────────────────────
   // Called ONLY after confirmed Supabase INSERT (error === null).
   // Dynamically injects the success screen — it never exists in the DOM before this.
@@ -1268,6 +1288,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   ) {
     const registrationPage = document.querySelector('.registration-page') as HTMLElement;
     if (!registrationPage) return;
+
+    const safeTeamName = escapeHtml(teamName);
+    const safeDomain = escapeHtml(domain);
+    const safeLeaderName = escapeHtml(leaderName);
 
     // Total members = leader + additional
     const totalMembers = additionalMemberCount + 1;
@@ -1327,15 +1351,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="sc-summary">
               <div class="sc-summary-row">
                 <span class="sc-summary-label">TEAM</span>
-                <span class="sc-summary-val">${teamName.toUpperCase()}</span>
+                <span class="sc-summary-val">${safeTeamName.toUpperCase()}</span>
               </div>
               <div class="sc-summary-row">
                 <span class="sc-summary-label">DOMAIN</span>
-                <span class="sc-summary-val">${domain.toUpperCase()}</span>
+                <span class="sc-summary-val">${safeDomain.toUpperCase()}</span>
               </div>
               <div class="sc-summary-row">
                 <span class="sc-summary-label">TEAM LEADER</span>
-                <span class="sc-summary-val">${leaderName.toUpperCase()}</span>
+                <span class="sc-summary-val">${safeLeaderName.toUpperCase()}</span>
               </div>
               <div class="sc-summary-row">
                 <span class="sc-summary-label">MEMBERS</span>
@@ -1463,8 +1487,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         submissionSuccessful = false;
         console.error('Submission Error:', err);
         if (errorBox) {
-          errorBox.textContent =
-            'Something went wrong. Your registration was not submitted. Please try again.';
+          let errorMessage = "REGISTRATION FAILED\n\nSomething went wrong while submitting your registration.\nPlease try again.";
+          
+          if (err && err.code === '23505') {
+            const errMsg = err.message || '';
+            if (errMsg.includes('registrations_team_name_unique')) {
+              errorMessage = "TEAM ALREADY REGISTERED\n\nA team with this name has already registered.\nPlease use a different team name.";
+            } else if (errMsg.includes('registrations_leader_email_unique')) {
+              errorMessage = "LEADER EMAIL ALREADY REGISTERED\n\nThis email is already associated with a ZAYATHON registration.\nPlease check the leader details.";
+            }
+          }
+          
+          errorBox.textContent = errorMessage;
           errorBox.hidden = false;
         }
         btnSubmit.disabled  = false;
