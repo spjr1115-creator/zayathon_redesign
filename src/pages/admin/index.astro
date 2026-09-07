@@ -56,18 +56,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <!-- Admin Event Control Section -->
       <section class="event-control-card">
         <div class="event-control-header">
-          <div>
-            <span class="section-label mono">EVENT CONTROL &bull; COUNTDOWN CLOCK</span>
-            <h2 class="event-control-heading font-display">NEXT EVENT COUNTDOWN</h2>
+          <div class="event-control-title-group">
+            <span class="section-label mono">04 / EVENT CONTROL</span>
+            <h2 class="event-control-heading font-display">NEXT EVENT &bull; CONTROL THE CLOCK</h2>
+            <p class="event-control-subtitle">Set the next public event and decide exactly when it goes live.</p>
           </div>
-          <div id="event-state-badge" class="state-badge mono inactive">COUNTDOWN INACTIVE</div>
+          <div id="event-state-badge" class="state-badge mono inactive">○ COUNTDOWN INACTIVE</div>
         </div>
 
-        <!-- Active Event Live Preview -->
+        <!-- Active Event Live Countdown Preview Panel -->
         <div id="active-event-display" class="active-event-box" hidden>
           <div class="active-event-info">
-            <span class="field-lbl">CURRENT ACTIVE EVENT</span>
+            <span class="field-lbl mono">COUNTDOWN ACTIVE</span>
             <div id="active-event-name" class="active-title font-display">—</div>
+            <p id="active-event-desc-display" class="active-desc" hidden></p>
             <div id="active-event-target" class="active-meta mono">—</div>
           </div>
           
@@ -84,12 +86,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <span class="admin-timer-sep">:</span>
             <div class="admin-timer-unit">
               <span id="admin-cd-minutes" class="admin-unit-val">00</span>
-              <span class="admin-unit-lbl">MINS</span>
+              <span class="admin-unit-lbl">MINUTES</span>
             </div>
             <span class="admin-timer-sep">:</span>
             <div class="admin-timer-unit">
               <span id="admin-cd-seconds" class="admin-unit-val">00</span>
-              <span class="admin-unit-lbl">SECS</span>
+              <span class="admin-unit-lbl">SECONDS</span>
             </div>
           </div>
 
@@ -99,41 +101,64 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </div>
 
         <!-- Event Form -->
-        <form id="event-control-form" class="event-form">
+        <form id="event-control-form" class="event-form" novalidate>
           <div id="event-error" class="event-error" aria-live="assertive" hidden></div>
+          <div id="event-success" class="event-success mono" aria-live="polite" hidden>COUNTDOWN STARTED ✓</div>
 
           <div class="event-form-grid">
-            <div class="field-group">
-              <label for="event-name">EVENT NAME <span class="req">*</span></label>
+            <div class="field-group full">
+              <label for="event-name" class="field-lbl">EVENT NAME <span class="req">*</span></label>
               <input 
                 type="text" 
                 id="event-name" 
                 name="event_name" 
+                class="admin-input"
                 placeholder="e.g. REGISTRATION OPENS" 
                 required 
               />
             </div>
 
-            <div class="field-group">
-              <label for="target-time">TARGET DATE & TIME (IST / Asia-Kolkata) <span class="req">*</span></label>
-              <input 
-                type="datetime-local" 
-                id="target-time" 
-                name="target_time" 
-                required 
-              />
-              <span class="field-hint mono">Stored as absolute UTC, formatted in IST (UTC+5:30)</span>
-            </div>
-
             <div class="field-group full">
-              <label for="event-desc">EVENT DESCRIPTION (OPTIONAL)</label>
+              <label for="event-desc" class="field-lbl">DESCRIPTION</label>
               <input 
                 type="text" 
                 id="event-desc" 
                 name="event_description" 
+                class="admin-input"
                 placeholder="e.g. Secure your team's place at ZAYATHON." 
               />
             </div>
+
+            <div class="field-group">
+              <label for="event-date" class="field-lbl">DATE <span class="req">*</span></label>
+              <input 
+                type="date" 
+                id="event-date" 
+                name="event_date" 
+                class="admin-input date-input"
+                required 
+              />
+              <span class="field-hint mono">IST / ASIA-KOLKATA</span>
+            </div>
+
+            <div class="field-group">
+              <label for="event-time" class="field-lbl">TIME <span class="req">*</span></label>
+              <input 
+                type="time" 
+                id="event-time" 
+                name="event_time" 
+                class="admin-input time-input"
+                required 
+              />
+              <span class="field-hint mono">IST</span>
+            </div>
+          </div>
+
+          <!-- Live Target Preview Box -->
+          <div id="target-preview-box" class="target-preview-box">
+            <span class="field-lbl mono">TARGET EVENT PREVIEW</span>
+            <div id="preview-event-name" class="preview-name font-display">—</div>
+            <div id="preview-target-time" class="preview-time mono">SELECT DATE & TIME TO PREVIEW TARGET</div>
           </div>
 
           <button type="submit" id="btn-start-countdown" class="btn-submit-event font-display">
@@ -463,10 +488,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     background: #FFFFFF;
     border: 1px solid rgba(17, 17, 17, 0.12);
     border-radius: 12px;
-    padding: 28px;
+    padding: 32px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 28px;
   }
 
   .event-control-header {
@@ -475,17 +500,35 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 16px;
-    padding-bottom: 20px;
+    padding-bottom: 24px;
     border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+  }
+
+  .event-control-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: #777777;
+    text-transform: uppercase;
   }
 
   .event-control-heading {
     font-family: var(--font-display, 'Inter Tight', sans-serif);
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 600;
     letter-spacing: -0.02em;
     color: #111111;
     text-transform: uppercase;
+  }
+
+  .event-control-subtitle {
+    font-size: 0.92rem;
+    color: #555555;
   }
 
   .state-badge {
@@ -503,42 +546,49 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   .state-badge.active {
-    background: rgba(29, 78, 216, 0.1);
+    background: rgba(29, 78, 216, 0.08);
     color: var(--blue, #1d4ed8);
     border: 1px solid rgba(29, 78, 216, 0.2);
   }
 
   .active-event-box {
     background: #FAFAFA;
-    border: 1px solid rgba(17, 17, 17, 0.1);
+    border: 1px solid rgba(17, 17, 17, 0.12);
     border-radius: 10px;
-    padding: 24px;
+    padding: 28px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
   }
 
   .active-title {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: #111111;
+    margin-top: 4px;
+    letter-spacing: -0.02em;
+  }
+
+  .active-desc {
+    font-size: 0.95rem;
+    color: #555555;
     margin-top: 4px;
   }
 
   .active-meta {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: #777777;
-    margin-top: 4px;
+    margin-top: 6px;
   }
 
   .active-event-timer {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
     background: #111111;
     color: #FFFFFF;
-    padding: 16px 24px;
-    border-radius: 8px;
+    padding: 20px 28px;
+    border-radius: 10px;
     width: fit-content;
   }
 
@@ -550,38 +600,45 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   .admin-unit-val {
     font-family: var(--font-display, 'Inter Tight', sans-serif);
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 600;
     line-height: 1;
   }
 
   .admin-unit-lbl {
-    font-size: 0.55rem;
-    letter-spacing: 0.12em;
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
     color: #999999;
-    margin-top: 4px;
+    margin-top: 6px;
   }
 
   .admin-timer-sep {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: #555555;
   }
 
   .btn-stop-countdown {
     align-self: flex-start;
-    background: #dc2626;
-    color: #FFFFFF;
-    border: none;
+    background: #FFFFFF;
+    color: #dc2626;
+    border: 1px solid rgba(220, 38, 38, 0.3);
     padding: 12px 24px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 0.78rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     cursor: pointer;
-    transition: background 200ms ease;
+    transition: background 200ms ease, border-color 200ms ease;
   }
 
   .btn-stop-countdown:hover {
-    background: #b91c1c;
+    background: rgba(220, 38, 38, 0.06);
+    border-color: #dc2626;
+  }
+
+  .event-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
   }
 
   .event-form-grid {
@@ -590,10 +647,71 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     gap: 20px;
   }
 
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field-group.full {
+    grid-column: 1 / -1;
+  }
+
+  .admin-input {
+    width: 100%;
+    height: 48px;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(17, 17, 17, 0.18);
+    border-radius: 8px;
+    padding: 0 16px;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.95rem;
+    color: #111111;
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+  }
+
+  .admin-input:focus {
+    outline: none;
+    border-color: var(--blue, #1d4ed8);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+  }
+
+  .date-input, .time-input {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .req {
+    color: var(--blue, #1d4ed8);
+  }
+
   .field-hint {
     font-size: 0.7rem;
+    letter-spacing: 0.08em;
     color: #777777;
     margin-top: 2px;
+  }
+
+  .target-preview-box {
+    background: #F9F9F8;
+    border: 1px solid rgba(17, 17, 17, 0.1);
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .preview-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111111;
+  }
+
+  .preview-time {
+    font-size: 0.85rem;
+    color: var(--blue, #1d4ed8);
   }
 
   .event-error {
@@ -606,6 +724,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     white-space: pre-line;
   }
 
+  .event-success {
+    background: rgba(29, 78, 216, 0.08);
+    border: 1px solid rgba(29, 78, 216, 0.2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: var(--blue, #1d4ed8);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+
   .btn-submit-event {
     align-self: flex-start;
     display: inline-flex;
@@ -614,8 +742,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     background: #111111;
     color: #FFFFFF;
     border: none;
-    height: 48px;
-    padding: 0 24px;
+    height: 50px;
+    padding: 0 28px;
     border-radius: 8px;
     font-size: 0.95rem;
     font-weight: 500;
@@ -1277,6 +1405,48 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   // ── Event Control Handlers ────────────────────────────────────────────────
+  function parseISTDateTime(dateVal: string, timeVal: string): Date | null {
+    if (!dateVal || !timeVal) return null;
+    const isoIST = `${dateVal}T${timeVal}:00+05:30`;
+    const d = new Date(isoIST);
+    if (isNaN(d.getTime())) return null;
+    return d;
+  }
+
+  function formatISTDisplay(d: Date): string {
+    const formatted = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Kolkata',
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    }).format(d);
+    return formatted.toUpperCase().replace(',', ' ·') + ' IST';
+  }
+
+  function updateTargetPreview() {
+    const eventNameInput = document.getElementById('event-name') as HTMLInputElement;
+    const eventDateInput = document.getElementById('event-date') as HTMLInputElement;
+    const eventTimeInput = document.getElementById('event-time') as HTMLInputElement;
+    const previewNameEl = document.getElementById('preview-event-name');
+    const previewTimeEl = document.getElementById('preview-target-time');
+
+    const nameVal = (eventNameInput?.value || '').trim() || 'REGISTRATION OPENS';
+    const dateVal = eventDateInput?.value || '';
+    const timeVal = eventTimeInput?.value || '';
+
+    if (previewNameEl) previewNameEl.textContent = nameVal.toUpperCase();
+
+    const istDate = parseISTDateTime(dateVal, timeVal);
+    if (istDate) {
+      if (previewTimeEl) previewTimeEl.textContent = formatISTDisplay(istDate);
+    } else {
+      if (previewTimeEl) previewTimeEl.textContent = 'SELECT DATE & TIME TO PREVIEW TARGET';
+    }
+  }
+
   async function fetchEventClock() {
     try {
       const { data, error } = await supabase
@@ -1302,13 +1472,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     const badge = document.getElementById('event-state-badge');
     const displayBox = document.getElementById('active-event-display');
     const nameEl = document.getElementById('active-event-name');
+    const descDisplayEl = document.getElementById('active-event-desc-display');
     const targetEl = document.getElementById('active-event-target');
+
     const eventNameInput = document.getElementById('event-name') as HTMLInputElement;
     const eventDescInput = document.getElementById('event-desc') as HTMLInputElement;
+    const eventDateInput = document.getElementById('event-date') as HTMLInputElement;
+    const eventTimeInput = document.getElementById('event-time') as HTMLInputElement;
 
     if (!activeEventClock || !activeEventClock.is_active) {
       if (badge) {
-        badge.textContent = 'COUNTDOWN INACTIVE';
+        badge.textContent = '○ COUNTDOWN INACTIVE';
         badge.className = 'state-badge mono inactive';
       }
       if (displayBox) displayBox.hidden = true;
@@ -1318,27 +1492,28 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     // Active event exists
     if (badge) {
-      badge.textContent = 'COUNTDOWN ACTIVE';
+      badge.textContent = '● COUNTDOWN ACTIVE';
       badge.className = 'state-badge mono active';
     }
     if (displayBox) displayBox.hidden = false;
 
     if (nameEl) nameEl.textContent = activeEventClock.event_name.toUpperCase();
+    
+    if (descDisplayEl) {
+      if (activeEventClock.event_description && activeEventClock.event_description.trim()) {
+        descDisplayEl.textContent = activeEventClock.event_description;
+        descDisplayEl.hidden = false;
+      } else {
+        descDisplayEl.hidden = true;
+      }
+    }
 
     const targetDate = new Date(activeEventClock.target_time);
-    const formattedIST = targetDate.toLocaleString('en-US', {
-      timeZone: 'Asia/Kolkata',
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    }) + ' (IST)';
+    const formattedIST = formatISTDisplay(targetDate);
 
     if (targetEl) targetEl.textContent = `TARGET: ${formattedIST}`;
 
-    // Prefill form for convenience
+    // Prefill form values for convenience
     if (eventNameInput && !eventNameInput.value) {
       eventNameInput.value = activeEventClock.event_name;
     }
@@ -1346,6 +1521,30 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       eventDescInput.value = activeEventClock.event_description;
     }
 
+    if (targetDate && (!eventDateInput?.value || !eventTimeInput?.value)) {
+      try {
+        const ymd = new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'Asia/Kolkata',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        }).format(targetDate);
+
+        const hm = new Intl.DateTimeFormat('en-GB', {
+          timeZone: 'Asia/Kolkata',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        }).format(targetDate);
+
+        if (eventDateInput && !eventDateInput.value) eventDateInput.value = ymd;
+        if (eventTimeInput && !eventTimeInput.value) eventTimeInput.value = hm;
+      } catch (err) {
+        console.error('Error prefilling date/time inputs:', err);
+      }
+    }
+
+    updateTargetPreview();
     startAdminTimer(targetDate.getTime());
   }
 
@@ -1385,15 +1584,40 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     adminTimerInterval = setInterval(updateAdminTimer, 1000);
   }
 
+  // Attach live preview listeners to inputs
+  const eventNameInputEl = document.getElementById('event-name');
+  const eventDateInputEl = document.getElementById('event-date');
+  const eventTimeInputEl = document.getElementById('event-time');
+
+  if (eventNameInputEl) {
+    eventNameInputEl.addEventListener('input', updateTargetPreview);
+  }
+  if (eventDateInputEl) {
+    eventDateInputEl.addEventListener('input', updateTargetPreview);
+    eventDateInputEl.addEventListener('change', updateTargetPreview);
+  }
+  if (eventTimeInputEl) {
+    eventTimeInputEl.addEventListener('input', updateTargetPreview);
+    eventTimeInputEl.addEventListener('change', updateTargetPreview);
+  }
+
   if (eventForm) {
     eventForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const eventError = document.getElementById('event-error');
+      const eventSuccess = document.getElementById('event-success');
       if (eventError) eventError.hidden = true;
+      if (eventSuccess) eventSuccess.hidden = true;
 
-      const formData = new FormData(eventForm);
-      const eventName = String(formData.get('event_name') || '').trim();
-      const eventDesc = String(formData.get('event_description') || '').trim();
-      const targetTimeInput = String(formData.get('target_time') || '').trim();
+      const eventNameInput = document.getElementById('event-name') as HTMLInputElement;
+      const eventDescInput = document.getElementById('event-desc') as HTMLInputElement;
+      const eventDateInput = document.getElementById('event-date') as HTMLInputElement;
+      const eventTimeInput = document.getElementById('event-time') as HTMLInputElement;
+
+      const eventName = (eventNameInput?.value || '').trim();
+      const eventDesc = (eventDescInput?.value || '').trim();
+      const eventDate = (eventDateInput?.value || '').trim();
+      const eventTime = (eventTimeInput?.value || '').trim();
 
       if (!eventName) {
         if (eventError) {
@@ -1403,18 +1627,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         return;
       }
 
-      if (!targetTimeInput) {
+      if (!eventDate) {
         if (eventError) {
-          eventError.textContent = 'INVALID EVENT TIME\n\nPlease choose a valid date and time.';
+          eventError.textContent = 'DATE REQUIRED\n\nPlease select an event date.';
           eventError.hidden = false;
         }
         return;
       }
 
-      const targetDate = new Date(targetTimeInput);
-      if (isNaN(targetDate.getTime()) || targetDate.getTime() <= Date.now()) {
+      if (!eventTime) {
         if (eventError) {
-          eventError.textContent = 'INVALID EVENT TIME\n\nChoose a future date and time.';
+          eventError.textContent = 'TIME REQUIRED\n\nPlease select an event time.';
+          eventError.hidden = false;
+        }
+        return;
+      }
+
+      const targetDate = parseISTDateTime(eventDate, eventTime);
+      if (!targetDate || targetDate.getTime() <= Date.now()) {
+        if (eventError) {
+          eventError.textContent = 'INVALID EVENT TIME\n\nPlease choose a future date and time.';
           eventError.hidden = false;
         }
         return;
@@ -1436,7 +1668,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         if (activeEventClock?.id) {
           const { error } = await supabase
             .from('event_clock')
-            .update(payload)
+            .update({
+              ...payload,
+              updated_at: new Date().toISOString()
+            })
             .eq('id', activeEventClock.id);
           resultError = error;
         } else {
@@ -1448,12 +1683,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
         if (resultError) throw resultError;
 
+        if (eventSuccess) {
+          eventSuccess.hidden = false;
+          setTimeout(() => {
+            if (eventSuccess) eventSuccess.hidden = true;
+          }, 2000);
+        }
+
         await fetchEventClock();
 
       } catch (err: any) {
         console.error('Failed to start countdown:', err);
         if (eventError) {
-          eventError.textContent = 'FAILED TO START COUNTDOWN\n\n' + (err?.message || 'Please try again.');
+          eventError.textContent = 'UNABLE TO START COUNTDOWN\n\nPlease try again.';
           eventError.hidden = false;
         }
       }
@@ -1467,7 +1709,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       try {
         const { error } = await supabase
           .from('event_clock')
-          .update({ is_active: false })
+          .update({ is_active: false, updated_at: new Date().toISOString() })
           .eq('id', activeEventClock.id);
 
         if (error) throw error;
