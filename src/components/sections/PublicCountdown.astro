@@ -1,0 +1,319 @@
+---
+---
+
+<section id="public-countdown-section" class="public-countdown-section" hidden aria-live="polite">
+  <div class="container countdown-container">
+    <div class="countdown-grid">
+      
+      <!-- Left Column: Section Label -->
+      <div class="countdown-left">
+        <p class="section-label">COUNTDOWN</p>
+      </div>
+
+      <!-- Right Column: Event Info & Timer -->
+      <div class="countdown-right">
+        <div class="event-meta-group">
+          <span class="subhead mono">NEXT UP</span>
+          <h2 id="public-event-name" class="event-title font-display">—</h2>
+          <p id="public-event-desc" class="event-desc" hidden></p>
+        </div>
+
+        <!-- Horizontal Timer Strip -->
+        <div class="timer-strip">
+          <div class="timer-unit">
+            <span id="pub-cd-days" class="timer-val font-display">00</span>
+            <span class="timer-lbl mono">DAYS</span>
+          </div>
+          <span class="timer-sep font-display" aria-hidden="true">:</span>
+
+          <div class="timer-unit">
+            <span id="pub-cd-hours" class="timer-val font-display">00</span>
+            <span class="timer-lbl mono">HOURS</span>
+          </div>
+          <span class="timer-sep font-display" aria-hidden="true">:</span>
+
+          <div class="timer-unit">
+            <span id="pub-cd-minutes" class="timer-val font-display">00</span>
+            <span class="timer-lbl mono">MINUTES</span>
+          </div>
+          <span class="timer-sep font-display" aria-hidden="true">:</span>
+
+          <div class="timer-unit">
+            <span id="pub-cd-seconds" class="timer-val font-display">00</span>
+            <span class="timer-lbl mono">SECONDS</span>
+          </div>
+        </div>
+
+        <div id="pub-event-status" class="pub-status-badge mono" hidden>
+          EVENT TIME REACHED
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  [hidden] {
+    display: none !important;
+  }
+
+  .public-countdown-section {
+    background-color: #F0F0EE;
+    color: #111111;
+    padding-top: clamp(60px, 8vh, 100px);
+    padding-bottom: clamp(60px, 8vh, 100px);
+    position: relative;
+    z-index: 10;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: minmax(180px, 2fr) 8fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .section-label {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--ink-3, #777777);
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .countdown-right {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 4vw, 44px);
+  }
+
+  .event-meta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .subhead {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: var(--blue, #1d4ed8);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .event-title {
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: clamp(2.2rem, 5vw, 4.5rem);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: #111111;
+  }
+
+  .event-desc {
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    line-height: 1.5;
+    color: var(--ink-2, #555555);
+    max-width: 54ch;
+    margin-top: 8px;
+  }
+
+  /* Horizontal Timer Strip */
+  .timer-strip {
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 3vw, 36px);
+    padding: clamp(24px, 4vw, 36px) clamp(28px, 4vw, 44px);
+    background: #FFFFFF;
+    border: 1px solid rgba(17, 17, 17, 0.12);
+    border-radius: 12px;
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .timer-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .timer-val {
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 600;
+    line-height: 1;
+    color: #111111;
+    letter-spacing: -0.02em;
+  }
+
+  .timer-lbl {
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    color: var(--ink-3, #777777);
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+
+  .timer-sep {
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    color: rgba(17, 17, 17, 0.25);
+    line-height: 1;
+    margin-top: -12px;
+  }
+
+  .pub-status-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    padding: 8px 16px;
+    background: rgba(17, 17, 17, 0.06);
+    color: #555555;
+    border-radius: 6px;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  @media (max-width: 980px) {
+    .countdown-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .timer-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 16px;
+      width: 100%;
+      padding: 24px 20px;
+    }
+
+    .timer-sep {
+      display: none;
+    }
+
+    .timer-val {
+      font-size: 2.4rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .public-countdown-section {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { createClient } from '@supabase/supabase-js';
+
+  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+  const supabaseKey = import.meta.env.PUBLIC_SUPABASE_KEY;
+
+  if (supabaseUrl && supabaseKey) {
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const sectionEl = document.getElementById('public-countdown-section');
+    const nameEl = document.getElementById('public-event-name');
+    const descEl = document.getElementById('public-event-desc');
+    const statusEl = document.getElementById('pub-event-status');
+
+    const daysEl = document.getElementById('pub-cd-days');
+    const hoursEl = document.getElementById('pub-cd-hours');
+    const minsEl = document.getElementById('pub-cd-minutes');
+    const secsEl = document.getElementById('pub-cd-seconds');
+
+    let targetTimeMs: number | null = null;
+    let timerInterval: any = null;
+
+    async function fetchActiveEvent() {
+      try {
+        const { data, error } = await supabase
+          .from('event_clock')
+          .select('event_name, event_description, target_time, is_active')
+          .eq('is_active', true)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (error || !data || !data.is_active) {
+          if (sectionEl) sectionEl.hidden = true;
+          if (timerInterval) clearInterval(timerInterval);
+          return;
+        }
+
+        if (nameEl) nameEl.textContent = data.event_name.toUpperCase();
+
+        if (descEl) {
+          if (data.event_description && data.event_description.trim()) {
+            descEl.textContent = data.event_description;
+            descEl.hidden = false;
+          } else {
+            descEl.hidden = true;
+          }
+        }
+
+        targetTimeMs = new Date(data.target_time).getTime();
+        if (sectionEl) sectionEl.hidden = false;
+
+        updateTimer();
+        if (!timerInterval) {
+          timerInterval = setInterval(updateTimer, 1000);
+        }
+      } catch {
+        if (sectionEl) sectionEl.hidden = true;
+      }
+    }
+
+    function updateTimer() {
+      if (!targetTimeMs) return;
+
+      const now = Date.now();
+      const diff = targetTimeMs - now;
+
+      if (diff <= 0) {
+        if (daysEl) daysEl.textContent = '00';
+        if (hoursEl) hoursEl.textContent = '00';
+        if (minsEl) minsEl.textContent = '00';
+        if (secsEl) secsEl.textContent = '00';
+        if (statusEl) statusEl.hidden = false;
+        if (timerInterval) clearInterval(timerInterval);
+        return;
+      } else {
+        if (statusEl) statusEl.hidden = true;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+      if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+      if (minsEl) minsEl.textContent = String(mins).padStart(2, '0');
+      if (secsEl) secsEl.textContent = String(secs).padStart(2, '0');
+    }
+
+    // Initial fetch + 30-second periodic sync
+    fetchActiveEvent();
+    setInterval(fetchActiveEvent, 30000);
+  }
+</script>
