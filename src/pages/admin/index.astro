@@ -1693,7 +1693,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         await fetchEventClock();
 
       } catch (err: any) {
-        console.error('Failed to start countdown:', err);
+        console.error('Event clock save failed:', err);
+        console.error('Event clock response:', { error: err });
         if (eventError) {
           eventError.textContent = 'UNABLE TO START COUNTDOWN\n\nPlease try again.';
           eventError.hidden = false;
