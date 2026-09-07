@@ -215,14 +215,21 @@ import { navLinks, site } from '../data/site';
   /* mobile dropdown */
   .nav-menu {
     position: fixed;
-    top: 84px;
-    right: max(22px, calc((100vw - var(--container-wide)) / 2 + var(--gutter)));
-    width: min(400px, calc(100vw - 44px));
-    background: var(--paper-2);
-    border: 1px solid var(--line-soft);
+    top: 76px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+    max-width: 440px;
+    margin-inline: auto;
+    max-height: calc(100vh - 92px);
+    overflow-y: auto;
+    background: #FFFFFF;
+    border: 1px solid rgba(17, 17, 17, 0.14);
     border-radius: 22px;
-    box-shadow: var(--shadow-float);
-    padding: 20px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+    padding: 24px;
+    z-index: 130;
+    pointer-events: auto;
   }
 
   .nav-menu[hidden] {
@@ -239,39 +246,41 @@ import { navLinks, site } from '../data/site';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 4px;
-    border-bottom: 1px solid var(--line-soft);
-    font-family: var(--font-display);
-    font-size: 1.35rem;
+    padding: 14px 4px;
+    border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: 1.25rem;
     font-weight: 500;
     letter-spacing: -0.01em;
-    color: var(--ink);
+    color: var(--ink, #111111);
+    min-height: 44px;
   }
 
   .nav-menu__link svg {
-    color: var(--ink-3);
+    color: var(--ink-3, #777777);
     transition: transform var(--dur-fast) var(--ease-out), color var(--dur-micro) var(--ease-out);
   }
 
   .nav-menu__link:hover {
-    color: var(--blue);
+    color: var(--blue, #1d4ed8);
   }
 
   .nav-menu__link:hover svg {
     transform: translateX(4px);
-    color: var(--blue);
+    color: var(--blue, #1d4ed8);
   }
 
   .nav-menu__cta {
     width: 100%;
     margin-top: 18px;
+    min-height: 48px;
   }
 
   .nav-menu__contact {
     margin-top: 14px;
     text-align: center;
-    font-size: 0.68rem;
-    color: var(--ink-3);
+    font-size: 0.7rem;
+    color: var(--ink-3, #777777);
     letter-spacing: 0.02em;
   }
 
@@ -303,17 +312,44 @@ import { navLinks, site } from '../data/site';
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  toggle?.addEventListener('click', () => {
-    const open = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!open));
-    if (menu) menu.hidden = open;
-    toggle.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+  function closeMenu() {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', 'false');
+    menu.hidden = true;
+    toggle.setAttribute('aria-label', 'Open menu');
+    document.body.style.overflow = '';
+  }
+
+  function openMenu() {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', 'true');
+    menu.hidden = false;
+    toggle.setAttribute('aria-label', 'Close menu');
+  }
+
+  toggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+    if (isExpanded) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
   menu?.querySelectorAll('a').forEach((a) =>
-    a.addEventListener('click', () => {
-      toggle?.setAttribute('aria-expanded', 'false');
-      if (menu) menu.hidden = true;
-    }),
+    a.addEventListener('click', closeMenu)
   );
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu && !menu.hidden) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (menu && !menu.hidden && header && !header.contains(e.target as Node)) {
+      closeMenu();
+    }
+  });
 </script>

@@ -245,7 +245,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <p class="state-desc">Teams will appear here once registration begins.</p>
         </div>
 
-        <!-- Data Table Container -->
+        <!-- Data Table Container (Desktop) -->
         <div id="table-wrapper" class="table-wrapper" hidden>
           <table class="registrations-table" aria-label="ZAYATHON Registrations">
             <thead>
@@ -264,6 +264,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               <!-- Rows rendered dynamically via JS -->
             </tbody>
           </table>
+        </div>
+
+        <!-- Mobile Cards Container (Mobile <= 768px) -->
+        <div id="mobile-cards-wrapper" class="mobile-cards-wrapper" hidden>
+          <!-- Cards rendered dynamically via JS -->
         </div>
 
       </div>
@@ -1228,23 +1233,130 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     border-radius: 6px;
   }
 
+  /* Mobile Registration Cards */
+  .mobile-cards-wrapper {
+    display: none;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .admin-mobile-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(17, 17, 17, 0.12);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
+
+  .admin-mobile-card:hover, .admin-mobile-card:active {
+    background-color: rgba(29, 78, 216, 0.03);
+    border-color: var(--blue, #1d4ed8);
+  }
+
+  .mobile-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .mobile-card-team {
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111111;
+    text-transform: uppercase;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .mobile-card-domain {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--blue, #1d4ed8);
+    background: rgba(29, 78, 216, 0.06);
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .mobile-card-leader {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .mobile-card-leader-name {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #111111;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .mobile-card-leader-sub {
+    font-size: 0.78rem;
+    color: #777777;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .mobile-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(17, 17, 17, 0.1);
+    font-size: 0.75rem;
+  }
+
   /* Mobile Tweaks */
   @media (max-width: 768px) {
+    .table-wrapper {
+      display: none !important;
+    }
+    .mobile-cards-wrapper {
+      display: flex !important;
+    }
+    .controls-bar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .filter-group {
+      flex: 1 1 100%;
+    }
     .event-form-grid {
       grid-template-columns: 1fr;
     }
     .active-event-timer {
       width: 100%;
       justify-content: space-between;
+      padding: 16px 18px;
+      gap: 6px;
+    }
+    .admin-unit-val {
+      font-size: 1.3rem;
+    }
+    .admin-timer-sep {
+      font-size: 1rem;
     }
     .modal-panel {
       max-width: 100%;
     }
     .modal-header {
-      padding: 20px 24px;
+      padding: 20px 16px;
     }
     .modal-body {
-      padding: 24px;
+      padding: 20px 16px;
     }
     .dossier-grid {
       grid-template-columns: 1fr;
@@ -1252,6 +1364,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     .btn-export {
       width: 100%;
       justify-content: center;
+    }
+    .header-inner {
+      gap: 12px;
+    }
+    .brand-sub {
+      display: none;
     }
   }
 
@@ -1779,11 +1897,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   // ── UI States ─────────────────────────────────────────────────────────────
+  const mobileCardsWrapper = document.getElementById('mobile-cards-wrapper');
+
   function showState(state: 'loading' | 'error' | 'empty' | 'table') {
     if (stateLoading) stateLoading.hidden = (state !== 'loading');
     if (stateError)   stateError.hidden   = (state !== 'error');
     if (stateEmpty)   stateEmpty.hidden   = (state !== 'empty');
     if (tableWrapper) tableWrapper.hidden = (state !== 'table');
+    if (mobileCardsWrapper) mobileCardsWrapper.hidden = (state !== 'table');
   }
 
   // ── Summary Metrics Calculation ──────────────────────────────────────────
@@ -1853,7 +1974,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     renderTable();
   }
 
-  // ── Render Table ──────────────────────────────────────────────────────────
+  // ── Render Table & Mobile Cards ──────────────────────────────────────────
   function renderTable() {
     if (isLoading) {
       showState('loading');
@@ -1911,6 +2032,40 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         if (reg) openDetailModal(reg);
       });
     });
+
+    if (mobileCardsWrapper) {
+      mobileCardsWrapper.innerHTML = filteredRegistrations.map(r => {
+        let memberCount = 1;
+        if (r.member_2_name && r.member_2_name.trim()) memberCount++;
+        if (r.member_3_name && r.member_3_name.trim()) memberCount++;
+        if (r.member_4_name && r.member_4_name.trim()) memberCount++;
+
+        return `
+          <div class="admin-mobile-card" data-id="${escapeHtml(r.id)}">
+            <div class="mobile-card-top">
+              <span class="mobile-card-team">${escapeHtml(r.team_name)}</span>
+              <span class="mobile-card-domain">${escapeHtml(r.problem_domain)}</span>
+            </div>
+            <div class="mobile-card-leader">
+              <span class="mobile-card-leader-name">${escapeHtml(r.leader_name)}</span>
+              <span class="mobile-card-leader-sub">${escapeHtml(r.leader_email)} &bull; ${escapeHtml(r.leader_phone)}</span>
+            </div>
+            <div class="mobile-card-bottom mono">
+              <span>${escapeHtml(r.leader_college)} &bull; ${escapeHtml(r.leader_year)}</span>
+              <span class="member-pill">${memberCount} ${memberCount === 1 ? 'MEMBER' : 'MEMBERS'}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      mobileCardsWrapper.querySelectorAll('.admin-mobile-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const id = card.getAttribute('data-id');
+          const reg = registrations.find(r => r.id === id);
+          if (reg) openDetailModal(reg);
+        });
+      });
+    }
   }
 
   // ── CSV Export Handler ──────────────────────────────────────────────────

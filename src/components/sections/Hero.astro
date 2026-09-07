@@ -359,6 +359,12 @@ const videoSrc =
       font-size: 0.54rem;
     }
 
+    .hero-line {
+      font-size: clamp(2.2rem, 8vw, 4rem);
+      width: 100%;
+      word-break: break-word;
+    }
+
     .hero-content {
       margin-bottom: 88px;
     }
@@ -367,22 +373,17 @@ const videoSrc =
       font-size: 1.02rem;
     }
 
-    .hero-countdown {
-      padding: 14px 18px;
-      max-width: 100%;
+    .hero-cta {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+      margin-top: 30px;
     }
 
-    .unit-val {
-      font-size: 1.4rem;
-    }
-
-    .timer-sep {
-      display: none;
-    }
-
-    .hero-countdown__timer {
-      gap: 12px;
-      justify-content: space-between;
+    .hero-cta .btn--paper,
+    .hero-cta__ghost {
+      width: 100%;
+      justify-content: center;
     }
   }
 

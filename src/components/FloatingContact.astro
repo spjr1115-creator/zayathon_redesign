@@ -360,9 +360,14 @@
     }
 
     .fc-panel {
-      width: calc(100vw - 32px);
-      max-width: 320px;
+      width: min(320px, calc(100vw - 32px));
+      max-width: 100%;
     }
+  }
+
+  .fc-contact-value {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   /* ----------------------------------------------------------
