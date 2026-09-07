@@ -32,6 +32,9 @@ import { navLinks, site } from '../data/site';
     </nav>
   </div>
 
+  <!-- Mobile menu backdrop -->
+  <div class="nav-backdrop" id="nav-backdrop" hidden></div>
+
   <!-- Mobile menu -->
   <div class="nav-menu" id="nav-menu" hidden>
     <ul role="list">
@@ -71,6 +74,8 @@ import { navLinks, site } from '../data/site';
 
   /* shared pill anatomy */
   .pill {
+    position: relative;
+    z-index: 135;
     pointer-events: auto;
     display: inline-flex;
     align-items: center;
@@ -212,6 +217,20 @@ import { navLinks, site } from '../data/site';
     transform: translateY(-3.1px) rotate(-45deg);
   }
 
+  /* mobile backdrop */
+  .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 125;
+    pointer-events: auto;
+  }
+
+  .nav-backdrop[hidden] {
+    display: none !important;
+  }
+
   /* mobile dropdown */
   .nav-menu {
     position: fixed;
@@ -233,7 +252,7 @@ import { navLinks, site } from '../data/site';
   }
 
   .nav-menu[hidden] {
-    display: none;
+    display: none !important;
   }
 
   .nav-menu ul {
@@ -254,6 +273,8 @@ import { navLinks, site } from '../data/site';
     letter-spacing: -0.01em;
     color: var(--ink, #111111);
     min-height: 44px;
+    pointer-events: auto;
+    cursor: pointer;
   }
 
   .nav-menu__link svg {
@@ -274,6 +295,8 @@ import { navLinks, site } from '../data/site';
     width: 100%;
     margin-top: 18px;
     min-height: 48px;
+    pointer-events: auto;
+    cursor: pointer;
   }
 
   .nav-menu__contact {
@@ -305,9 +328,10 @@ import { navLinks, site } from '../data/site';
 </style>
 
 <script>
-  const header = document.getElementById('site-header');
-  const toggle = header?.querySelector<HTMLButtonElement>('.menu-btn');
-  const menu = header?.querySelector<HTMLElement>('#nav-menu');
+  const header   = document.getElementById('site-header');
+  const toggle   = header?.querySelector<HTMLButtonElement>('.menu-btn');
+  const menu     = header?.querySelector<HTMLElement>('#nav-menu');
+  const backdrop = header?.querySelector<HTMLElement>('#nav-backdrop');
 
   const onScroll = () => {
     header?.classList.toggle('is-scrolled', window.scrollY > 48);
@@ -319,6 +343,7 @@ import { navLinks, site } from '../data/site';
     if (!toggle || !menu) return;
     toggle.setAttribute('aria-expanded', 'false');
     menu.hidden = true;
+    if (backdrop) backdrop.hidden = true;
     toggle.setAttribute('aria-label', 'Open menu');
     document.body.style.overflow = '';
   }
@@ -327,7 +352,9 @@ import { navLinks, site } from '../data/site';
     if (!toggle || !menu) return;
     toggle.setAttribute('aria-expanded', 'true');
     menu.hidden = false;
+    if (backdrop) backdrop.hidden = false;
     toggle.setAttribute('aria-label', 'Close menu');
+    document.body.style.overflow = 'hidden';
   }
 
   toggle?.addEventListener('click', (e) => {
@@ -340,16 +367,11 @@ import { navLinks, site } from '../data/site';
     }
   });
 
+  backdrop?.addEventListener('click', closeMenu);
+
   menu?.querySelectorAll('a').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href');
-      if (href && !href.startsWith('#')) {
-        e.preventDefault();
-        closeMenu();
-        window.location.href = href;
-      } else {
-        closeMenu();
-      }
+    a.addEventListener('click', () => {
+      setTimeout(closeMenu, 100);
     });
   });
 
