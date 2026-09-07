@@ -340,9 +340,18 @@ import { navLinks, site } from '../data/site';
     }
   });
 
-  menu?.querySelectorAll('a').forEach((a) =>
-    a.addEventListener('click', closeMenu)
-  );
+  menu?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if (href && !href.startsWith('#')) {
+        e.preventDefault();
+        closeMenu();
+        window.location.href = href;
+      } else {
+        closeMenu();
+      }
+    });
+  });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && menu && !menu.hidden) {
