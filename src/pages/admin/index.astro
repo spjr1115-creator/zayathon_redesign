@@ -155,8 +155,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div class="modal-panel" role="dialog" aria-labelledby="modal-team-name" aria-modal="true">
         
         <header class="modal-header">
-          <div>
-            <span class="modal-label mono">TEAM DETAILS</span>
+          <div class="modal-header-title-group">
+            <span class="modal-label mono">TEAM DETAILS &bull; REGISTRATION PROFILE</span>
             <h2 id="modal-team-name" class="modal-title">—</h2>
           </div>
           <button type="button" id="btn-close-modal" class="btn-close-modal" aria-label="Close detail panel">
@@ -529,7 +529,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     font-size: 0.8rem !important;
   }
 
-  /* Detail Modal / Panel */
+  /* Detail Modal / Panel Dossier Styling */
   .detail-modal {
     position: fixed;
     inset: 0;
@@ -541,21 +541,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(17, 17, 17, 0.4);
-    backdrop-filter: blur(2px);
+    background: rgba(17, 17, 17, 0.45);
+    backdrop-filter: blur(4px);
+    transition: opacity 250ms ease;
   }
 
   .modal-panel {
     position: relative;
     z-index: 101;
     width: 100%;
-    max-width: 520px;
+    max-width: 560px;
     height: 100%;
-    background: #FFFFFF;
+    background: #F0F0EE;
     display: flex;
     flex-direction: column;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
-    animation: slideLeft 300ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.15);
+    animation: slideLeft 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   @keyframes slideLeft {
@@ -564,46 +565,60 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   .modal-header {
-    padding: 32px;
-    border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+    padding: 28px 32px;
+    background: #F0F0EE;
+    border-bottom: 1px solid rgba(17, 17, 17, 0.12);
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .modal-header-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
   .modal-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
     color: #777777;
-    margin-bottom: 8px;
-    display: block;
+    text-transform: uppercase;
   }
 
   .modal-title {
     font-family: var(--font-display, 'Inter Tight', sans-serif);
-    font-size: 1.8rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-size: clamp(1.8rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
     color: #111111;
     text-transform: uppercase;
+    line-height: 1.05;
+    word-break: break-word;
   }
 
   .btn-close-modal {
-    background: none;
+    background: #FFFFFF;
     border: 1px solid rgba(17, 17, 17, 0.16);
     border-radius: 6px;
     padding: 8px 14px;
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
     font-size: 0.72rem;
     letter-spacing: 0.1em;
-    color: #555555;
+    color: #111111;
     cursor: pointer;
-    transition: border-color 200ms, color 200ms;
+    transition: background 200ms, border-color 200ms, color 200ms;
+    flex-shrink: 0;
+    margin-left: 16px;
   }
 
   .btn-close-modal:hover {
+    background: #111111;
+    color: #FFFFFF;
     border-color: #111111;
-    color: #111111;
   }
 
   .modal-body {
@@ -615,59 +630,190 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     gap: 32px;
   }
 
-  .detail-section {
+  /* Dossier Sections */
+  .dossier-section {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(17, 17, 17, 0.12);
   }
 
-  .detail-sec-title {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    color: #777777;
-    text-transform: uppercase;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+  .dossier-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
   }
 
-  .detail-grid {
+  .identity-section {
+    background: #FFFFFF;
+    border: 1px solid rgba(17, 17, 17, 0.12);
+    border-radius: 12px;
+    padding: 20px 24px;
+    gap: 0;
+  }
+
+  .identity-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px 16px;
   }
 
-  .detail-field {
+  .identity-block {
     display: flex;
     flex-direction: column;
     gap: 4px;
   }
 
-  .detail-field.full {
+  .domain-val {
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--blue, #1d4ed8);
+    line-height: 1.3;
+  }
+
+  .meta-val {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #111111;
+  }
+
+  .section-badge {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: #777777;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .dossier-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 16px;
+  }
+
+  .dossier-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    user-select: text;
+  }
+
+  .dossier-field.full {
     grid-column: 1 / -1;
   }
 
   .field-lbl {
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    color: #999999;
+    font-size: 0.63rem;
+    letter-spacing: 0.12em;
+    color: #777777;
     text-transform: uppercase;
   }
 
   .field-val {
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 400;
     color: #111111;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  .field-val.highlight {
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .field-val.muted {
+    color: #999999;
+  }
+
+  /* Interactive Contact Links */
+  .link-contact {
+    color: #111111;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 200ms ease;
+  }
+
+  .link-contact:hover {
+    color: var(--blue, #1d4ed8);
+    text-decoration: underline;
+  }
+
+  .contact-arrow {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.8em;
+    color: #777777;
+    transition: transform 200ms ease, color 200ms ease;
+  }
+
+  .link-contact:hover .contact-arrow {
+    transform: translate(2px, -2px);
+    color: var(--blue, #1d4ed8);
+  }
+
+  /* Member Cards Stack */
+  .members-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .member-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(17, 17, 17, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .member-card-subhead {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: #777777;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(17, 17, 17, 0.1);
+  }
+
+  .empty-members-text {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: #777777;
+    background: rgba(17, 17, 17, 0.04);
+    padding: 12px 16px;
+    border-radius: 6px;
   }
 
   /* Mobile Tweaks */
   @media (max-width: 768px) {
-    .filter-group {
-      flex: 1 1 100%;
-    }
     .modal-panel {
       max-width: 100%;
+    }
+    .modal-header {
+      padding: 20px 24px;
+    }
+    .modal-body {
+      padding: 24px;
+    }
+    .dossier-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .modal-panel {
+      animation: none !important;
+    }
+    .contact-arrow {
+      transition: none !important;
     }
   }
 </style>
@@ -987,12 +1133,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     });
   }
 
-  // ── Detail Modal ──────────────────────────────────────────────────────────
+  // ── Detail Modal (Redesigned Editorial Dossier View) ─────────────────────
   function openDetailModal(r: Registration) {
     if (!r || !detailModal || !modalTeamName || !modalBody) return;
 
     selectedRegistration = r;
     modalTeamName.textContent = selectedRegistration.team_name;
+
+    // Calculate total team size
+    let totalMembers = 1;
+    if (selectedRegistration.member_2_name && selectedRegistration.member_2_name.trim()) totalMembers++;
+    if (selectedRegistration.member_3_name && selectedRegistration.member_3_name.trim()) totalMembers++;
+    if (selectedRegistration.member_4_name && selectedRegistration.member_4_name.trim()) totalMembers++;
+
+    const membersText = `${totalMembers} ${totalMembers === 1 ? 'MEMBER' : 'MEMBERS'}`;
 
     const formattedDate = new Date(selectedRegistration.created_at).toLocaleString('en-US', {
       month: 'short',
@@ -1002,120 +1156,103 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       minute: '2-digit'
     });
 
-    let membersHtml = '';
+    // Helper for additional member blocks
+    const renderMemberCard = (label: string, name?: string | null, email?: string | null, phone?: string | null) => {
+      if (!name || !name.trim()) return '';
 
-    if (selectedRegistration.member_2_name && selectedRegistration.member_2_name.trim()) {
-      membersHtml += `
-        <div class="detail-section">
-          <div class="detail-sec-title">MEMBER 2</div>
-          <div class="detail-grid">
-            <div class="detail-field">
+      const emailHtml = email && email.trim() 
+        ? `<a href="mailto:${escapeHtml(email)}" class="field-val link-contact">${escapeHtml(email)} <span class="contact-arrow">↗</span></a>`
+        : `<span class="field-val muted">—</span>`;
+
+      const phoneHtml = phone && phone.trim()
+        ? `<a href="tel:${escapeHtml(phone)}" class="field-val link-contact">${escapeHtml(phone)} <span class="contact-arrow">↗</span></a>`
+        : `<span class="field-val muted">—</span>`;
+
+      return `
+        <div class="member-card">
+          <div class="member-card-subhead mono">${label}</div>
+          <div class="dossier-grid">
+            <div class="dossier-field full">
               <span class="field-lbl">FULL NAME</span>
-              <span class="field-val">${escapeHtml(selectedRegistration.member_2_name)}</span>
+              <span class="field-val highlight">${escapeHtml(name)}</span>
             </div>
-            <div class="detail-field">
+            <div class="dossier-field">
               <span class="field-lbl">EMAIL</span>
-              <span class="field-val">${escapeHtml(selectedRegistration.member_2_email || '—')}</span>
+              ${emailHtml}
             </div>
-            <div class="detail-field full">
+            <div class="dossier-field">
               <span class="field-lbl">PHONE</span>
-              <span class="field-val">${escapeHtml(selectedRegistration.member_2_phone || '—')}</span>
+              ${phoneHtml}
             </div>
           </div>
         </div>
       `;
-    }
+    };
 
-    if (selectedRegistration.member_3_name && selectedRegistration.member_3_name.trim()) {
-      membersHtml += `
-        <div class="detail-section">
-          <div class="detail-sec-title">MEMBER 3</div>
-          <div class="detail-grid">
-            <div class="detail-field">
-              <span class="field-lbl">FULL NAME</span>
-              <span class="field-val">${escapeHtml(selectedRegistration.member_3_name)}</span>
-            </div>
-            <div class="detail-field">
-              <span class="field-lbl">EMAIL</span>
-              <span class="field-val">${escapeHtml(selectedRegistration.member_3_email || '—')}</span>
-            </div>
-            <div class="detail-field full">
-              <span class="field-lbl">PHONE</span>
-              <span class="field-val">${escapeHtml(selectedRegistration.member_3_phone || '—')}</span>
-            </div>
-          </div>
-        </div>
-      `;
-    }
+    let memberCardsHtml = '';
+    memberCardsHtml += renderMemberCard('MEMBER 02', selectedRegistration.member_2_name, selectedRegistration.member_2_email, selectedRegistration.member_2_phone);
+    memberCardsHtml += renderMemberCard('MEMBER 03', selectedRegistration.member_3_name, selectedRegistration.member_3_email, selectedRegistration.member_3_phone);
+    memberCardsHtml += renderMemberCard('MEMBER 04', selectedRegistration.member_4_name, selectedRegistration.member_4_email, selectedRegistration.member_4_phone);
 
-    if (selectedRegistration.member_4_name && selectedRegistration.member_4_name.trim()) {
-      membersHtml += `
-        <div class="detail-section">
-          <div class="detail-sec-title">MEMBER 4</div>
-          <div class="detail-grid">
-            <div class="detail-field">
-              <span class="field-lbl">FULL NAME</span>
-              <span class="field-val">${escapeHtml(selectedRegistration.member_4_name)}</span>
-            </div>
-            <div class="detail-field">
-              <span class="field-lbl">EMAIL</span>
-              <span class="field-val">${escapeHtml(selectedRegistration.member_4_email || '—')}</span>
-            </div>
-            <div class="detail-field full">
-              <span class="field-lbl">PHONE</span>
-              <span class="field-val">${escapeHtml(selectedRegistration.member_4_phone || '—')}</span>
-            </div>
-          </div>
-        </div>
-      `;
-    }
+    const membersSectionContent = memberCardsHtml 
+      ? `<div class="members-stack">${memberCardsHtml}</div>`
+      : `<p class="empty-members-text mono">1 MEMBER &bull; LEADER ONLY</p>`;
 
     modalBody.innerHTML = `
-      <div class="detail-section">
-        <div class="detail-sec-title">TEAM OVERVIEW</div>
-        <div class="detail-grid">
-          <div class="detail-field">
-            <span class="field-lbl">TEAM NAME</span>
-            <span class="field-val">${escapeHtml(selectedRegistration.team_name)}</span>
-          </div>
-          <div class="detail-field">
+      <!-- Team Identity Block -->
+      <div class="dossier-section identity-section">
+        <div class="identity-grid">
+          <div class="identity-block">
             <span class="field-lbl">PROBLEM DOMAIN</span>
-            <span class="field-val">${escapeHtml(selectedRegistration.problem_domain)}</span>
+            <span class="domain-val">${escapeHtml(selectedRegistration.problem_domain)}</span>
           </div>
-          <div class="detail-field full">
+          <div class="identity-block">
             <span class="field-lbl">REGISTRATION DATE</span>
-            <span class="field-val">${formattedDate}</span>
+            <span class="meta-val mono">${formattedDate}</span>
+          </div>
+          <div class="identity-block">
+            <span class="field-lbl">TEAM SIZE</span>
+            <span class="meta-val mono">${membersText}</span>
           </div>
         </div>
       </div>
 
-      <div class="detail-section">
-        <div class="detail-sec-title">TEAM LEADER</div>
-        <div class="detail-grid">
-          <div class="detail-field">
+      <!-- 01 / Team Leader Section -->
+      <div class="dossier-section">
+        <div class="section-badge mono">01 / TEAM LEADER</div>
+        <div class="dossier-grid">
+          <div class="dossier-field">
             <span class="field-lbl">FULL NAME</span>
-            <span class="field-val">${escapeHtml(selectedRegistration.leader_name)}</span>
+            <span class="field-val highlight">${escapeHtml(selectedRegistration.leader_name)}</span>
           </div>
-          <div class="detail-field">
-            <span class="field-lbl">EMAIL</span>
-            <span class="field-val">${escapeHtml(selectedRegistration.leader_email)}</span>
-          </div>
-          <div class="detail-field">
-            <span class="field-lbl">PHONE NUMBER</span>
-            <span class="field-val">${escapeHtml(selectedRegistration.leader_phone)}</span>
-          </div>
-          <div class="detail-field">
+          <div class="dossier-field">
             <span class="field-lbl">YEAR OF STUDY</span>
             <span class="field-val">${escapeHtml(selectedRegistration.leader_year)}</span>
           </div>
-          <div class="detail-field full">
+          <div class="dossier-field">
+            <span class="field-lbl">EMAIL</span>
+            <a href="mailto:${escapeHtml(selectedRegistration.leader_email)}" class="field-val link-contact">
+              ${escapeHtml(selectedRegistration.leader_email)} <span class="contact-arrow">↗</span>
+            </a>
+          </div>
+          <div class="dossier-field">
+            <span class="field-lbl">PHONE</span>
+            <a href="tel:${escapeHtml(selectedRegistration.leader_phone)}" class="field-val link-contact">
+              ${escapeHtml(selectedRegistration.leader_phone)} <span class="contact-arrow">↗</span>
+            </a>
+          </div>
+          <div class="dossier-field full">
             <span class="field-lbl">COLLEGE / INSTITUTION</span>
             <span class="field-val">${escapeHtml(selectedRegistration.leader_college)}</span>
           </div>
         </div>
       </div>
 
-      ${membersHtml}
+      <!-- 02 / Team Members Section -->
+      <div class="dossier-section">
+        <div class="section-badge mono">02 / TEAM MEMBERS</div>
+        ${membersSectionContent}
+      </div>
     `;
 
     detailModal.hidden = false;
