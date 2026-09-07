@@ -53,6 +53,95 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </div>
       </div>
 
+      <!-- Admin Event Control Section -->
+      <section class="event-control-card">
+        <div class="event-control-header">
+          <div>
+            <span class="section-label mono">EVENT CONTROL &bull; COUNTDOWN CLOCK</span>
+            <h2 class="event-control-heading font-display">NEXT EVENT COUNTDOWN</h2>
+          </div>
+          <div id="event-state-badge" class="state-badge mono inactive">COUNTDOWN INACTIVE</div>
+        </div>
+
+        <!-- Active Event Live Preview -->
+        <div id="active-event-display" class="active-event-box" hidden>
+          <div class="active-event-info">
+            <span class="field-lbl">CURRENT ACTIVE EVENT</span>
+            <div id="active-event-name" class="active-title font-display">—</div>
+            <div id="active-event-target" class="active-meta mono">—</div>
+          </div>
+          
+          <div class="active-event-timer mono">
+            <div class="admin-timer-unit">
+              <span id="admin-cd-days" class="admin-unit-val">00</span>
+              <span class="admin-unit-lbl">DAYS</span>
+            </div>
+            <span class="admin-timer-sep">:</span>
+            <div class="admin-timer-unit">
+              <span id="admin-cd-hours" class="admin-unit-val">00</span>
+              <span class="admin-unit-lbl">HOURS</span>
+            </div>
+            <span class="admin-timer-sep">:</span>
+            <div class="admin-timer-unit">
+              <span id="admin-cd-minutes" class="admin-unit-val">00</span>
+              <span class="admin-unit-lbl">MINS</span>
+            </div>
+            <span class="admin-timer-sep">:</span>
+            <div class="admin-timer-unit">
+              <span id="admin-cd-seconds" class="admin-unit-val">00</span>
+              <span class="admin-unit-lbl">SECS</span>
+            </div>
+          </div>
+
+          <button type="button" id="btn-stop-countdown" class="btn-stop-countdown mono">
+            STOP COUNTDOWN
+          </button>
+        </div>
+
+        <!-- Event Form -->
+        <form id="event-control-form" class="event-form">
+          <div id="event-error" class="event-error" aria-live="assertive" hidden></div>
+
+          <div class="event-form-grid">
+            <div class="field-group">
+              <label for="event-name">EVENT NAME <span class="req">*</span></label>
+              <input 
+                type="text" 
+                id="event-name" 
+                name="event_name" 
+                placeholder="e.g. REGISTRATION OPENS" 
+                required 
+              />
+            </div>
+
+            <div class="field-group">
+              <label for="target-time">TARGET DATE & TIME (IST / Asia-Kolkata) <span class="req">*</span></label>
+              <input 
+                type="datetime-local" 
+                id="target-time" 
+                name="target_time" 
+                required 
+              />
+              <span class="field-hint mono">Stored as absolute UTC, formatted in IST (UTC+5:30)</span>
+            </div>
+
+            <div class="field-group full">
+              <label for="event-desc">EVENT DESCRIPTION (OPTIONAL)</label>
+              <input 
+                type="text" 
+                id="event-desc" 
+                name="event_description" 
+                placeholder="e.g. Secure your team's place at ZAYATHON." 
+              />
+            </div>
+          </div>
+
+          <button type="submit" id="btn-start-countdown" class="btn-submit-event font-display">
+            START COUNTDOWN <span class="arrow">↗</span>
+          </button>
+        </form>
+      </section>
+
       <!-- Controls & Filter Bar -->
       <div class="controls-bar">
         
@@ -367,6 +456,175 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     font-weight: 600;
     letter-spacing: -0.03em;
     color: #111111;
+  }
+
+  /* Event Control Card */
+  .event-control-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(17, 17, 17, 0.12);
+    border-radius: 12px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .event-control-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+  }
+
+  .event-control-heading {
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #111111;
+    text-transform: uppercase;
+  }
+
+  .state-badge {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    padding: 6px 14px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .state-badge.inactive {
+    background: rgba(17, 17, 17, 0.06);
+    color: #777777;
+  }
+
+  .state-badge.active {
+    background: rgba(29, 78, 216, 0.1);
+    color: var(--blue, #1d4ed8);
+    border: 1px solid rgba(29, 78, 216, 0.2);
+  }
+
+  .active-event-box {
+    background: #FAFAFA;
+    border: 1px solid rgba(17, 17, 17, 0.1);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .active-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #111111;
+    margin-top: 4px;
+  }
+
+  .active-meta {
+    font-size: 0.8rem;
+    color: #777777;
+    margin-top: 4px;
+  }
+
+  .active-event-timer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #111111;
+    color: #FFFFFF;
+    padding: 16px 24px;
+    border-radius: 8px;
+    width: fit-content;
+  }
+
+  .admin-timer-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .admin-unit-val {
+    font-family: var(--font-display, 'Inter Tight', sans-serif);
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .admin-unit-lbl {
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    color: #999999;
+    margin-top: 4px;
+  }
+
+  .admin-timer-sep {
+    font-size: 1.2rem;
+    color: #555555;
+  }
+
+  .btn-stop-countdown {
+    align-self: flex-start;
+    background: #dc2626;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: background 200ms ease;
+  }
+
+  .btn-stop-countdown:hover {
+    background: #b91c1c;
+  }
+
+  .event-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .field-hint {
+    font-size: 0.7rem;
+    color: #777777;
+    margin-top: 2px;
+  }
+
+  .event-error {
+    background: rgba(220, 38, 38, 0.06);
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: #dc2626;
+    font-size: 0.88rem;
+    white-space: pre-line;
+  }
+
+  .btn-submit-event {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #111111;
+    color: #FFFFFF;
+    border: none;
+    height: 48px;
+    padding: 0 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 200ms ease;
+  }
+
+  .btn-submit-event:hover {
+    background: #333333;
   }
 
   /* Controls Bar */
@@ -844,6 +1102,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   /* Mobile Tweaks */
   @media (max-width: 768px) {
+    .event-form-grid {
+      grid-template-columns: 1fr;
+    }
+    .active-event-timer {
+      width: 100%;
+      justify-content: space-between;
+    }
     .modal-panel {
       max-width: 100%;
     }
@@ -933,6 +1198,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   let registrations: Registration[] = [];
   let filteredRegistrations: Registration[] = [];
   let selectedRegistration: Registration | null = null;
+  let activeEventClock: any = null;
+  let adminTimerInterval: any = null;
 
   // DOM Elements
   const btnSignOut = document.getElementById('btn-signout');
@@ -959,9 +1226,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   const modalTeamName = document.getElementById('modal-team-name');
   const modalBody = document.getElementById('modal-body');
 
+  // Event Control DOM
+  const eventForm = document.getElementById('event-control-form') as HTMLFormElement;
+  const eventError = document.getElementById('event-error');
+  const btnStopCountdown = document.getElementById('btn-stop-countdown');
+
   // ── Session & Authorization Check ─────────────────────────────────────────
   async function initAdminDashboard() {
-    closeDetailModal(); // Ensure detail modal is closed initially
+    closeDetailModal();
 
     const { data: { session } } = await supabase.auth.getSession();
 
@@ -977,8 +1249,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       return;
     }
 
-    // Load registrations only after authorized
-    await fetchRegistrations();
+    // Load registrations & event clock only after authorized
+    await Promise.all([
+      fetchRegistrations(),
+      fetchEventClock()
+    ]);
   }
 
   async function verifyAdmin(userId: string, email?: string): Promise<boolean> {
@@ -999,6 +1274,209 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     } catch {
       return false;
     }
+  }
+
+  // ── Event Control Handlers ────────────────────────────────────────────────
+  async function fetchEventClock() {
+    try {
+      const { data, error } = await supabase
+        .from('event_clock')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Failed to fetch event clock:', error);
+        return;
+      }
+
+      activeEventClock = data;
+      renderAdminEventControl();
+    } catch (err) {
+      console.error('Error fetching event clock:', err);
+    }
+  }
+
+  function renderAdminEventControl() {
+    const badge = document.getElementById('event-state-badge');
+    const displayBox = document.getElementById('active-event-display');
+    const nameEl = document.getElementById('active-event-name');
+    const targetEl = document.getElementById('active-event-target');
+    const eventNameInput = document.getElementById('event-name') as HTMLInputElement;
+    const eventDescInput = document.getElementById('event-desc') as HTMLInputElement;
+
+    if (!activeEventClock || !activeEventClock.is_active) {
+      if (badge) {
+        badge.textContent = 'COUNTDOWN INACTIVE';
+        badge.className = 'state-badge mono inactive';
+      }
+      if (displayBox) displayBox.hidden = true;
+      if (adminTimerInterval) clearInterval(adminTimerInterval);
+      return;
+    }
+
+    // Active event exists
+    if (badge) {
+      badge.textContent = 'COUNTDOWN ACTIVE';
+      badge.className = 'state-badge mono active';
+    }
+    if (displayBox) displayBox.hidden = false;
+
+    if (nameEl) nameEl.textContent = activeEventClock.event_name.toUpperCase();
+
+    const targetDate = new Date(activeEventClock.target_time);
+    const formattedIST = targetDate.toLocaleString('en-US', {
+      timeZone: 'Asia/Kolkata',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    }) + ' (IST)';
+
+    if (targetEl) targetEl.textContent = `TARGET: ${formattedIST}`;
+
+    // Prefill form for convenience
+    if (eventNameInput && !eventNameInput.value) {
+      eventNameInput.value = activeEventClock.event_name;
+    }
+    if (eventDescInput && !eventDescInput.value && activeEventClock.event_description) {
+      eventDescInput.value = activeEventClock.event_description;
+    }
+
+    startAdminTimer(targetDate.getTime());
+  }
+
+  function startAdminTimer(targetMs: number) {
+    if (adminTimerInterval) clearInterval(adminTimerInterval);
+
+    const updateAdminTimer = () => {
+      const daysEl = document.getElementById('admin-cd-days');
+      const hoursEl = document.getElementById('admin-cd-hours');
+      const minsEl = document.getElementById('admin-cd-minutes');
+      const secsEl = document.getElementById('admin-cd-seconds');
+
+      const now = Date.now();
+      const diff = targetMs - now;
+
+      if (diff <= 0) {
+        if (daysEl) daysEl.textContent = '00';
+        if (hoursEl) hoursEl.textContent = '00';
+        if (minsEl) minsEl.textContent = '00';
+        if (secsEl) secsEl.textContent = '00';
+        if (adminTimerInterval) clearInterval(adminTimerInterval);
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+      if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+      if (minsEl) minsEl.textContent = String(mins).padStart(2, '0');
+      if (secsEl) secsEl.textContent = String(secs).padStart(2, '0');
+    };
+
+    updateAdminTimer();
+    adminTimerInterval = setInterval(updateAdminTimer, 1000);
+  }
+
+  if (eventForm) {
+    eventForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (eventError) eventError.hidden = true;
+
+      const formData = new FormData(eventForm);
+      const eventName = String(formData.get('event_name') || '').trim();
+      const eventDesc = String(formData.get('event_description') || '').trim();
+      const targetTimeInput = String(formData.get('target_time') || '').trim();
+
+      if (!eventName) {
+        if (eventError) {
+          eventError.textContent = 'EVENT NAME REQUIRED\n\nPlease enter an event name.';
+          eventError.hidden = false;
+        }
+        return;
+      }
+
+      if (!targetTimeInput) {
+        if (eventError) {
+          eventError.textContent = 'INVALID EVENT TIME\n\nPlease choose a valid date and time.';
+          eventError.hidden = false;
+        }
+        return;
+      }
+
+      const targetDate = new Date(targetTimeInput);
+      if (isNaN(targetDate.getTime()) || targetDate.getTime() <= Date.now()) {
+        if (eventError) {
+          eventError.textContent = 'INVALID EVENT TIME\n\nChoose a future date and time.';
+          eventError.hidden = false;
+        }
+        return;
+      }
+
+      try {
+        const { data: userRes } = await supabase.auth.getUser();
+        const userUid = userRes?.user?.id || null;
+
+        const payload = {
+          event_name: eventName,
+          event_description: eventDesc || null,
+          target_time: targetDate.toISOString(),
+          is_active: true,
+          updated_by: userUid
+        };
+
+        let resultError = null;
+        if (activeEventClock?.id) {
+          const { error } = await supabase
+            .from('event_clock')
+            .update(payload)
+            .eq('id', activeEventClock.id);
+          resultError = error;
+        } else {
+          const { error } = await supabase
+            .from('event_clock')
+            .insert([payload]);
+          resultError = error;
+        }
+
+        if (resultError) throw resultError;
+
+        await fetchEventClock();
+
+      } catch (err: any) {
+        console.error('Failed to start countdown:', err);
+        if (eventError) {
+          eventError.textContent = 'FAILED TO START COUNTDOWN\n\n' + (err?.message || 'Please try again.');
+          eventError.hidden = false;
+        }
+      }
+    });
+  }
+
+  if (btnStopCountdown) {
+    btnStopCountdown.addEventListener('click', async () => {
+      if (!activeEventClock?.id) return;
+
+      try {
+        const { error } = await supabase
+          .from('event_clock')
+          .update({ is_active: false })
+          .eq('id', activeEventClock.id);
+
+        if (error) throw error;
+
+        await fetchEventClock();
+      } catch (err) {
+        console.error('Failed to stop countdown:', err);
+      }
+    });
   }
 
   // ── Fetch Registrations ───────────────────────────────────────────────────
@@ -1096,12 +1574,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     const sortBy = sortSelect?.value || 'LATEST';
 
     filteredRegistrations = registrations.filter(r => {
-      // Domain filter
       if (domain !== 'ALL' && r.problem_domain !== domain) {
         return false;
       }
 
-      // Search query filter
       if (query) {
         const teamMatch   = (r.team_name || '').toLowerCase().includes(query);
         const leaderMatch = (r.leader_name || '').toLowerCase().includes(query);
@@ -1115,7 +1591,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       return true;
     });
 
-    // Sorting
     filteredRegistrations.sort((a, b) => {
       if (sortBy === 'LATEST') {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
@@ -1186,7 +1661,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       `;
     }).join('');
 
-    // Attach click handlers for detail view
     tbody.querySelectorAll('tr').forEach(row => {
       row.addEventListener('click', () => {
         const id = row.getAttribute('data-id');
@@ -1200,7 +1674,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   function exportRegistrationsToCsv() {
     if (!btnExportCsv) return;
 
-    // Target registrations already loaded in memory
     const exportList = registrations;
 
     if (!exportList || exportList.length === 0) {
@@ -1256,11 +1729,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     const csvContent = [headers.map(h => escapeCsv(h)).join(','), ...rows].join('\r\n');
 
-    // Dynamic filename: zayathon-registrations-YYYY-MM-DD.csv
     const dateStr = new Date().toISOString().split('T')[0];
     const filename = `zayathon-registrations-${dateStr}.csv`;
 
-    // Local client-side browser download
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -1271,7 +1742,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 
-    // Micro-interaction button state update
     const originalContent = btnExportCsv.innerHTML;
     btnExportCsv.innerHTML = 'EXPORTED ✓';
     setTimeout(() => {
@@ -1286,7 +1756,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     selectedRegistration = r;
     modalTeamName.textContent = selectedRegistration.team_name;
 
-    // Calculate total team size
     let totalMembers = 1;
     if (selectedRegistration.member_2_name && selectedRegistration.member_2_name.trim()) totalMembers++;
     if (selectedRegistration.member_3_name && selectedRegistration.member_3_name.trim()) totalMembers++;
@@ -1302,7 +1771,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       minute: '2-digit'
     });
 
-    // Helper for additional member blocks
     const renderMemberCard = (label: string, name?: string | null, email?: string | null, phone?: string | null) => {
       if (!name || !name.trim()) return '';
 
@@ -1345,7 +1813,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       : `<p class="empty-members-text mono">1 MEMBER &bull; LEADER ONLY</p>`;
 
     modalBody.innerHTML = `
-      <!-- Team Identity Block -->
       <div class="dossier-section identity-section">
         <div class="identity-grid">
           <div class="identity-block">
@@ -1363,7 +1830,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <!-- 01 / Team Leader Section -->
       <div class="dossier-section">
         <div class="section-badge mono">01 / TEAM LEADER</div>
         <div class="dossier-grid">
@@ -1394,7 +1860,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <!-- 02 / Team Members Section -->
       <div class="dossier-section">
         <div class="section-badge mono">02 / TEAM MEMBERS</div>
         ${membersSectionContent}
