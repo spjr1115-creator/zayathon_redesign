@@ -4,9 +4,23 @@ import '../styles/tokens.css';
 import '../styles/base.css';
 import FloatingContact from '../components/FloatingContact.astro';
 
-const title = `${site.name} — ${site.theme} | Build. Innovate. Win.`;
-const description =
-  'ZAYATHON is a student hackathon by ZAYA CODE HUB — open to 1st–3rd year students. 10 hours of non-stop building at Sona College of Technology, Salem.';
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  noindex?: boolean;
+  ogType?: string;
+  image?: string;
+}
+
+const {
+  title = "ZAYATHON 2026 — Build. Test. Present. | ZAYA CODE HUB",
+  description = "ZAYATHON 2026 is a 10-hour student hackathon by ZAYA CODE HUB, bringing teams together to build innovative solutions across AI, robotics, cybersecurity, healthtech, fintech and more.",
+  canonical = "https://zayathon-xi.vercel.app/",
+  noindex = false,
+  ogType = "website",
+  image = "https://zayathon-xi.vercel.app/og-image.png"
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -18,16 +32,27 @@ const description =
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#070a12" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={site.officialUrl} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- Open Graph / social (primary acquisition channel) -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={site.name} />
-    <meta property="og:title" content={`${site.name} — ${site.theme}`} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="ZAYATHON" />
+    <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={site.officialUrl} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
 
     <!-- Fonts: Inter Tight (display) · Inter (body) · JetBrains Mono (data) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

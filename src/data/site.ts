@@ -23,7 +23,7 @@ export const site = {
   byline: 'CREATED BY ZAYA CODE HUB TEAM', // [official] meta description
   org: 'ZAYA CODE HUB',
   copyrightYear: 2026, // [draft] footer © 2026 Zaya Code Hub
-  officialUrl: 'https://zayathon.in/',
+  officialUrl: 'https://zayathon-xi.vercel.app/',
   contact: {
     email: 'zayacodehub@gmail.com', // [social] sponsor post; [draft] footer
     phoneDisplay: '+91 70333 99183', // [social] / [draft] footer

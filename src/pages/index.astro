@@ -13,9 +13,36 @@ import Prizes from '../components/sections/Prizes.astro';
 import Sponsors from '../components/sections/Sponsors.astro';
 import Faq from '../components/sections/Faq.astro';
 import FinalCta from '../components/sections/FinalCta.astro';
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "ZAYATHON 2026",
+  "startDate": "2026-02-10T08:00:00+05:30",
+  "endDate": "2026-02-10T18:00:00+05:30",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "location": {
+    "@type": "Place",
+    "name": "Sona College of Technology",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Salem",
+      "addressRegion": "Tamil Nadu",
+      "addressCountry": "IN"
+    }
+  },
+  "image": ["https://zayathon-xi.vercel.app/og-image.png"],
+  "description": "ZAYATHON 2026 is a 10-hour student hackathon by ZAYA CODE HUB, bringing teams together to build innovative solutions across AI, robotics, cybersecurity, healthtech, fintech and more.",
+  "organizer": {
+    "@type": "Organization",
+    "name": "ZAYA CODE HUB",
+    "url": "https://zayathon-xi.vercel.app/"
+  }
+};
 ---
 
 <BaseLayout>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <Header />
   <main id="main">
     <Hero />
