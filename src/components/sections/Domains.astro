@@ -358,6 +358,17 @@ const arenaDomains = [
     display: flex;
     flex-direction: column;
     position: relative;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 48px;
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    .arena-row:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+      transition: transform 120ms ease, opacity 120ms ease;
+    }
   }
 
   .row-main {

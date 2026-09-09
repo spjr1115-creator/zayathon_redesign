@@ -2,7 +2,7 @@
    ZAYATHON — v2 global base styles & primitives
    ============================================================ */
 
-/* ————— Reset ————— */
+/* ————— Reset & Touch Responsiveness ————— */
 *,
 *::before,
 *::after {
@@ -39,9 +39,13 @@ video {
 input,
 button,
 textarea,
-select {
+select,
+a,
+[role='button'] {
   font: inherit;
   color: inherit;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 a {
@@ -186,12 +190,24 @@ p {
   transition: transform var(--dur-fast) var(--ease-out);
 }
 
-.btn:hover svg.arrow {
-  transform: translateX(4px);
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover svg.arrow {
+    transform: translateX(4px);
+  }
 }
 
 .btn:active {
   transform: translateY(1px);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .btn:active,
+  button:active,
+  a:active,
+  [role='button']:active {
+    transform: scale(0.98);
+    transition: transform 120ms var(--ease-out), opacity 120ms var(--ease-out);
+  }
 }
 
 /* Solid blue — primary interactive on paper */

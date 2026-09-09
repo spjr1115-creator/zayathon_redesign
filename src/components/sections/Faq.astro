@@ -191,11 +191,14 @@ const faqList = [
     display: flex;
     align-items: baseline;
     padding: clamp(24px, 3vw, 36px) 0;
+    min-height: 48px;
     background: transparent;
     border: none;
     color: inherit;
     cursor: pointer;
     text-align: left;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
@@ -289,6 +292,20 @@ const faqList = [
     .faq-trigger[aria-expanded="true"]:hover .faq-icon {
       color: var(--blue);
     }
+    .btn-contact:hover {
+      background-color: var(--blue);
+      color: #F0F0EE;
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    .faq-trigger:active,
+    .btn-contact:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+      transition: transform 120ms ease, opacity 120ms ease;
+    }
   }
 
   /* Footer CTA */
@@ -309,6 +326,10 @@ const faqList = [
   }
 
   .btn-contact {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
     font-family: var(--font-display);
     font-size: clamp(1.2rem, 1.8vw, 1.8rem);
     font-weight: 500;
@@ -319,13 +340,9 @@ const faqList = [
     border-radius: 40px;
     text-transform: uppercase;
     text-decoration: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     transition: all 300ms ease;
-  }
-
-  .btn-contact:hover {
-    background-color: var(--blue);
-    color: #F0F0EE;
-    transform: translateY(-2px);
   }
 
   .footer-mail {

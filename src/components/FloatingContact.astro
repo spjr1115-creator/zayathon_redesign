@@ -125,6 +125,7 @@
     align-items: center;
     gap: 8px;
     height: 52px;
+    min-height: 48px;
     padding: 0 22px;
     background: var(--fc-bg);
     color: var(--fc-fg);
@@ -137,17 +138,50 @@
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     transition:
       padding var(--fc-dur) var(--fc-ease),
       box-shadow var(--fc-dur) var(--fc-ease),
-      background var(--fc-dur) var(--fc-ease);
+      background var(--fc-dur) var(--fc-ease),
+      transform var(--dur-micro) var(--ease-out);
     white-space: nowrap;
   }
 
-  .fc-trigger:hover {
-    background: #222222;
-    box-shadow: var(--fc-shadow-lg);
-    padding: 0 26px;
+  @media (hover: hover) and (pointer: fine) {
+    .fc-trigger:hover {
+      background: #222222;
+      box-shadow: var(--fc-shadow-lg);
+      padding: 0 26px;
+    }
+
+    .fc-trigger:hover .fc-btn-icon {
+      transform: translate(3px, -3px);
+    }
+
+    .fc-close-btn:hover {
+      color: var(--fc-fg);
+    }
+
+    .fc-contact-row:hover .fc-contact-label,
+    .fc-contact-row:hover .fc-contact-value {
+      color: var(--fc-blue);
+    }
+
+    .fc-contact-row:hover .fc-arrow {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    .fc-trigger:active,
+    .fc-close-btn:active,
+    .fc-contact-row:active {
+      transform: scale(0.97);
+      opacity: 0.88;
+      transition: transform 120ms var(--ease-out), opacity 120ms var(--ease-out);
+    }
   }
 
   .fc-trigger:focus-visible {
@@ -161,10 +195,6 @@
     font-size: 1em;
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
     transition: transform var(--fc-dur) var(--fc-ease);
-  }
-
-  .fc-trigger:hover .fc-btn-icon {
-    transform: translate(3px, -3px);
   }
 
   /* When panel is open — button shows CLOSE × */
@@ -230,16 +260,22 @@
     background: none;
     border: none;
     color: var(--fc-muted);
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     line-height: 1;
     cursor: pointer;
-    padding: 4px;
-    border-radius: 4px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: -8px -8px -8px 0;
+    padding: 0;
+    border-radius: 50%;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     transition: color var(--fc-dur) ease;
-  }
-
-  .fc-close-btn:hover {
-    color: var(--fc-fg);
   }
 
   .fc-close-btn:focus-visible {
@@ -276,7 +312,10 @@
     gap: 4px;
     text-decoration: none;
     padding: 14px 0;
+    min-height: 48px;
     border-bottom: 1px solid var(--fc-divider);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     transition: color var(--fc-dur) ease;
   }
 
