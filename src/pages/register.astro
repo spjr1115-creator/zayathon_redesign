@@ -60,7 +60,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <div class="fields-container">
                 <div class="field-group">
                   <label for="team_name">TEAM NAME <span class="req" aria-hidden="true">*</span></label>
-                  <input type="text" id="team_name" name="team_name" required aria-required="true" autocomplete="organization" placeholder="Enter team name" />
+                  <input type="text" id="team_name" name="team_name" required aria-required="true" autocomplete="organization" placeholder="Enter team name" maxlength="100" />
                 </div>
                 
                 <div class="field-group">
@@ -97,22 +97,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <div class="fields-container">
                 <div class="field-group">
                   <label for="leader_name">FULL NAME <span class="req" aria-hidden="true">*</span></label>
-                  <input type="text" id="leader_name" name="leader_name" required aria-required="true" autocomplete="name" placeholder="Leader's full name" />
+                  <input type="text" id="leader_name" name="leader_name" required aria-required="true" autocomplete="name" placeholder="Leader's full name" maxlength="100" />
                 </div>
                 
                 <div class="field-group">
                   <label for="leader_email">EMAIL <span class="req" aria-hidden="true">*</span></label>
-                  <input type="email" id="leader_email" name="leader_email" required aria-required="true" autocomplete="email" placeholder="leader@example.com" />
+                  <input type="email" id="leader_email" name="leader_email" required aria-required="true" autocomplete="email" placeholder="leader@example.com" maxlength="150" />
                 </div>
                 
                 <div class="field-group">
                   <label for="leader_phone">PHONE NUMBER <span class="req" aria-hidden="true">*</span></label>
-                  <input type="tel" id="leader_phone" name="leader_phone" required aria-required="true" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" title="Please enter exactly 10 digits" />
+                  <input type="tel" id="leader_phone" name="leader_phone" required aria-required="true" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" title="Please enter exactly 10 digits" maxlength="15" />
                 </div>
 
                 <div class="field-group">
                   <label for="leader_college">COLLEGE / INSTITUTION <span class="req" aria-hidden="true">*</span></label>
-                  <input type="text" id="leader_college" name="leader_college" required aria-required="true" autocomplete="organization" placeholder="Full college name" />
+                  <input type="text" id="leader_college" name="leader_college" required aria-required="true" autocomplete="organization" placeholder="Full college name" maxlength="150" />
                 </div>
 
                 <div class="field-group">
@@ -150,15 +150,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <div class="fields-container">
                       <div class="field-group">
                         <label for="member_2_name">FULL NAME <span class="req" aria-hidden="true">*</span></label>
-                        <input type="text" id="member_2_name" name="member_2_name" autocomplete="name" placeholder="Member's full name" />
+                        <input type="text" id="member_2_name" name="member_2_name" autocomplete="name" placeholder="Member's full name" maxlength="100" />
                       </div>
                       <div class="field-group">
                         <label for="member_2_email">EMAIL <span class="req" aria-hidden="true">*</span></label>
-                        <input type="email" id="member_2_email" name="member_2_email" autocomplete="email" placeholder="member@example.com" />
+                        <input type="email" id="member_2_email" name="member_2_email" autocomplete="email" placeholder="member@example.com" maxlength="150" />
                       </div>
                       <div class="field-group">
                         <label for="member_2_phone">PHONE NUMBER <span class="req" aria-hidden="true">*</span></label>
-                        <input type="tel" id="member_2_phone" name="member_2_phone" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" />
+                        <input type="tel" id="member_2_phone" name="member_2_phone" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" maxlength="15" />
                       </div>
                     </div>
                   </div>
@@ -171,15 +171,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <div class="fields-container">
                       <div class="field-group">
                         <label for="member_3_name">FULL NAME <span class="req" aria-hidden="true">*</span></label>
-                        <input type="text" id="member_3_name" name="member_3_name" autocomplete="name" placeholder="Member's full name" />
+                        <input type="text" id="member_3_name" name="member_3_name" autocomplete="name" placeholder="Member's full name" maxlength="100" />
                       </div>
                       <div class="field-group">
                         <label for="member_3_email">EMAIL <span class="req" aria-hidden="true">*</span></label>
-                        <input type="email" id="member_3_email" name="member_3_email" autocomplete="email" placeholder="member@example.com" />
+                        <input type="email" id="member_3_email" name="member_3_email" autocomplete="email" placeholder="member@example.com" maxlength="150" />
                       </div>
                       <div class="field-group">
                         <label for="member_3_phone">PHONE NUMBER <span class="req" aria-hidden="true">*</span></label>
-                        <input type="tel" id="member_3_phone" name="member_3_phone" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" />
+                        <input type="tel" id="member_3_phone" name="member_3_phone" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" maxlength="15" />
                       </div>
                     </div>
                   </div>
@@ -192,15 +192,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <div class="fields-container">
                       <div class="field-group">
                         <label for="member_4_name">FULL NAME <span class="req" aria-hidden="true">*</span></label>
-                        <input type="text" id="member_4_name" name="member_4_name" autocomplete="name" placeholder="Member's full name" />
+                        <input type="text" id="member_4_name" name="member_4_name" autocomplete="name" placeholder="Member's full name" maxlength="100" />
                       </div>
                       <div class="field-group">
                         <label for="member_4_email">EMAIL <span class="req" aria-hidden="true">*</span></label>
-                        <input type="email" id="member_4_email" name="member_4_email" autocomplete="email" placeholder="member@example.com" />
+                        <input type="email" id="member_4_email" name="member_4_email" autocomplete="email" placeholder="member@example.com" maxlength="150" />
                       </div>
                       <div class="field-group">
                         <label for="member_4_phone">PHONE NUMBER <span class="req" aria-hidden="true">*</span></label>
-                        <input type="tel" id="member_4_phone" name="member_4_phone" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" />
+                        <input type="tel" id="member_4_phone" name="member_4_phone" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" maxlength="15" />
                       </div>
                     </div>
                   </div>

@@ -1777,6 +1777,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           updated_by: userUid
         };
 
+        // Deactivate any existing active event clocks to guarantee a single active event
+        await supabase
+          .from('event_clock')
+          .update({ is_active: false })
+          .eq('is_active', true);
+
         let resultError = null;
         if (activeEventClock?.id) {
           const { error } = await supabase
