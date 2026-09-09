@@ -68,7 +68,7 @@ const faqList = [
       <div class="faq-list" role="list">
         {faqList.map((item, i) => (
           <div class="faq-row" data-reveal style={`--d: ${(i * 100) + 150}ms;`}>
-            <button class="faq-trigger" aria-expanded="false" aria-controls={`faq-answer-${i}`}>
+            <button class="faq-trigger" id={`faq-trigger-${i}`} type="button" aria-expanded="false" aria-controls={`faq-answer-${i}`}>
               <span class="faq-num mono" aria-hidden="true">{`0${i + 1}`}</span>
               <span class="faq-q">{item.q}</span>
               <span class="faq-icon" aria-hidden="true">
@@ -78,7 +78,7 @@ const faqList = [
                 </svg>
               </span>
             </button>
-            <div class="faq-answer-wrapper" id={`faq-answer-${i}`}>
+            <div class="faq-answer-wrapper" id={`faq-answer-${i}`} role="region" aria-labelledby={`faq-trigger-${i}`}>
               <div class="faq-answer-inner">
                 <p class="faq-a">{item.a}</p>
               </div>

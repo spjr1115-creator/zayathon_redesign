@@ -368,21 +368,17 @@ const whyItems = [
 </style>
 
 <script>
-  // Mobile interaction logic (only active on touch devices essentially)
-  const isTouch = window.matchMedia('(hover: none)').matches;
-  
-  if (isTouch) {
-    const rows = document.querySelectorAll<HTMLButtonElement>('.why-row');
-    rows.forEach((row) => {
-      row.addEventListener('click', () => {
-        const isExpanded = row.getAttribute('aria-expanded') === 'true';
-        
-        // Close others
-        rows.forEach(r => r.setAttribute('aria-expanded', 'false'));
-        
-        // Toggle current
-        row.setAttribute('aria-expanded', String(!isExpanded));
-      });
+  // Unified interaction logic for click, tap, and keyboard activation
+  const rows = document.querySelectorAll<HTMLButtonElement>('.why-row');
+  rows.forEach((row) => {
+    row.addEventListener('click', () => {
+      const isExpanded = row.getAttribute('aria-expanded') === 'true';
+      
+      // Close others
+      rows.forEach(r => r.setAttribute('aria-expanded', 'false'));
+      
+      // Toggle current
+      row.setAttribute('aria-expanded', String(!isExpanded));
     });
-  }
+  });
 </script>

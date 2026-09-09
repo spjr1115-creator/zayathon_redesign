@@ -1971,28 +1971,33 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       return 0;
     });
 
-    renderTable();
+    renderTableAndCards();
   }
 
-  // ── Render Table & Mobile Cards ──────────────────────────────────────────
-  function renderTable() {
-    if (isLoading) {
-      showState('loading');
-      return;
-    }
+  let lastFocusedElement: HTMLElement | null = null;
 
-    if (loadError) {
-      showState('error');
-      return;
-    }
+  // ── Render Table & Mobile Cards ──────────────────────────────────────────
+  function renderTableAndCards() {
+    if (!tbody) return;
 
     if (filteredRegistrations.length === 0) {
-      showState('empty');
+      if (tableWrapper) tableWrapper.hidden = true;
+      if (mobileCardsWrapper) mobileCardsWrapper.hidden = true;
+      if (stateEmpty) stateEmpty.hidden = false;
       return;
     }
 
-    showState('table');
-    if (!tbody) return;
+    if (stateEmpty) stateEmpty.hidden = true;
+
+    // Desktop view vs Mobile view
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      if (tableWrapper) tableWrapper.hidden = true;
+      if (mobileCardsWrapper) mobileCardsWrapper.hidden = false;
+    } else {
+      if (tableWrapper) tableWrapper.hidden = false;
+      if (mobileCardsWrapper) mobileCardsWrapper.hidden = true;
+    }
 
     tbody.innerHTML = filteredRegistrations.map((r, index) => {
       let memberCount = 1;
@@ -2007,7 +2012,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       });
 
       return `
-        <tr data-id="${escapeHtml(r.id)}">
+        <tr data-id="${escapeHtml(r.id)}" tabindex="0" role="button" aria-label="View details for team ${escapeHtml(r.team_name)}">
           <td class="col-num mono">${index + 1}</td>
           <td class="col-team">${escapeHtml(r.team_name)}</td>
           <td class="col-domain">${escapeHtml(r.problem_domain)}</td>
@@ -2026,10 +2031,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }).join('');
 
     tbody.querySelectorAll('tr').forEach(row => {
-      row.addEventListener('click', () => {
+      const handleTrigger = () => {
         const id = row.getAttribute('data-id');
         const reg = registrations.find(r => r.id === id);
-        if (reg) openDetailModal(reg);
+        if (reg) openDetailModal(reg, row as HTMLElement);
+      };
+      row.addEventListener('click', handleTrigger);
+      row.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleTrigger();
+        }
       });
     });
 
@@ -2041,7 +2053,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         if (r.member_4_name && r.member_4_name.trim()) memberCount++;
 
         return `
-          <div class="admin-mobile-card" data-id="${escapeHtml(r.id)}">
+          <div class="admin-mobile-card" data-id="${escapeHtml(r.id)}" tabindex="0" role="button" aria-label="View details for team ${escapeHtml(r.team_name)}">
             <div class="mobile-card-top">
               <span class="mobile-card-team">${escapeHtml(r.team_name)}</span>
               <span class="mobile-card-domain">${escapeHtml(r.problem_domain)}</span>
@@ -2059,10 +2071,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       }).join('');
 
       mobileCardsWrapper.querySelectorAll('.admin-mobile-card').forEach(card => {
-        card.addEventListener('click', () => {
+        const handleTrigger = () => {
           const id = card.getAttribute('data-id');
           const reg = registrations.find(r => r.id === id);
-          if (reg) openDetailModal(reg);
+          if (reg) openDetailModal(reg, card as HTMLElement);
+        };
+        card.addEventListener('click', handleTrigger);
+        card.addEventListener('keydown', (e: KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleTrigger();
+          }
         });
       });
     }
@@ -2148,8 +2167,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   // ── Detail Modal (Redesigned Editorial Dossier View) ─────────────────────
-  function openDetailModal(r: Registration) {
+  function openDetailModal(r: Registration, triggerEl?: HTMLElement) {
     if (!r || !detailModal || !modalTeamName || !modalBody) return;
+
+    lastFocusedElement = triggerEl || (document.activeElement as HTMLElement);
 
     selectedRegistration = r;
     modalTeamName.textContent = selectedRegistration.team_name;
@@ -2267,6 +2288,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     detailModal.hidden = false;
     detailModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+
+    setTimeout(() => {
+      if (btnCloseModal) btnCloseModal.focus();
+    }, 50);
   }
 
   function closeDetailModal() {

@@ -387,51 +387,66 @@ import { navLinks, site } from '../data/site';
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  function closeMenu() {
+  function closeMenu(restoreFocus = false) {
     if (!toggle || !menu) return;
     toggle.setAttribute('aria-expanded', 'false');
     menu.hidden = true;
-    if (backdrop) backdrop.hidden = true;
-    toggle.setAttribute('aria-label', 'Open menu');
+    menu.setAttribute('aria-hidden', 'true');
+    if (backdrop) {
+      backdrop.hidden = true;
+      backdrop.setAttribute('aria-hidden', 'true');
+    }
+    toggle.setAttribute('aria-label', 'Open navigation menu');
     document.body.style.overflow = '';
+    if (restoreFocus) {
+      toggle.focus();
+    }
   }
 
   function openMenu() {
     if (!toggle || !menu) return;
     toggle.setAttribute('aria-expanded', 'true');
     menu.hidden = false;
-    if (backdrop) backdrop.hidden = false;
-    toggle.setAttribute('aria-label', 'Close menu');
+    menu.setAttribute('aria-hidden', 'false');
+    if (backdrop) {
+      backdrop.hidden = false;
+      backdrop.setAttribute('aria-hidden', 'false');
+    }
+    toggle.setAttribute('aria-label', 'Close navigation menu');
     document.body.style.overflow = 'hidden';
+
+    // Shift focus to the first link inside the menu for keyboard accessibility
+    const firstInteractive = menu.querySelector<HTMLElement>('a, button');
+    firstInteractive?.focus();
   }
 
   toggle?.addEventListener('click', (e) => {
     e.stopPropagation();
     const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
     if (isExpanded) {
-      closeMenu();
+      closeMenu(true);
     } else {
       openMenu();
     }
   });
 
-  backdrop?.addEventListener('click', closeMenu);
+  backdrop?.addEventListener('click', () => closeMenu(true));
 
   menu?.querySelectorAll('a').forEach((a) => {
     a.addEventListener('click', () => {
-      closeMenu();
+      closeMenu(false);
     });
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && menu && !menu.hidden) {
-      closeMenu();
+      closeMenu(true);
     }
   });
 
   document.addEventListener('click', (e) => {
     if (menu && !menu.hidden && header && !header.contains(e.target as Node)) {
-      closeMenu();
+      closeMenu(false);
     }
   });
 </script>

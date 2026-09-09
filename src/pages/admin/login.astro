@@ -24,27 +24,29 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
         <form id="admin-login-form" class="login-form">
           
-          <div id="login-error" class="login-error" aria-live="assertive" hidden></div>
+          <div id="login-error" class="login-error" role="alert" aria-live="assertive" tabindex="-1" hidden></div>
 
           <div class="field-group">
-            <label for="email">EMAIL <span class="req">*</span></label>
+            <label for="email">EMAIL <span class="req" aria-hidden="true">*</span></label>
             <input 
               type="email" 
               id="email" 
               name="email" 
               required 
+              aria-required="true"
               placeholder="admin@zayathon.com"
               autocomplete="email"
             />
           </div>
 
           <div class="field-group">
-            <label for="password">PASSWORD <span class="req">*</span></label>
+            <label for="password">PASSWORD <span class="req" aria-hidden="true">*</span></label>
             <input 
               type="password" 
               id="password" 
               name="password" 
               required 
+              aria-required="true"
               placeholder="••••••••••••"
               autocomplete="current-password"
             />
@@ -328,6 +330,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
       const originalBtnText = btnLogin.innerHTML;
       btnLogin.disabled = true;
+      btnLogin.setAttribute('aria-busy', 'true');
       btnLogin.innerHTML = 'SIGNING IN...';
 
       const formData = new FormData(form);
@@ -352,8 +355,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           if (errorBox) {
             errorBox.textContent = 'ACCESS DENIED\n\nYou do not have permission to access the ZAYATHON admin dashboard.';
             errorBox.hidden = false;
+            errorBox.focus();
           }
           btnLogin.disabled = false;
+          btnLogin.removeAttribute('aria-busy');
           btnLogin.innerHTML = originalBtnText;
           return;
         }
@@ -365,8 +370,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         if (errorBox) {
           errorBox.textContent = err?.message || 'Authentication failed. Please try again.';
           errorBox.hidden = false;
+          errorBox.focus();
         }
         btnLogin.disabled = false;
+        btnLogin.removeAttribute('aria-busy');
         btnLogin.innerHTML = originalBtnText;
       }
     });

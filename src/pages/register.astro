@@ -55,14 +55,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               
               <div class="fields-container">
                 <div class="field-group">
-                  <label for="team_name">TEAM NAME <span class="req">*</span></label>
-                  <input type="text" id="team_name" name="team_name" required placeholder="Enter team name" />
+                  <label for="team_name">TEAM NAME <span class="req" aria-hidden="true">*</span></label>
+                  <input type="text" id="team_name" name="team_name" required aria-required="true" autocomplete="organization" placeholder="Enter team name" />
                 </div>
                 
                 <div class="field-group">
-                  <label for="problem_domain">PROBLEM DOMAIN <span class="req">*</span></label>
+                  <label for="problem_domain">PROBLEM DOMAIN <span class="req" aria-hidden="true">*</span></label>
                   <div class="select-wrapper">
-                    <select id="problem_domain" name="problem_domain" required>
+                    <select id="problem_domain" name="problem_domain" required aria-required="true">
                       <option value="" disabled selected>Select a domain</option>
                       <option value="Agentic AI">Agentic AI</option>
                       <option value="Robotics & Autonomous Systems">Robotics & Autonomous Systems</option>
@@ -92,29 +92,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
               <div class="fields-container">
                 <div class="field-group">
-                  <label for="leader_name">FULL NAME <span class="req">*</span></label>
-                  <input type="text" id="leader_name" name="leader_name" required placeholder="Leader's full name" />
+                  <label for="leader_name">FULL NAME <span class="req" aria-hidden="true">*</span></label>
+                  <input type="text" id="leader_name" name="leader_name" required aria-required="true" autocomplete="name" placeholder="Leader's full name" />
                 </div>
                 
                 <div class="field-group">
-                  <label for="leader_email">EMAIL <span class="req">*</span></label>
-                  <input type="email" id="leader_email" name="leader_email" required placeholder="leader@example.com" />
+                  <label for="leader_email">EMAIL <span class="req" aria-hidden="true">*</span></label>
+                  <input type="email" id="leader_email" name="leader_email" required aria-required="true" autocomplete="email" placeholder="leader@example.com" />
                 </div>
                 
                 <div class="field-group">
-                  <label for="leader_phone">PHONE NUMBER <span class="req">*</span></label>
-                  <input type="tel" id="leader_phone" name="leader_phone" required placeholder="10-digit number" pattern="[0-9]{10}" title="Please enter exactly 10 digits" />
+                  <label for="leader_phone">PHONE NUMBER <span class="req" aria-hidden="true">*</span></label>
+                  <input type="tel" id="leader_phone" name="leader_phone" required aria-required="true" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" title="Please enter exactly 10 digits" />
                 </div>
 
                 <div class="field-group">
-                  <label for="leader_college">COLLEGE / INSTITUTION <span class="req">*</span></label>
-                  <input type="text" id="leader_college" name="leader_college" required placeholder="Full college name" />
+                  <label for="leader_college">COLLEGE / INSTITUTION <span class="req" aria-hidden="true">*</span></label>
+                  <input type="text" id="leader_college" name="leader_college" required aria-required="true" autocomplete="organization" placeholder="Full college name" />
                 </div>
 
                 <div class="field-group">
-                  <label for="leader_year">YEAR OF STUDY <span class="req">*</span></label>
+                  <label for="leader_year">YEAR OF STUDY <span class="req" aria-hidden="true">*</span></label>
                   <div class="select-wrapper">
-                    <select id="leader_year" name="leader_year" required>
+                    <select id="leader_year" name="leader_year" required aria-required="true">
                       <option value="" disabled selected>Select year</option>
                       <option value="1st Year">1st Year</option>
                       <option value="2nd Year">2nd Year</option>
@@ -145,16 +145,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     </div>
                     <div class="fields-container">
                       <div class="field-group">
-                        <label for="member_2_name">FULL NAME <span class="req">*</span></label>
-                        <input type="text" id="member_2_name" name="member_2_name" placeholder="Member's full name" />
+                        <label for="member_2_name">FULL NAME <span class="req" aria-hidden="true">*</span></label>
+                        <input type="text" id="member_2_name" name="member_2_name" autocomplete="name" placeholder="Member's full name" />
                       </div>
                       <div class="field-group">
-                        <label for="member_2_email">EMAIL <span class="req">*</span></label>
-                        <input type="email" id="member_2_email" name="member_2_email" placeholder="member@example.com" />
+                        <label for="member_2_email">EMAIL <span class="req" aria-hidden="true">*</span></label>
+                        <input type="email" id="member_2_email" name="member_2_email" autocomplete="email" placeholder="member@example.com" />
                       </div>
                       <div class="field-group">
-                        <label for="member_2_phone">PHONE NUMBER <span class="req">*</span></label>
-                        <input type="tel" id="member_2_phone" name="member_2_phone" placeholder="10-digit number" pattern="[0-9]{10}" />
+                        <label for="member_2_phone">PHONE NUMBER <span class="req" aria-hidden="true">*</span></label>
+                        <input type="tel" id="member_2_phone" name="member_2_phone" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" />
                       </div>
                     </div>
                   </div>
@@ -166,16 +166,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     </div>
                     <div class="fields-container">
                       <div class="field-group">
-                        <label for="member_3_name">FULL NAME <span class="req">*</span></label>
-                        <input type="text" id="member_3_name" name="member_3_name" placeholder="Member's full name" />
+                        <label for="member_3_name">FULL NAME <span class="req" aria-hidden="true">*</span></label>
+                        <input type="text" id="member_3_name" name="member_3_name" autocomplete="name" placeholder="Member's full name" />
                       </div>
                       <div class="field-group">
-                        <label for="member_3_email">EMAIL <span class="req">*</span></label>
-                        <input type="email" id="member_3_email" name="member_3_email" placeholder="member@example.com" />
+                        <label for="member_3_email">EMAIL <span class="req" aria-hidden="true">*</span></label>
+                        <input type="email" id="member_3_email" name="member_3_email" autocomplete="email" placeholder="member@example.com" />
                       </div>
                       <div class="field-group">
-                        <label for="member_3_phone">PHONE NUMBER <span class="req">*</span></label>
-                        <input type="tel" id="member_3_phone" name="member_3_phone" placeholder="10-digit number" pattern="[0-9]{10}" />
+                        <label for="member_3_phone">PHONE NUMBER <span class="req" aria-hidden="true">*</span></label>
+                        <input type="tel" id="member_3_phone" name="member_3_phone" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" />
                       </div>
                     </div>
                   </div>
@@ -187,19 +187,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     </div>
                     <div class="fields-container">
                       <div class="field-group">
-                        <label for="member_4_name">FULL NAME <span class="req">*</span></label>
-                        <input type="text" id="member_4_name" name="member_4_name" placeholder="Member's full name" />
+                        <label for="member_4_name">FULL NAME <span class="req" aria-hidden="true">*</span></label>
+                        <input type="text" id="member_4_name" name="member_4_name" autocomplete="name" placeholder="Member's full name" />
                       </div>
                       <div class="field-group">
-                        <label for="member_4_email">EMAIL <span class="req">*</span></label>
-                        <input type="email" id="member_4_email" name="member_4_email" placeholder="member@example.com" />
+                        <label for="member_4_email">EMAIL <span class="req" aria-hidden="true">*</span></label>
+                        <input type="email" id="member_4_email" name="member_4_email" autocomplete="email" placeholder="member@example.com" />
                       </div>
                       <div class="field-group">
-                        <label for="member_4_phone">PHONE NUMBER <span class="req">*</span></label>
-                        <input type="tel" id="member_4_phone" name="member_4_phone" placeholder="10-digit number" pattern="[0-9]{10}" />
+                        <label for="member_4_phone">PHONE NUMBER <span class="req" aria-hidden="true">*</span></label>
+                        <input type="tel" id="member_4_phone" name="member_4_phone" autocomplete="tel" placeholder="10-digit number" pattern="[0-9]{10}" />
                       </div>
                     </div>
                   </div>
+
+                <div id="member-live-status" class="sr-only" aria-live="polite"></div>
 
                 <button type="button" class="btn-add-member mono" id="btn-add-member">
                   + ADD TEAM MEMBER
@@ -1216,6 +1218,11 @@ Please try again.
       if (hiddenMember) {
         (hiddenMember as HTMLElement).style.display = 'flex';
         updateAddMemberButton();
+        const memberNum = hiddenMember.id.replace('member-group-', '');
+        const liveStatus = document.getElementById('member-live-status');
+        if (liveStatus) liveStatus.textContent = `Member ${memberNum} added.`;
+        const firstInput = hiddenMember.querySelector('input') as HTMLInputElement | null;
+        if (firstInput) firstInput.focus();
       }
     });
   }
@@ -1244,6 +1251,9 @@ Please try again.
         group.style.display = 'none';
         group.querySelectorAll('input').forEach(input => (input as HTMLInputElement).value = '');
         updateAddMemberButton();
+        const liveStatus = document.getElementById('member-live-status');
+        if (liveStatus) liveStatus.textContent = `Member ${memberId} removed.`;
+        if (btnAddMember) btnAddMember.focus();
       }
     });
   });
@@ -1326,7 +1336,7 @@ Please try again.
           <!-- LEFT: headline copy -->
           <div class="sc-left">
             <p class="sc-label">REGISTRATION COMPLETE</p>
-            <h1 class="sc-hero">YOU&#x2019;RE<br>IN.</h1>
+            <h1 class="sc-hero" id="sc-hero" tabindex="-1">YOU&#x2019;RE<br>IN.</h1>
             <p class="sc-tagline">Your team registration has been received.</p>
             <p class="sc-tagline-strong">Now it&#x2019;s time to build.</p>
           </div>
@@ -1419,6 +1429,7 @@ Please try again.
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('sc-hero')?.focus();
   }
 
   // ── Form submission ──────────────────────────────────────────────────────────
@@ -1439,6 +1450,7 @@ Please try again.
       // Loading state
       const originalBtnContent = btnSubmit.innerHTML;
       btnSubmit.disabled  = true;
+      btnSubmit.setAttribute('aria-busy', 'true');
       btnSubmit.innerHTML = 'SUBMITTING...';
 
       // Collect values — saved here so success screen can use them
@@ -1485,7 +1497,7 @@ Please try again.
         // Only NOW create the success screen in the DOM
         renderSuccess(teamName, domain, leaderName, additionalMemberCount);
 
-      } catch (err) {
+      } catch (err: any) {
         // ── INSERT failed → submissionSuccessful stays false ─────────────────
         // Form remains visible. Success screen is never rendered.
         submissionSuccessful = false;
@@ -1503,9 +1515,13 @@ Please try again.
           }
           
           errorBox.textContent = errorMessage;
+          errorBox.setAttribute('role', 'alert');
+          errorBox.setAttribute('tabindex', '-1');
           errorBox.hidden = false;
+          errorBox.focus();
         }
         btnSubmit.disabled  = false;
+        btnSubmit.removeAttribute('aria-busy');
         btnSubmit.innerHTML = originalBtnContent;
       }
     });

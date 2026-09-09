@@ -1,7 +1,7 @@
 ---
 ---
 
-<section id="public-countdown-section" class="public-countdown-section" hidden aria-live="polite">
+<section id="public-countdown-section" class="public-countdown-section" hidden>
   <div class="container countdown-container">
     <div class="countdown-grid">
       
@@ -16,10 +16,11 @@
           <span class="subhead mono">NEXT UP</span>
           <h2 id="public-event-name" class="event-title font-display">—</h2>
           <p id="public-event-desc" class="event-desc" hidden></p>
+          <p id="pub-cd-sr-summary" class="sr-only" aria-live="polite"></p>
         </div>
 
         <!-- Horizontal Timer Strip -->
-        <div class="timer-strip">
+        <div class="timer-strip" aria-hidden="true">
           <div class="timer-unit">
             <span id="pub-cd-days" class="timer-val font-display">00</span>
             <span class="timer-lbl mono">DAYS</span>
@@ -241,8 +242,11 @@
     const minsEl = document.getElementById('pub-cd-minutes');
     const secsEl = document.getElementById('pub-cd-seconds');
 
+    const srSummaryEl = document.getElementById('pub-cd-sr-summary');
+
     let targetTimeMs: number | null = null;
     let timerInterval: any = null;
+    let lastSrUpdateMin = -1;
 
     async function fetchActiveEvent() {
       try {
@@ -295,6 +299,9 @@
         if (minsEl) minsEl.textContent = '00';
         if (secsEl) secsEl.textContent = '00';
         if (statusEl) statusEl.hidden = false;
+        if (srSummaryEl && nameEl) {
+          srSummaryEl.textContent = `Event ${nameEl.textContent} has reached its target time.`;
+        }
         if (timerInterval) clearInterval(timerInterval);
         return;
       } else {
@@ -310,6 +317,12 @@
       if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
       if (minsEl) minsEl.textContent = String(mins).padStart(2, '0');
       if (secsEl) secsEl.textContent = String(secs).padStart(2, '0');
+
+      // Update screen reader summary once per minute to avoid 1-second aria tick spam
+      if (srSummaryEl && nameEl && (mins !== lastSrUpdateMin || lastSrUpdateMin === -1)) {
+        lastSrUpdateMin = mins;
+        srSummaryEl.textContent = `Countdown active for event ${nameEl.textContent}: ${days} days, ${hours} hours, ${mins} minutes remaining.`;
+      }
     }
 
     // Initial fetch + 30-second periodic sync

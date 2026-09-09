@@ -452,35 +452,38 @@
     panel.setAttribute('aria-hidden', 'false');
     btnLabel.textContent = 'CLOSE';
     btnIcon.textContent  = '×';
+    (closeBtn as HTMLElement)?.focus();
   }
 
-  function closePanel() {
+  function closePanel(restoreFocus = false) {
     isOpen = false;
     root.classList.remove('is-open');
     trigger.setAttribute('aria-expanded', 'false');
     panel.setAttribute('aria-hidden', 'true');
     btnLabel.textContent = 'CONTACT';
     btnIcon.textContent  = '↗';
+    if (restoreFocus) {
+      trigger.focus();
+    }
   }
 
   trigger.addEventListener('click', () => {
-    isOpen ? closePanel() : openPanel();
+    isOpen ? closePanel(true) : openPanel();
   });
 
-  closeBtn.addEventListener('click', closePanel);
+  closeBtn.addEventListener('click', () => closePanel(true));
 
   // Close on outside click
   document.addEventListener('click', (e) => {
     if (isOpen && !root.contains(e.target as Node)) {
-      closePanel();
+      closePanel(false);
     }
   });
 
   // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if (isOpen && e.key === 'Escape') {
-      closePanel();
-      trigger.focus();
+      closePanel(true);
     }
   });
 </script>
