@@ -224,13 +224,10 @@
 </style>
 
 <script>
-  import { createClient } from '@supabase/supabase-js';
+  import { getSupabase } from '../../lib/supabase';
 
-  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-  const supabaseKey = import.meta.env.PUBLIC_SUPABASE_KEY;
-
-  if (supabaseUrl && supabaseKey) {
-    const supabase = createClient(supabaseUrl, supabaseKey);
+  try {
+    const supabase = getSupabase();
 
     const sectionEl = document.getElementById('public-countdown-section');
     const nameEl = document.getElementById('public-event-name');
@@ -328,5 +325,7 @@
     // Initial fetch + 30-second periodic sync
     fetchActiveEvent();
     setInterval(fetchActiveEvent, 30000);
+  } catch (err) {
+    console.error('Failed to initialize PublicCountdown:', err);
   }
 </script>

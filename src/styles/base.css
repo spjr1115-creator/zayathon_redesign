@@ -276,7 +276,6 @@ p {
   transition:
     opacity var(--dur-reveal) var(--ease-out) var(--d, 0s),
     transform var(--dur-reveal) var(--ease-out) var(--d, 0s);
-  will-change: opacity, transform;
 }
 
 [data-reveal].is-revealed {

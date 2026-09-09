@@ -1384,18 +1384,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </style>
 
 <script>
-  import { createClient } from '@supabase/supabase-js';
+  import { getSupabase } from '../../lib/supabase';
 
-  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-  const supabaseKey = import.meta.env.PUBLIC_SUPABASE_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error(
-      'Missing Supabase configuration. Set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_KEY.'
-    );
-  }
-
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const supabase = getSupabase();
 
   // HTML Escape Helper
   function escapeHtml(str: string | null | undefined): string {
@@ -2303,7 +2294,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   // ── Event Listeners ────────────────────────────────────────────────────────
-  if (searchInput) searchInput.addEventListener('input', applyFiltersAndSort);
+  let searchDebounceTimer: any = null;
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(applyFiltersAndSort, 150);
+    });
+  }
   if (domainFilter) domainFilter.addEventListener('change', applyFiltersAndSort);
   if (sortSelect) sortSelect.addEventListener('change', applyFiltersAndSort);
 

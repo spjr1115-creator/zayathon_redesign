@@ -14,7 +14,7 @@ const videoSrc =
     muted
     loop
     playsinline
-    preload="auto"
+    preload="metadata"
     aria-hidden="true"
     tabindex="-1"
   ></video>
@@ -97,6 +97,7 @@ const videoSrc =
     height: 100%;
     object-fit: cover;
     pointer-events: none !important;
+    background-color: var(--night, #070a12);
   }
 
   .hero-scrim {
@@ -426,18 +427,20 @@ const videoSrc =
 </style>
 
 <script>
-  import { createClient } from '@supabase/supabase-js';
-
-  // Autoplay video handler
+  // Autoplay video handler with non-blocking initialization
   const video = document.querySelector<HTMLVideoElement>('.hero-video');
   if (video) {
-    const tryPlay = () => video.play().catch(() => {});
-    if (video.readyState >= 1) tryPlay();
-    else video.addEventListener('loadedmetadata', tryPlay, { once: true });
+    const tryPlay = () => {
+      video.play().catch(() => {});
+    };
+    if (video.readyState >= 1) {
+      tryPlay();
+    } else {
+      video.addEventListener('loadedmetadata', tryPlay, { once: true });
+    }
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) tryPlay();
     });
-    document.addEventListener('click', tryPlay, { once: true });
+    document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
   }
-
 </script>

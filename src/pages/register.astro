@@ -1191,19 +1191,10 @@ Please try again.
 </style>
 
 <script>
-  import { createClient } from '@supabase/supabase-js';
+  import { getSupabase } from '../lib/supabase';
 
   // ── Supabase client ──────────────────────────────────────────────────────────
-  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-  const supabaseKey = import.meta.env.PUBLIC_SUPABASE_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error(
-      'Missing Supabase configuration. Set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_KEY.'
-    );
-  }
-
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const supabase = getSupabase();
 
   // ── State ────────────────────────────────────────────────────────────────────
   // FALSE on every fresh page load — success HTML does NOT exist in the DOM yet.
