@@ -115,12 +115,15 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 10px;
+    pointer-events: none !important;
   }
 
   /* ----------------------------------------------------------
      TRIGGER BUTTON
   ---------------------------------------------------------- */
   .fc-trigger {
+    position: relative;
+    pointer-events: auto !important;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -206,20 +209,23 @@
      CONTACT PANEL
   ---------------------------------------------------------- */
   .fc-panel {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    right: 0;
     width: 300px;
     background: var(--fc-panel-bg);
     border-radius: var(--fc-panel-r);
     padding: 24px;
     box-shadow: var(--fc-shadow-lg);
-    display: flex;
+    display: none !important;
     flex-direction: column;
     gap: 0;
 
     /* Hidden state */
     opacity: 0;
     transform: translateY(12px);
-    pointer-events: none;
-    visibility: hidden;
+    pointer-events: none !important;
+    visibility: hidden !important;
     transition:
       opacity var(--fc-dur) var(--fc-ease),
       transform var(--fc-dur) var(--fc-ease),
@@ -227,10 +233,11 @@
   }
 
   .fc-root.is-open .fc-panel {
+    display: flex !important;
     opacity: 1;
     transform: translateY(0);
-    pointer-events: auto;
-    visibility: visible;
+    pointer-events: auto !important;
+    visibility: visible !important;
     transition:
       opacity var(--fc-dur) var(--fc-ease),
       transform var(--fc-dur) var(--fc-ease),

@@ -235,6 +235,8 @@ import { navLinks, site } from '../data/site';
 
   .nav-backdrop[hidden] {
     display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
   }
 
   /* mobile dropdown */
@@ -247,6 +249,7 @@ import { navLinks, site } from '../data/site';
     max-width: 440px;
     margin-inline: auto;
     max-height: calc(100vh - 92px);
+    max-height: calc(100dvh - 92px);
     overflow-y: auto;
     background: #FFFFFF;
     border: 1px solid rgba(17, 17, 17, 0.14);
@@ -260,6 +263,8 @@ import { navLinks, site } from '../data/site';
 
   .nav-menu[hidden] {
     display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
   }
 
   .nav-menu ul {
